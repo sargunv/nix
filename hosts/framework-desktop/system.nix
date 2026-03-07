@@ -12,6 +12,20 @@
     "nix-command"
     "flakes"
   ];
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+  nix.settings.auto-optimise-store = true;
+
+  # Auto-upgrade from GitHub
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:sargunv/nix";
+    dates = "04:00";
+    allowReboot = false;
+  };
 
   # System packages
   environment.systemPackages = with pkgs; [

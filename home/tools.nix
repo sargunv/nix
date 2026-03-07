@@ -11,7 +11,6 @@
     ripgrep # fast regex search (rg)
     fd # fast file finder
     eza # modern ls replacement
-    zoxide # smart cd with frecency
 
     # Dev tools
     mise # polyglot runtime manager
