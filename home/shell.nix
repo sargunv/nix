@@ -29,6 +29,17 @@
         file = "share/zsh/plugins/clipboard/clipboard.plugin.zsh";
       }
     ];
+    initExtra = ''
+      # Ctrl+Left/Right for word navigation
+      bindkey '^[[1;5D' backward-word
+      bindkey '^[[1;5C' forward-word
+      # Alt+Left/Right for word navigation
+      bindkey '^[[1;3D' backward-word
+      bindkey '^[[1;3C' forward-word
+      # Ctrl+Home/End for beginning/end of line
+      bindkey '^[[1;5H' beginning-of-line
+      bindkey '^[[1;5F' end-of-line
+    '';
     history = {
       size = 100000;
       save = 100000;
