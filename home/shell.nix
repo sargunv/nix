@@ -71,6 +71,14 @@
   programs.starship = {
     enable = true;
     presets = [ "pure-preset" ];
+    settings = {
+      time = {
+        disabled = false;
+        style = "dimmed";
+      };
+      directory.truncate_to_repo = false;
+      right_format = "$time";
+    };
   };
 
   programs.zoxide = {
@@ -88,6 +96,7 @@
   programs.mise = {
     enable = true;
     enableZshIntegration = true;
+    globalConfig.settings.trusted_config_paths = [ "~/Code" ];
   };
 
   programs.direnv = {

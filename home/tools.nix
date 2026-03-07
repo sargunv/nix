@@ -47,6 +47,12 @@
     };
   };
 
+  # Documentation
+  programs.tealdeer = {
+    enable = true;
+    settings.updates.auto_update = true;
+  };
+
   # System info
   programs.fastfetch = {
     enable = true;
