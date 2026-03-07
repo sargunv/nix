@@ -1,19 +1,41 @@
-# CLI tools and language servers.
-{ pkgs, ... }:
-
+# CLI tools.
 {
-  home.packages = with pkgs; [
-    # Editors
-    helix # terminal modal editor
-    claude-code # AI coding assistant (Anthropic)
-    opencode # AI coding assistant (open-source, multi-provider)
+  # Editors
+  programs.helix = {
+    enable = true;
+    defaultEditor = true;
+  };
 
-    # Search and navigation
-    ripgrep # fast regex search (rg)
-    fd # fast file finder
+  programs.claude-code = {
+    enable = true;
+    settings = {
+      permissions = {
+        allow = [ "Bash" "Edit" "Write" "WebFetch" "Read" ];
+      };
+    };
+  };
 
+  programs.opencode = {
+    enable = true;
+    settings = {
+      permission = "allow";
+    };
+  };
 
-    # Dev tools
-    fastfetch # system info display
-  ];
+  # Search and navigation
+  programs.ripgrep = {
+    enable = true;
+    arguments = [
+      "--smart-case"
+    ];
+  };
+
+  programs.fd = {
+    enable = true;
+  };
+
+  # System info
+  programs.fastfetch = {
+    enable = true;
+  };
 }
