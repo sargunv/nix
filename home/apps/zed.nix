@@ -8,6 +8,7 @@
       load_direnv = "shell_hook";
       buffer_font_family = "MonaspiceAr Nerd Font";
       terminal.font_family = "MonaspiceAr Nerd Font";
+      edit_predictions.provider = "sweep";
     };
   };
 }

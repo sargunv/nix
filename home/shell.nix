@@ -29,7 +29,7 @@
         file = "share/zsh/plugins/clipboard/clipboard.plugin.zsh";
       }
     ];
-    initExtra = ''
+    initContent = ''
       # Ctrl+Left/Right for word navigation
       bindkey '^[[1;5D' backward-word
       bindkey '^[[1;5C' forward-word

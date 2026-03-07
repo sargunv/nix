@@ -12,7 +12,19 @@
     enable = true;
     settings = {
       permissions = {
-        allow = [ "Bash" "Edit" "Write" "WebFetch" "Read" ];
+        allow = [
+          "Bash(*)"
+          "Read"
+          "Edit"
+          "Write"
+          "WebFetch"
+          "WebSearch"
+          "Glob"
+          "Grep"
+          "Agent"
+          "NotebookEdit"
+          "mcp__*"
+        ];
       };
     };
   };
