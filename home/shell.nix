@@ -40,6 +40,23 @@
       bindkey '^[[1;5H' beginning-of-line
       bindkey '^[[1;5F' end-of-line
     '';
+    shellAliases = {
+      # ugrep shortcuts
+      uq = "ug -Q";
+      uz = "ug -z";
+      ux = "ug -U --hexdump";
+      ugit = "ug -R --ignore-files";
+      # replace grep variants
+      grep = "ug -G";
+      egrep = "ug -E";
+      fgrep = "ug -F";
+      zgrep = "ug -zG";
+      zegrep = "ug -zE";
+      zfgrep = "ug -zF";
+      # utilities
+      xdump = "ugrep -X \"\"";
+      zmore = "ugrep+ -z -I -+ --pager \"\"";
+    };
     history = {
       size = 100000;
       save = 100000;

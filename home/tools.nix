@@ -1,5 +1,7 @@
 # CLI tools.
+{ pkgs, ... }:
 {
+  home.packages = [ pkgs.ugrep ];
   # Editors
   programs.helix = {
     enable = true;
