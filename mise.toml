@@ -2,6 +2,10 @@
 description = "Reconfigure the machine"
 run = ["sudo nixos-rebuild switch --flake {{ config_root }}"]
 
+[tasks.check]
+description = "Validate flake without building"
+run = ["nix flake check --no-build"]
+
 [tasks.update]
 description = "Update flake.lock"
 run = ["nix flake update"]

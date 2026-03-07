@@ -24,12 +24,12 @@
         modules = [
           lanzaboote.nixosModules.lanzaboote
           nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
-          ./hosts/framework-desktop/configuration.nix
+          ./hosts/framework-desktop
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.sargunv = import ./home/home.nix;
+            home-manager.users.sargunv = import ./home;
           }
         ];
       };
