@@ -20,6 +20,7 @@
     nil
     nixd
     package-version-server
+    github-cli
   ];
 
   programs.git = {
