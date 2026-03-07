@@ -32,6 +32,8 @@
   programs.atuin = {
     enable = true;
     enableZshIntegration = true;
+    flags = [ "--disable-up-arrow" ];
+    settings.enter_accept = false;
   };
 
   programs.mise = {
@@ -43,6 +45,11 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.eza = {

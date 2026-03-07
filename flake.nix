@@ -12,6 +12,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gitignore = {
+      url = "github:github/gitignore";
+      flake = false;
+    };
   };
 
   outputs =
@@ -20,6 +24,7 @@
       nixos-hardware,
       lanzaboote,
       home-manager,
+      gitignore,
       ...
     }:
     let
@@ -44,6 +49,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "bak";
+            home-manager.extraSpecialArgs = { inherit gitignore; };
             home-manager.users.sargunv = import ./home;
           }
         ];

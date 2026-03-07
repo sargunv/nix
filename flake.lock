@@ -32,6 +32,22 @@
       }
     },
     "gitignore": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770918651,
+        "narHash": "sha256-jZH6gJYnwCyFmRYgKzqdC0ng4UALxE8c918i9vp6TSw=",
+        "owner": "github",
+        "repo": "gitignore",
+        "rev": "b4105e73e493bb7a20b5d7ea35efd5780ca44938",
+        "type": "github"
+      },
+      "original": {
+        "owner": "github",
+        "repo": "gitignore",
+        "type": "github"
+      }
+    },
+    "gitignore_2": {
       "inputs": {
         "nixpkgs": [
           "lanzaboote",
@@ -132,7 +148,7 @@
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "gitignore": "gitignore",
+        "gitignore": "gitignore_2",
         "nixpkgs": [
           "lanzaboote",
           "nixpkgs"
@@ -154,6 +170,7 @@
     },
     "root": {
       "inputs": {
+        "gitignore": "gitignore",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nixos-hardware": "nixos-hardware",

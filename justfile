@@ -1,5 +1,9 @@
 # NixOS system management tasks
 
+# Choose a recipe to run
+default:
+    @just --choose
+
 # Reconfigure the machine
 apply:
     sudo nixos-rebuild switch --flake .
