@@ -7,7 +7,7 @@
   home.packages = with pkgs; [
     fastfetch
     helix
-    zed
+    zed-editor
     proton-pass
     vivaldi
     claude-code
