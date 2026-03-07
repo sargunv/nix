@@ -21,7 +21,7 @@
 
   programs.starship = {
     enable = true;
-    settings = { };
+    presets = [ "pure-preset" ];
   };
 
   programs.zoxide = {
