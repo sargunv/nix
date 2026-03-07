@@ -10,6 +10,7 @@
   home.packages = with pkgs; [
     vivaldi
     proton-pass
+    proton-vpn-cli
     vscodium
     nerd-fonts.monaspace
   ];

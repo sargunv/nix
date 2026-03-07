@@ -1,7 +1,7 @@
 # CLI tools.
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.ugrep ];
+  home.packages = [ pkgs.ugrep pkgs.proton-pass-cli ];
   # Editors
   programs.helix = {
     enable = true;
