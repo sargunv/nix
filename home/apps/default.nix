@@ -4,6 +4,7 @@
 {
   imports = [
     ./ghostty.nix
+    ./vscodium.nix
     ./zed.nix
   ];
 
@@ -11,7 +12,6 @@
     vivaldi
     proton-pass
     proton-vpn-cli
-    vscodium
     nerd-fonts.monaspace
   ];
 }

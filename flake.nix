@@ -12,6 +12,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     gitignore = {
       url = "github:github/gitignore";
       flake = false;
@@ -24,11 +28,13 @@
       nixos-hardware,
       lanzaboote,
       home-manager,
+      nix-vscode-extensions,
       gitignore,
       ...
     }:
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      vscode-extensions = nix-vscode-extensions.extensions.x86_64-linux;
     in
     {
       devShells.x86_64-linux.default = pkgs.mkShell {
@@ -49,7 +55,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "bak";
-            home-manager.extraSpecialArgs = { inherit gitignore; };
+            home-manager.extraSpecialArgs = { inherit gitignore vscode-extensions; };
             home-manager.users.sargunv = import ./home;
           }
         ];
