@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   home.username = "sargunv";
@@ -17,6 +17,9 @@
     fd
     eza
     zoxide
+    nil
+    nixd
+    package-version-server
   ];
 
   programs.git = {

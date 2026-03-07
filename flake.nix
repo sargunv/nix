@@ -11,20 +11,27 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, lanzaboote, home-manager, ... }@inputs: {
-    nixosConfigurations.framework-desktop = nixpkgs.lib.nixosSystem {
-      modules = [
-        lanzaboote.nixosModules.lanzaboote
-        nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
-        ./hosts/framework-desktop/configuration.nix
-
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.sargunv = import ./home/home.nix;
-        }
-      ];
+  outputs =
+    {
+      nixpkgs,
+      nixos-hardware,
+      lanzaboote,
+      home-manager,
+      ...
+    }:
+    {
+      nixosConfigurations.framework-desktop = nixpkgs.lib.nixosSystem {
+        modules = [
+          lanzaboote.nixosModules.lanzaboote
+          nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
+          ./hosts/framework-desktop/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sargunv = import ./home/home.nix;
+          }
+        ];
+      };
     };
-  };
 }
