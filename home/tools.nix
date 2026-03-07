@@ -14,8 +14,6 @@
 
 
     # Dev tools
-    mise # polyglot runtime manager
-    github-cli # GitHub from the terminal (gh)
     fastfetch # system info display
   ];
 }

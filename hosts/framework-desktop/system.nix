@@ -1,10 +1,14 @@
-# System basics: hostname, networking, nix settings, and system packages.
+# System basics: hostname, networking, locale, nix settings, and system packages.
 { pkgs, ... }:
 
 {
   # Networking
   networking.hostName = "framework-desktop";
   networking.networkmanager.enable = true;
+
+  # Locale
+  time.timeZone = "America/Los_Angeles";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # Nix settings
   nixpkgs.config.allowUnfree = true;

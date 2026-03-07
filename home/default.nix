@@ -10,5 +10,7 @@
   home.username = "sargunv";
   home.homeDirectory = "/home/sargunv";
 
+  xdg.enable = true;
+
   home.stateVersion = "25.11";
 }

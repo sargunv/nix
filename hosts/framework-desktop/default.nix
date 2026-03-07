@@ -3,7 +3,6 @@
   imports = [
     ./hardware-configuration.nix
     ./boot.nix
-    ./locale.nix
     ./desktop.nix
     ./system.nix
     ./user.nix

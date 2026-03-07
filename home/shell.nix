@@ -1,13 +1,13 @@
 # Shell configuration: zsh, starship prompt, and shell integrations.
+{ config, ... }:
+
 {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    initContent = ''
-      eval "$(mise activate zsh)"
-    '';
+    dotDir = "${config.xdg.configHome}/zsh";
   };
 
   programs.starship = {
@@ -21,6 +21,11 @@
   };
 
   programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.mise = {
     enable = true;
     enableZshIntegration = true;
   };

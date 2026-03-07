@@ -1,4 +1,4 @@
-# Git configuration.
+# Git and GitHub CLI configuration.
 {
   programs.git = {
     enable = true;
@@ -8,5 +8,10 @@
         email = "sargunv@users.noreply.github.com";
       };
     };
+  };
+
+  programs.gh = {
+    enable = true;
+    settings.git_protocol = "https";
   };
 }
