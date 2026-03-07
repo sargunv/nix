@@ -19,6 +19,15 @@ in
         name = "Sargun Vohra";
         email = "sargunv@users.noreply.github.com";
       };
+      branch.sort = "-committerdate";
+      push = {
+        autoSetupRemote = true;
+        useForceIfIncludes = true;
+      };
+      pull.rebase = true;
+      rebase.autoStash = true;
+      diff.algorithm = "histogram";
+      merge.conflictstyle = "zdiff3";
     };
   };
 

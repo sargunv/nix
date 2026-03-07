@@ -1,5 +1,5 @@
 # Shell configuration: zsh, starship prompt, and shell integrations.
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.zsh = {
@@ -8,6 +8,27 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
+    plugins = [
+      {
+        name = "zsh-autopair";
+        src = pkgs.zsh-autopair;
+        file = "share/zsh/zsh-autopair/autopair.zsh";
+      }
+      {
+        name = "zsh-shift-select";
+        src = pkgs.fetchFromGitHub {
+          owner = "jirutka";
+          repo = "zsh-shift-select";
+          rev = "da460999b7d31aef0f0a82a3e749d70edf6f2ef9";
+          hash = "sha256-ekA8acUgNT/t2SjSBGJs2Oko5EB7MvVUccC6uuTI/vc=";
+        };
+      }
+      {
+        name = "zsh-clipboard";
+        src = pkgs.zsh-clipboard;
+        file = "share/zsh/plugins/clipboard/clipboard.plugin.zsh";
+      }
+    ];
     history = {
       size = 100000;
       save = 100000;
