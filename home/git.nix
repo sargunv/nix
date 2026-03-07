@@ -36,6 +36,11 @@ in
     enableGitIntegration = true;
   };
 
+  programs.lazygit = {
+    enable = true;
+    settings.gui.nerdFontsVersion = "3";
+  };
+
   programs.gh = {
     enable = true;
     settings.git_protocol = "https";
