@@ -4,12 +4,13 @@
 {
   imports = [
     ./ghostty.nix
+    ./zed.nix
   ];
 
   home.packages = with pkgs; [
     vivaldi
     proton-pass
-    zed-editor
     vscodium
+    nerd-fonts.monaspace
   ];
 }

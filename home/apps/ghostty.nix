@@ -2,6 +2,8 @@
 {
   programs.ghostty = {
     enable = true;
-    settings = { };
+    settings = {
+      font-family = "MonaspiceAr Nerd Font";
+    };
   };
 }
