@@ -37,4 +37,10 @@
 
   # Firmware updates
   services.fwupd.enable = true;
+
+  # Compressed swap in RAM for OOM protection
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+  };
 }

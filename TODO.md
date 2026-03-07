@@ -2,11 +2,9 @@
 
 ## Medium priority
 
-- [ ] Enable zramSwap — OOM protection with no perf cost, important with AI Max unified memory.
-- [ ] Set `services.displayManager.defaultSession = "plasma"` — auto-login may land on X11 instead of Wayland.
-- [ ] Use `programs.eza` module — installed but no `ls`/`ll` aliases without shell integration.
-- [ ] Add fzf with zsh integration — fuzzy Ctrl+R history, Ctrl+T file finder, pairs with ripgrep/fd.
-- [ ] Add direnv + nix-direnv — auto-loads flake dev shells on `cd`.
+
+
+
 - [ ] Remove redundant `i18n.extraLocaleSettings` — every entry matches `defaultLocale`.
 
 ## Low priority

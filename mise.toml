@@ -1,3 +1,7 @@
+[tools]
+nil = "latest"
+nixd = "latest"
+
 [tasks.apply]
 description = "Reconfigure the machine"
 run = ["sudo nixos-rebuild switch --flake {{ config_root }}"]
