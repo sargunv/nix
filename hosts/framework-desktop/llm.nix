@@ -20,33 +20,6 @@ let
       hash = "sha256-hqr2RkkfYjzgp9aYPqh4jjawnVnlVDpHmczFfuOvFak=";
     };
 
-    qwen35-122b =
-      let
-        base = "https://huggingface.co/unsloth/Qwen3.5-122B-A10B-GGUF/resolve/main/UD-Q4_K_XL";
-      in
-      pkgs.linkFarm "qwen3.5-122b-a10b-ud-q4_k_xl" [
-        {
-          name = "Qwen3.5-122B-A10B-UD-Q4_K_XL-00001-of-00003.gguf";
-          path = pkgs.fetchurl {
-            url = "${base}/Qwen3.5-122B-A10B-UD-Q4_K_XL-00001-of-00003.gguf";
-            hash = "sha256-Rnyb2S6lGFOc91v1pfv7016aC0DXZsyqZ78SDhIEHfM=";
-          };
-        }
-        {
-          name = "Qwen3.5-122B-A10B-UD-Q4_K_XL-00002-of-00003.gguf";
-          path = pkgs.fetchurl {
-            url = "${base}/Qwen3.5-122B-A10B-UD-Q4_K_XL-00002-of-00003.gguf";
-            hash = "sha256-7NvULUOw35+g75pYTgnpWkOWbvA6Eiq6C4epnUTZrZg=";
-          };
-        }
-        {
-          name = "Qwen3.5-122B-A10B-UD-Q4_K_XL-00003-of-00003.gguf";
-          path = pkgs.fetchurl {
-            url = "${base}/Qwen3.5-122B-A10B-UD-Q4_K_XL-00003-of-00003.gguf";
-            hash = "sha256-EzAODwWeb6IaoPq94qVU+d7qNmwOVPJoBFdpshSyjJc=";
-          };
-        }
-      ];
   };
 in
 {
@@ -57,18 +30,15 @@ in
       healthCheckTimeout = 300;
       models = {
         "sweep-next-edit-1.5b" = {
-          cmd = ''${llama-server} --port ''${PORT} -m ${models.sweep-next-edit} --cache-reuse 64 -ngl 99 --no-webui'';
+          cmd = ''${llama-server} --port ''${PORT} -m ${models.sweep-next-edit} -c 4096 --cache-reuse 1 -ngl 99 --no-webui'';
           persistent = true;
         };
         "qwen2.5-coder-1.5b" = {
-          cmd = ''${llama-server} --port ''${PORT} -m ${models.qwen25-coder} -ngl 99 --no-webui'';
+          cmd = ''${llama-server} --port ''${PORT} -m ${models.qwen25-coder} -c 4096 --cache-reuse 1 -ngl 99 --no-webui'';
           persistent = true;
         };
         "qwen3.5-35b-a3b" = {
-          cmd = ''${llama-server} --port ''${PORT} -m ${models.qwen35-35b} -ngl 99 --no-webui'';
-        };
-        "qwen3.5-122b-a10b" = {
-          cmd = ''${llama-server} --port ''${PORT} -m ${models.qwen35-122b}/Qwen3.5-122B-A10B-UD-Q4_K_XL-00001-of-00003.gguf -ngl 99 --no-webui'';
+          cmd = ''${llama-server} --port ''${PORT} -m ${models.qwen35-35b} -c 32768 --cache-reuse 1 -ngl 99 --no-webui'';
         };
       };
     };

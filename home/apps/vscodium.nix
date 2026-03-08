@@ -3,6 +3,10 @@
 
 {
   home.file.".continue/config.yaml".text = builtins.toJSON {
+    name = "Local";
+    version = "1.0.0";
+    schema = "v1";
+    allowAnonymousTelemetry = false;
     models = [
       {
         name = "Local Autocomplete";
@@ -11,7 +15,6 @@
         model = "qwen2.5-coder-1.5b";
         apiKey = "none";
         roles = [ "autocomplete" ];
-        useLegacyCompletionsEndpoint = true;
       }
     ];
   };
@@ -19,6 +22,7 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
+    mutableExtensionsDir = false;
     profiles.default = {
       extensions =
         (with pkgs.vscode-extensions; [
@@ -38,7 +42,6 @@ jnoortheen.nix-ide
           hverlin.mise-vscode
           dprint.dprint
           github.vscode-github-actions
-          mkhl.mkhl-just
           opentofu.vscode-opentofu
           continue.continue
         ]);

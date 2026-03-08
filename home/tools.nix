@@ -43,13 +43,10 @@
             "qwen3.5-35b-a3b" = {
               name = "Qwen 3.5 35B-A3B";
             };
-            "qwen3.5-122b-a10b" = {
-              name = "Qwen 3.5 122B-A10B";
-            };
           };
         };
       };
-      model = "local/qwen3.5-122b-a10b";
+      model = "local/qwen3.5-35b-a3b";
     };
   };
 
