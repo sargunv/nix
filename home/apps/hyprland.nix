@@ -52,7 +52,12 @@
 
       animations.enabled = true;
 
-      input.touchpad.natural_scroll = true;
+      input = {
+        natural_scroll = true;
+        scroll_method = "on_button_down";
+        scroll_button = 274; # middle mouse
+        touchpad.natural_scroll = true;
+      };
 
       dwindle = {
         pseudotile = true;
