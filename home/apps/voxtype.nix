@@ -3,20 +3,7 @@
 { pkgs, lib, ... }:
 
 let
-  silero-vad = pkgs.fetchurl {
-    url = "https://huggingface.co/ggml-org/whisper-vad/resolve/main/ggml-silero-v6.2.0.bin";
-    hash = "sha256-KqJpt4XutTqCmDogUB3ffB2cSOM6tjpBORrGyff7aYc=";
-  };
-in
-lib.mkIf pkgs.stdenv.isLinux {
-  home.packages = with pkgs; [
-    voxtype
-    wtype
-  ];
-
-  xdg.dataFile."voxtype/models/ggml-silero-vad.bin".source = silero-vad;
-
-  xdg.configFile."voxtype/config.toml".text = ''
+  configText = ''
     [hotkey]
     enabled = false
 
@@ -37,7 +24,6 @@ lib.mkIf pkgs.stdenv.isLinux {
     mode = "type"
     fallback_to_clipboard = true
     driver_order = ["wtype"]
-    pre_type_delay_ms = 100
     shift_enter_newlines = true
     append_text = " "
 
@@ -53,6 +39,21 @@ lib.mkIf pkgs.stdenv.isLinux {
     icon_theme = "nerd-font"
   '';
 
+  silero-vad = pkgs.fetchurl {
+    url = "https://huggingface.co/ggml-org/whisper-vad/resolve/main/ggml-silero-v6.2.0.bin";
+    hash = "sha256-KqJpt4XutTqCmDogUB3ffB2cSOM6tjpBORrGyff7aYc=";
+  };
+in
+lib.mkIf pkgs.stdenv.isLinux {
+  home.packages = with pkgs; [
+    voxtype
+    wtype
+  ];
+
+  xdg.dataFile."voxtype/models/ggml-silero-vad.bin".source = silero-vad;
+
+  xdg.configFile."voxtype/config.toml".text = configText;
+
   systemd.user.services.voxtype = {
     Unit = {
       Description = "Voxtype voice dictation daemon";
@@ -64,7 +65,7 @@ lib.mkIf pkgs.stdenv.isLinux {
       ExecStart = "${pkgs.voxtype}/bin/voxtype daemon";
       Restart = "on-failure";
       RestartSec = 5;
-      Environment = "XDG_RUNTIME_DIR=%t";
+      Environment = "XDG_RUNTIME_DIR=%t CONFIG_HASH=${builtins.hashString "sha256" configText}";
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };

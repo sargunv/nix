@@ -3,7 +3,7 @@
 
 {
   imports = [
-    ./ghostty.nix
+    ./kitty.nix
     ./hyprland.nix
     ./vscodium.nix
     ./zed.nix

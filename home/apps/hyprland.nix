@@ -118,7 +118,7 @@
       ];
 
       bind = [
-        "$mod, Return, exec, ghostty"
+        "$mod, Return, exec, kitty"
         "$mod, D, exec, fuzzel"
         "$mod, Q, killactive,"
         "$mod, F, fullscreen,"
@@ -269,7 +269,7 @@
   programs.fuzzel = {
     enable = true;
     settings.main = {
-      terminal = "ghostty";
+      terminal = "kitty";
       layer = "overlay";
     };
   };
