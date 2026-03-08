@@ -57,7 +57,7 @@ in
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      ExecStart = "${whisper-server} --host 127.0.0.1 --port 8090 -m ${models.whisper-large-v3-turbo} -l en --convert --request-path /v1/audio --inference-path /transcriptions";
+      ExecStart = "${whisper-server} --host 127.0.0.1 --port 8090 -m ${models.whisper-large-v3-turbo} -l auto --convert --request-path /v1/audio --inference-path /transcriptions";
       Environment = "PATH=${pkgs.ffmpeg-headless}/bin";
       Restart = "on-failure";
       RestartSec = 5;

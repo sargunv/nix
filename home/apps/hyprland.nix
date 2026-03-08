@@ -186,8 +186,6 @@
         "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
         "$mod, R, submap, resize"
 
-        # Voxtype push-to-talk
-        ", F13, exec, voxtype record start"
       ];
 
       # Volume and brightness (repeatable, works while locked)
@@ -200,11 +198,8 @@
 
       bindl = [
         ", XF86AudioMute, exec, pamixer -t"
-      ];
-
-      # Voxtype: stop recording on key release
-      bindr = [
-        ", F13, exec, voxtype record stop"
+        # Voxtype toggle-to-talk (key sends XF86Tools instead of F13 on this keyboard)
+        ", XF86Tools, exec, voxtype record toggle"
       ];
 
       # Mouse bindings
@@ -240,13 +235,25 @@
         format-wifi = "{essid} ({signalStrength}%)";
         format-disconnected = "disconnected";
       };
+      # https://raw.githubusercontent.com/peteonrails/voxtype/main/docs/WAYBAR.md
       "custom/voxtype" = {
-        exec = "voxtype status --follow --format json --icon-theme nerd-font";
+        exec = "voxtype status --follow --format json";
         return-type = "json";
         format = "{}";
         tooltip = true;
       };
     };
+    style = ''
+      #custom-voxtype {
+        min-width: 20px;
+      }
+      #custom-voxtype.recording {
+        color: #${config.lib.stylix.colors.base08};
+      }
+      #custom-voxtype.transcribing {
+        color: #${config.lib.stylix.colors.base0A};
+      }
+    '';
   };
 
   # Hide desktop entries that clutter the app launcher
