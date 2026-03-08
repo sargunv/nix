@@ -1,7 +1,7 @@
 # CLI tools.
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.ugrep pkgs.proton-pass-cli pkgs.nixfmt-rfc-style ];
+  home.packages = [ pkgs.ugrep pkgs.proton-pass-cli pkgs.nixfmt ];
   # Editors
   programs.helix = {
     enable = true;
