@@ -1,10 +1,7 @@
 # Home Manager configuration for sargunv.
 {
   imports = [
-    ./shell.nix
-    ./git.nix
-    ./tools.nix
-    ./neovim.nix
+    ./tools
     ./apps
   ];
 
