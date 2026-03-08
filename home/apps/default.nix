@@ -6,6 +6,7 @@
     ./ghostty.nix
     ./vscodium.nix
     ./zed.nix
+    ./t3code.nix
   ];
 
   home.packages = with pkgs; [

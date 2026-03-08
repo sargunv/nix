@@ -7,6 +7,7 @@
     ./git.nix
     ./neovim.nix
     ./claude-code.nix
+    ./codex.nix
     ./opencode.nix
   ];
 
