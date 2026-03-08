@@ -1,7 +1,7 @@
 # NixOS system management tasks
 
 # Choose a recipe to run
-default:
+_default:
     @just --choose
 
 # Reconfigure the machine

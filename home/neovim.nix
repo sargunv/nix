@@ -1,5 +1,30 @@
 # Neovim editor (NixVim).
-{ ... }:
+{ pkgs, ... }:
+let
+  cursortab-src = pkgs.fetchFromGitHub {
+    owner = "leonardcser";
+    repo = "cursortab.nvim";
+    rev = "3762be86c088f7a1d0c394f6ec4f3b460a5787db";
+    hash = "sha256-v+8Re49iIzgC9tKzWxh4cAOlvr0rJ1gOBc3imqkYMA0=";
+  };
+
+  cursortab-server = pkgs.buildGoModule {
+    pname = "cursortab-server";
+    version = "unstable-2025-07-04";
+    src = "${cursortab-src}/server";
+    vendorHash = "sha256-IvJw+89eZ5Ghppjt0KT9IRL8XPyU6XbiAYL3axQO6u4=";
+  };
+
+  cursortab-nvim = pkgs.vimUtils.buildVimPlugin {
+    pname = "cursortab-nvim";
+    version = "unstable-2025-07-04";
+    src = cursortab-src;
+    postInstall = ''
+      mkdir -p $out/server
+      ln -s ${cursortab-server}/bin/cursortab $out/server/cursortab
+    '';
+  };
+in
 {
   programs.nixvim = {
     enable = true;
@@ -232,6 +257,16 @@
         };
       };
     };
+
+    extraPlugins = [ cursortab-nvim ];
+
+    extraConfigLua = ''
+      require("cursortab").setup({
+        provider = {
+          type = "sweep",
+        },
+      })
+    '';
 
     keymaps = [
       {

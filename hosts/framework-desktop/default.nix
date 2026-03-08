@@ -6,6 +6,7 @@
     ./desktop.nix
     ./system.nix
     ./user.nix
+    ./llm.nix
   ];
 
   system.stateVersion = "25.11";
