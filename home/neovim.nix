@@ -33,9 +33,9 @@
       showmode = false;
     };
 
-    colorschemes.catppuccin = {
+    colorschemes.gruvbox = {
       enable = true;
-      settings.flavour = "mocha";
+      settings.contrast = "hard";
     };
 
     plugins = {
@@ -152,7 +152,6 @@
       neo-tree = {
         enable = true;
         settings = {
-          close_if_last_window = true;
           filesystem = {
             follow_current_file.enabled = true;
             filtered_items = {
@@ -175,6 +174,11 @@
         enable = true;
         settings.options = {
           diagnostics = "nvim_lsp";
+          close_command.__raw = ''
+            function(bufnum)
+              require('mini.bufremove').delete(bufnum, false)
+            end
+          '';
           offsets = [
             {
               filetype = "neo-tree";
@@ -209,9 +213,15 @@
       };
 
       indent-blankline.enable = true;
-      nvim-autopairs.enable = true;
-      comment.enable = true;
-      web-devicons.enable = true;
+      mini = {
+        enable = true;
+        mockDevIcons = true;
+        modules = {
+          bufremove = { };
+          pairs = { };
+          icons = { };
+        };
+      };
 
       toggleterm = {
         enable = true;
@@ -241,7 +251,7 @@
       }
       {
         key = "<leader>bd";
-        action = "<cmd>bdelete<cr>";
+        action = "<cmd>lua require('mini.bufremove').delete()<cr>";
         options.desc = "Delete buffer";
       }
       {

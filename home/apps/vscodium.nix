@@ -15,6 +15,10 @@
           bradlc.vscode-tailwindcss
         ])
         ++ (with vscode-extensions.open-vsx; [
+          jdinhlife.gruvbox
+          joaopaulocmarra.inline-blame-mini
+          ms-python.python
+          github.vscode-pull-request-github
           vitest.explorer
           tombi-toml.tombi
           oxc.oxc-vscode
@@ -27,6 +31,7 @@
       userSettings = {
         "editor.fontFamily" = "MonaspiceAr Nerd Font";
         "terminal.integrated.fontFamily" = "MonaspiceAr Nerd Font";
+        "workbench.colorTheme" = "Gruvbox Dark Hard";
       };
     };
   };

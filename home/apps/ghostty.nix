@@ -4,6 +4,7 @@
     enable = true;
     settings = {
       font-family = "MonaspiceAr Nerd Font";
+      theme = "Gruvbox Dark Hard";
     };
   };
 }

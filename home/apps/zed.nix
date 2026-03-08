@@ -2,8 +2,9 @@
 {
   programs.zed-editor = {
     enable = true;
-    extensions = [ "nix" "toml" "dockerfile" ];
+    extensions = [ "nix" "toml" "dockerfile" "gruvbox" "git-firefly" "just" ];
     userSettings = {
+      theme = "Gruvbox Dark Hard";
       vim_mode = true;
       load_direnv = "shell_hook";
       buffer_font_family = "MonaspiceAr Nerd Font";

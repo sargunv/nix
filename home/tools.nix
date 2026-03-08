@@ -2,6 +2,8 @@
 { pkgs, ... }:
 {
   home.packages = [ pkgs.ugrep pkgs.proton-pass-cli pkgs.nixfmt ];
+
+  programs.bat.enable = true;
   # Editors
   programs.helix = {
     enable = true;
