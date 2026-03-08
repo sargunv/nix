@@ -5,15 +5,13 @@
 lib.mkIf pkgs.stdenv.isLinux {
   home.packages = with pkgs; [
     voxtype
-    dotool
     wtype
   ];
 
   xdg.configFile."voxtype/config.toml".text = ''
     [hotkey]
-    # Disabled: using KDE global shortcut instead to avoid key repeat leak.
-    # On Hyprland/Sway, can re-enable with key = "F13" and use compositor bindings.
-    enabled = false
+    enabled = true
+    key = "F13"
 
     [audio]
     device = "default"
@@ -31,9 +29,7 @@ lib.mkIf pkgs.stdenv.isLinux {
     [output]
     mode = "type"
     fallback_to_clipboard = true
-    # dotool first: Plasma workaround (wtype unsupported on KDE Wayland).
-    # On Hyprland/Sway, change to ["wtype", "clipboard"].
-    driver_order = ["dotool", "wtype", "clipboard"]
+    driver_order = ["wtype", "clipboard"]
     append_text = " "
 
     [output.notification]

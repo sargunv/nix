@@ -4,6 +4,7 @@
 {
   imports = [
     ./ghostty.nix
+    ./hyprland.nix
     ./vscodium.nix
     ./zed.nix
     ./t3code.nix
