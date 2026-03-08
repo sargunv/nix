@@ -1,11 +1,10 @@
 # CLI tools.
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.ugrep pkgs.proton-pass-cli ];
+  home.packages = [ pkgs.ugrep pkgs.proton-pass-cli pkgs.nixfmt-rfc-style ];
   # Editors
   programs.helix = {
     enable = true;
-    defaultEditor = true;
   };
 
   programs.claude-code = {

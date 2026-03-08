@@ -4,6 +4,7 @@
     ./shell.nix
     ./git.nix
     ./tools.nix
+    ./neovim.nix
     ./apps
   ];
 

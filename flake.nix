@@ -16,6 +16,10 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     gitignore = {
       url = "github:github/gitignore";
       flake = false;
@@ -29,6 +33,7 @@
       lanzaboote,
       home-manager,
       nix-vscode-extensions,
+      nixvim,
       gitignore,
       ...
     }:
@@ -55,6 +60,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "bak";
+            home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
             home-manager.extraSpecialArgs = { inherit gitignore vscode-extensions; };
             home-manager.users.sargunv = import ./home;
           }
