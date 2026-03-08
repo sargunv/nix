@@ -6,7 +6,7 @@
     ./desktop.nix
     ./system.nix
     ./user.nix
-    ./llm.nix
+    ./inference.nix
   ];
 
   system.stateVersion = "25.11";

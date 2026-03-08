@@ -1,20 +1,13 @@
-# Voxtype - push-to-talk voice dictation with local Whisper.
-{ pkgs, ... }:
+# Voxtype - push-to-talk voice dictation (Linux only).
+# Uses the system-level whisper-server (see hosts/*/inference.nix).
+{ pkgs, lib, ... }:
 
-let
-  whisper-model = pkgs.fetchurl {
-    url = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo.bin";
-    hash = "sha256-H8cPd0046xaZk6w5Huo1fvR8iHV+9y7llDh5t+jivGk=";
-  };
-in
-{
+lib.mkIf pkgs.stdenv.isLinux {
   home.packages = with pkgs; [
-    voxtype-vulkan
+    voxtype
     dotool
     wtype
   ];
-
-  xdg.dataFile."voxtype/models/ggml-large-v3-turbo.bin".source = whisper-model;
 
   xdg.configFile."voxtype/config.toml".text = ''
     [hotkey]
@@ -31,7 +24,8 @@ in
     enabled = true
 
     [whisper]
-    model = "large-v3-turbo"
+    mode = "remote"
+    remote_endpoint = "http://127.0.0.1:8090"
     language = "en"
 
     [output]
@@ -56,7 +50,7 @@ in
     };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.voxtype-vulkan}/bin/voxtype daemon";
+      ExecStart = "${pkgs.voxtype}/bin/voxtype daemon";
       Restart = "on-failure";
       RestartSec = 5;
       Environment = "XDG_RUNTIME_DIR=%t";

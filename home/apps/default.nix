@@ -1,17 +1,14 @@
 # GUI applications and editors.
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [
-      ./ghostty.nix
-      ./vscodium.nix
-      ./zed.nix
-      ./t3code.nix
-    ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
-      ./voxtype.nix
-    ];
+  imports = [
+    ./ghostty.nix
+    ./vscodium.nix
+    ./zed.nix
+    ./t3code.nix
+    ./voxtype.nix
+  ];
 
   home.packages = with pkgs; [
     beeper
