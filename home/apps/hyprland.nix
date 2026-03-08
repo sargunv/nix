@@ -2,9 +2,10 @@
 { pkgs, ... }:
 
 {
+  home.sessionVariables.NIXOS_OZONE_WL = "1";
+
   home.packages = with pkgs; [
     grimblast
-    jq
     wl-clipboard
     cliphist
     brightnessctl
@@ -19,7 +20,16 @@
     settings = {
       "$mod" = "SUPER";
 
-      monitor = ", preferred, auto, 1";
+      # TODO: extract per-host monitor/workspace config when adding second machine
+      monitor = [
+        "desc:ASUSTek COMPUTER INC PG27UCDM TALMAV003641, 3840x2160@120, 0x525, 1.666667, bitdepth, 10"
+        "desc:GIGA-BYTE TECHNOLOGY CO. LTD. M27U 23323B000942, 3840x2160@120, 2304x0, 1.666667, transform, 1, bitdepth, 10"
+      ];
+
+      workspace = [
+        "1, monitor:desc:ASUSTek COMPUTER INC PG27UCDM TALMAV003641, default:true"
+        "2, monitor:desc:GIGA-BYTE TECHNOLOGY CO. LTD. M27U 23323B000942, default:true"
+      ];
 
       general = {
         gaps_in = 5;
@@ -110,9 +120,6 @@
         ", F14, exec, grimblast copy output"
         "$mod, F14, exec, grimblast copy active"
         "SHIFT, F14, exec, grimblast copy area"
-
-        # Keybind cheat sheet
-        "$mod, slash, exec, hyprctl binds -j | jq -r '.[] | \"\\(.modmask_str) + \\(.key) → \\(.dispatcher) \\(.arg)\"' | fuzzel --dmenu"
 
         # Lock screen
         "$mod, L, exec, hyprlock"

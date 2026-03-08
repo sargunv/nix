@@ -1,10 +1,26 @@
-# Desktop environment: SDDM, Hyprland, audio (PipeWire), and printing (CUPS).
+# Desktop environment: greetd, Hyprland, audio (PipeWire), and printing (CUPS).
 { pkgs, ... }:
 {
-  # Display manager and desktop
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
+  # Display manager
+  services.greetd = {
+    enable = true;
+    settings = {
+      initial_session = {
+        command = "start-hyprland";
+        user = "sargunv";
+      };
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
+        user = "greeter";
+      };
+    };
+  };
+
+  # Compositor
   programs.hyprland.enable = true;
+
+  # Keyring
+  services.gnome.gnome-keyring.enable = true;
 
   # Printing
   services.printing.enable = true;
