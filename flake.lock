@@ -230,6 +230,24 @@
         "type": "gitlab"
       }
     },
+    "gruvbox-wallpapers": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1772829649,
+        "narHash": "sha256-y23V6g/X7LCkhLcOakN48ucK3hQekgQ+j2EZi4TGKgw=",
+        "owner": "AngelJumbo",
+        "repo": "gruvbox-wallpapers",
+        "rev": "f54801299ae04a77b76df411862a9fc54a676b64",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AngelJumbo",
+        "repo": "gruvbox-wallpapers",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -311,6 +329,22 @@
       }
     },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1761907660,
+        "narHash": "sha256-kJ8lIZsiPOmbkJypG+B5sReDXSD1KGu2VEPNqhRa/ew=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2fb006b87f04c4d3bdf08cfdbc7fab9c13d94a15",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1772773019,
         "narHash": "sha256-E1bxHxNKfDoQUuvriG71+f+s/NT0qWkImXsYZNFFfCs=",
@@ -399,11 +433,12 @@
     "root": {
       "inputs": {
         "gitignore": "gitignore",
+        "gruvbox-wallpapers": "gruvbox-wallpapers",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
         "stylix": "stylix"
       }

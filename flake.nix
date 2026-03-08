@@ -28,6 +28,7 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gruvbox-wallpapers.url = "github:AngelJumbo/gruvbox-wallpapers";
   };
 
   outputs =
@@ -40,6 +41,7 @@
       nixvim,
       gitignore,
       stylix,
+      gruvbox-wallpapers,
       ...
     }:
     let
@@ -56,6 +58,7 @@
       };
 
       nixosConfigurations.framework-desktop = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit gruvbox-wallpapers; };
         modules = [
           lanzaboote.nixosModules.lanzaboote
           nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series

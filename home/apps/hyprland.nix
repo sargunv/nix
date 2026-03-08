@@ -12,7 +12,6 @@
     pamixer
     networkmanagerapplet
     hyprpolkitagent
-    swww
   ];
 
   wayland.windowManager.hyprland = {
@@ -114,14 +113,13 @@
       exec-once = [
         "nm-applet --indicator"
         "hyprpolkitagent"
-        "swww-daemon"
       ];
 
       bind = [
         "$mod, Return, exec, kitty"
         "$mod, D, exec, fuzzel"
         "$mod, Q, killactive,"
-        "$mod, F, fullscreen,"
+        "$mod, F, fullscreen, 1"
         "$mod, V, togglefloating,"
         "$mod, P, pseudo,"
         "$mod, S, togglesplit,"
@@ -264,6 +262,7 @@
     cups = { name = "CUPS"; exec = "xdg-open http://localhost:631"; noDisplay = true; };
     qt5ct = { name = "Qt5 Settings"; exec = "qt5ct"; noDisplay = true; };
     qt6ct = { name = "Qt6 Settings"; exec = "qt6ct"; noDisplay = true; };
+    nvim = { name = "Neovim wrapper"; exec = "nvim"; noDisplay = true; };
   };
 
   programs.fuzzel = {

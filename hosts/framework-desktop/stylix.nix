@@ -1,8 +1,9 @@
 # Stylix: system-wide Gruvbox Dark Hard color scheme and fonts.
-{ pkgs, ... }:
+{ pkgs, gruvbox-wallpapers, ... }:
 
 {
   stylix = {
+    image = "${gruvbox-wallpapers.packages.${pkgs.stdenv.hostPlatform.system}.default}/cosy-retreat-sunset.png";
     enable = true;
     polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
