@@ -1,16 +1,7 @@
 # Hyprland compositor and Wayland utilities.
-{ pkgs, lib, ... }:
+# https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/
+{ config, pkgs, ... }:
 
-let
-  colors = {
-    bg = "1d2021";
-    bg1 = "282828";
-    fg = "ebdbb2";
-    gray = "928374";
-    yellow = "d79921";
-    red = "cc241d";
-  };
-in
 {
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -21,7 +12,6 @@ in
     pamixer
     networkmanagerapplet
     hyprpolkitagent
-    adwaita-icon-theme
     swww
   ];
 
@@ -33,9 +23,9 @@ in
       binde = , right, resizeactive, 20 0
       binde = , up, resizeactive, 0 -20
       binde = , down, resizeactive, 0 20
-      bind = , escape, exec, hyprctl keyword general:col.active_border 'rgba(${colors.yellow}ee)'
+      bind = , escape, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base0D})'
       bind = , escape, submap, reset
-      bind = $mod, R, exec, hyprctl keyword general:col.active_border 'rgba(${colors.yellow}ee)'
+      bind = $mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base0D})'
       bind = $mod, R, submap, reset
       submap = reset
     '';
@@ -43,7 +33,6 @@ in
       "$mod" = "SUPER";
 
       env = [
-        "NIXOS_OZONE_WL,1"
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "GDK_BACKEND,wayland,x11,*"
@@ -64,8 +53,6 @@ in
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        "col.active_border" = lib.mkForce "rgba(${colors.yellow}ee)";
-        "col.inactive_border" = lib.mkForce "rgba(${colors.gray}aa)";
         layout = "dwindle";
       };
 
@@ -122,10 +109,7 @@ in
         preserve_split = true;
       };
 
-      misc = {
-        disable_hyprland_logo = true;
-        background_color = "rgb(${colors.bg})";
-      };
+      misc.disable_hyprland_logo = true;
 
       exec-once = [
         "nm-applet --indicator"
@@ -199,7 +183,7 @@ in
         ''}"
 
         # Resize mode
-        "$mod, R, exec, hyprctl keyword general:col.active_border 'rgba(${colors.red}ee)'"
+        "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
         "$mod, R, submap, resize"
 
         # Voxtype push-to-talk
@@ -234,60 +218,35 @@ in
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    settings = {
-      mainBar = {
-        layer = "top";
-        position = "top";
-        height = 30;
-        modules-left = [ "hyprland/workspaces" ];
-        modules-center = [ "clock" ];
-        modules-right = [ "custom/voxtype" "pulseaudio" "network" "tray" ];
-        clock = {
-          format = "{:%H:%M}";
-          tooltip-format = "{:%Y-%m-%d | %H:%M}";
-        };
-        pulseaudio = {
-          format = "{volume}% {icon}";
-          format-muted = "muted";
-          format-icons.default = [ "" "" "" ];
-          on-click = "pamixer -t";
-        };
-        network = {
-          format-ethernet = "connected";
-          format-wifi = "{essid} ({signalStrength}%)";
-          format-disconnected = "disconnected";
-        };
-        "custom/voxtype" = {
-          exec = "voxtype status --follow --format json --icon-theme nerd-font";
-          return-type = "json";
-          format = "{}";
-          tooltip = true;
-        };
+    settings.mainBar = {
+      layer = "top";
+      position = "top";
+      height = 30;
+      modules-left = [ "hyprland/workspaces" ];
+      modules-center = [ "clock" ];
+      modules-right = [ "custom/voxtype" "pulseaudio" "network" "tray" ];
+      clock = {
+        format = "{:%H:%M}";
+        tooltip-format = "{:%Y-%m-%d | %H:%M}";
+      };
+      pulseaudio = {
+        format = "{volume}% {icon}";
+        format-muted = "muted";
+        format-icons.default = [ "" "" "" ];
+        on-click = "pamixer -t";
+      };
+      network = {
+        format-ethernet = "connected";
+        format-wifi = "{essid} ({signalStrength}%)";
+        format-disconnected = "disconnected";
+      };
+      "custom/voxtype" = {
+        exec = "voxtype status --follow --format json --icon-theme nerd-font";
+        return-type = "json";
+        format = "{}";
+        tooltip = true;
       };
     };
-    style = ''
-      * {
-        font-family: "MonaspiceAr Nerd Font";
-        font-size: 14px;
-      }
-      window#waybar {
-        background-color: rgba(29, 32, 33, 0.9);
-        color: #${colors.fg};
-      }
-      #workspaces button {
-        padding: 0 5px;
-        color: #${colors.gray};
-      }
-      #workspaces button.active {
-        color: #${colors.yellow};
-      }
-      #clock, #pulseaudio, #network, #tray, #custom-voxtype {
-        padding: 0 10px;
-      }
-      #custom-voxtype.recording {
-        color: #${colors.red};
-      }
-    '';
   };
 
   # Hide desktop entries that clutter the app launcher
@@ -296,6 +255,8 @@ in
     gvim = { name = "GVim"; exec = "gvim"; noDisplay = true; };
     nixos-manual = { name = "NixOS Manual"; exec = "nixos-help"; noDisplay = true; };
     cups = { name = "CUPS"; exec = "xdg-open http://localhost:631"; noDisplay = true; };
+    qt5ct = { name = "Qt5 Settings"; exec = "qt5ct"; noDisplay = true; };
+    qt6ct = { name = "Qt6 Settings"; exec = "qt6ct"; noDisplay = true; };
   };
 
   programs.fuzzel = {
@@ -303,34 +264,10 @@ in
     settings.main = {
       terminal = "ghostty";
       layer = "overlay";
-      icon-theme = "Adwaita";
     };
   };
 
-  programs.hyprlock = {
-    enable = true;
-    settings = {
-      background = {
-        color = "rgb(${colors.bg})";
-      };
-      input-field = lib.mkForce [
-        {
-          size = "300, 50";
-          outline_thickness = 2;
-          dots_size = 0.2;
-          dots_spacing = 0.5;
-          outer_color = "rgb(${colors.yellow})";
-          inner_color = "rgb(${colors.bg1})";
-          font_color = "rgb(${colors.fg})";
-          fade_on_empty = false;
-          placeholder_text = "<i>Password...</i>";
-          position = "0, -20";
-          halign = "center";
-          valign = "center";
-        }
-      ];
-    };
-  };
+  programs.hyprlock.enable = true;
 
   services.hypridle = {
     enable = true;

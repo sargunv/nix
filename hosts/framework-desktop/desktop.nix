@@ -1,4 +1,5 @@
 # Desktop environment: greetd, Hyprland, audio (PipeWire), and printing (CUPS).
+# https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
 { pkgs, ... }:
 {
   # Display manager
