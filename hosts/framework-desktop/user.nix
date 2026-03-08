@@ -7,7 +7,6 @@
     description = "Sargun Vohra";
     shell = pkgs.zsh;
     extraGroups = [
-      "input" # voxtype: evdev hotkey detection
       "networkmanager"
       "wheel"
     ];

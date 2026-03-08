@@ -1,24 +1,53 @@
 # Hyprland compositor and Wayland utilities.
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+let
+  colors = {
+    bg = "1d2021";
+    bg1 = "282828";
+    fg = "ebdbb2";
+    gray = "928374";
+    yellow = "d79921";
+    red = "cc241d";
+  };
+in
 {
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home.packages = with pkgs; [
     grimblast
     wl-clipboard
-    cliphist
     brightnessctl
     pamixer
     networkmanagerapplet
-    wlogout
     hyprpolkitagent
+    adwaita-icon-theme
+    swww
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
+    extraConfig = ''
+      submap = resize
+      binde = , left, resizeactive, -20 0
+      binde = , right, resizeactive, 20 0
+      binde = , up, resizeactive, 0 -20
+      binde = , down, resizeactive, 0 20
+      bind = , escape, exec, hyprctl keyword general:col.active_border 'rgba(${colors.yellow}ee)'
+      bind = , escape, submap, reset
+      bind = $mod, R, exec, hyprctl keyword general:col.active_border 'rgba(${colors.yellow}ee)'
+      bind = $mod, R, submap, reset
+      submap = reset
+    '';
     settings = {
       "$mod" = "SUPER";
+
+      env = [
+        "NIXOS_OZONE_WL,1"
+        "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "GDK_BACKEND,wayland,x11,*"
+      ];
 
       # TODO: extract per-host monitor/workspace config when adding second machine
       monitor = [
@@ -35,8 +64,8 @@
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        "col.active_border" = "rgba(d79921ee)";
-        "col.inactive_border" = "rgba(928374aa)";
+        "col.active_border" = lib.mkForce "rgba(${colors.yellow}ee)";
+        "col.inactive_border" = lib.mkForce "rgba(${colors.gray}aa)";
         layout = "dwindle";
       };
 
@@ -50,7 +79,34 @@
         shadow.enabled = false;
       };
 
-      animations.enabled = true;
+      animations = {
+        enabled = true;
+        bezier = [
+          "easeOutQuint, 0.23, 1, 0.32, 1"
+          "easeInOutCubic, 0.65, 0.05, 0.36, 1"
+          "linear, 0, 0, 1, 1"
+          "almostLinear, 0.5, 0.5, 0.75, 1.0"
+          "quick, 0.15, 0, 0.1, 1"
+        ];
+        animation = [
+          "global, 1, 10, default"
+          "border, 1, 5.39, easeOutQuint"
+          "windows, 1, 4.79, easeOutQuint"
+          "windowsIn, 1, 4.1, easeOutQuint, popin 87%"
+          "windowsOut, 1, 1.49, linear, popin 87%"
+          "fadeIn, 1, 1.73, almostLinear"
+          "fadeOut, 1, 1.46, almostLinear"
+          "fade, 1, 3.03, quick"
+          "layers, 1, 3.81, easeOutQuint"
+          "layersIn, 1, 4, easeOutQuint, fade"
+          "layersOut, 1, 1.5, linear, fade"
+          "fadeLayersIn, 1, 1.79, almostLinear"
+          "fadeLayersOut, 1, 1.39, almostLinear"
+          "workspaces, 1, 1.94, almostLinear, fade"
+          "workspacesIn, 1, 1.21, almostLinear, fade"
+          "workspacesOut, 1, 1.94, almostLinear, fade"
+        ];
+      };
 
       input = {
         natural_scroll = true;
@@ -59,6 +115,8 @@
         touchpad.natural_scroll = true;
       };
 
+      xwayland.force_zero_scaling = true;
+
       dwindle = {
         pseudotile = true;
         preserve_split = true;
@@ -66,13 +124,13 @@
 
       misc = {
         disable_hyprland_logo = true;
-        background_color = "rgb(1d2021)";
+        background_color = "rgb(${colors.bg})";
       };
 
       exec-once = [
         "nm-applet --indicator"
         "hyprpolkitagent"
-        "wl-paste --watch cliphist store"
+        "swww-daemon"
       ];
 
       bind = [
@@ -129,11 +187,23 @@
         # Lock screen
         "$mod, L, exec, hyprlock"
 
-        # Clipboard history
-        "$mod SHIFT, V, exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
-
         # Logout menu
-        "$mod, M, exec, wlogout"
+        "$mod, M, exec, ${pkgs.writeShellScript "power-menu" ''
+          sel=$(printf 'Lock\nLogout\nReboot\nShutdown' | fuzzel --dmenu)
+          case $sel in
+            Lock) hyprlock;;
+            Logout) hyprctl dispatch exit;;
+            Reboot) systemctl reboot;;
+            Shutdown) systemctl poweroff;;
+          esac
+        ''}"
+
+        # Resize mode
+        "$mod, R, exec, hyprctl keyword general:col.active_border 'rgba(${colors.red}ee)'"
+        "$mod, R, submap, resize"
+
+        # Voxtype push-to-talk
+        ", F13, exec, voxtype record start"
       ];
 
       # Volume and brightness (repeatable, works while locked)
@@ -146,6 +216,11 @@
 
       bindl = [
         ", XF86AudioMute, exec, pamixer -t"
+      ];
+
+      # Voxtype: stop recording on key release
+      bindr = [
+        ", F13, exec, voxtype record stop"
       ];
 
       # Mouse bindings
@@ -166,7 +241,7 @@
         height = 30;
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "clock" ];
-        modules-right = [ "pulseaudio" "network" "tray" ];
+        modules-right = [ "custom/voxtype" "pulseaudio" "network" "tray" ];
         clock = {
           format = "{:%H:%M}";
           tooltip-format = "{:%Y-%m-%d | %H:%M}";
@@ -182,6 +257,12 @@
           format-wifi = "{essid} ({signalStrength}%)";
           format-disconnected = "disconnected";
         };
+        "custom/voxtype" = {
+          exec = "voxtype status --follow --format json --icon-theme nerd-font";
+          return-type = "json";
+          format = "{}";
+          tooltip = true;
+        };
       };
     };
     style = ''
@@ -191,19 +272,30 @@
       }
       window#waybar {
         background-color: rgba(29, 32, 33, 0.9);
-        color: #ebdbb2;
+        color: #${colors.fg};
       }
       #workspaces button {
         padding: 0 5px;
-        color: #928374;
+        color: #${colors.gray};
       }
       #workspaces button.active {
-        color: #d79921;
+        color: #${colors.yellow};
       }
-      #clock, #pulseaudio, #network, #tray {
+      #clock, #pulseaudio, #network, #tray, #custom-voxtype {
         padding: 0 10px;
       }
+      #custom-voxtype.recording {
+        color: #${colors.red};
+      }
     '';
+  };
+
+  # Hide desktop entries that clutter the app launcher
+  xdg.desktopEntries = {
+    vim = { name = "Vim"; exec = "vim"; noDisplay = true; };
+    gvim = { name = "GVim"; exec = "gvim"; noDisplay = true; };
+    nixos-manual = { name = "NixOS Manual"; exec = "nixos-help"; noDisplay = true; };
+    cups = { name = "CUPS"; exec = "xdg-open http://localhost:631"; noDisplay = true; };
   };
 
   programs.fuzzel = {
@@ -211,6 +303,7 @@
     settings.main = {
       terminal = "ghostty";
       layer = "overlay";
+      icon-theme = "Adwaita";
     };
   };
 
@@ -218,17 +311,17 @@
     enable = true;
     settings = {
       background = {
-        color = "rgb(1d2021)";
+        color = "rgb(${colors.bg})";
       };
-      input-field = [
+      input-field = lib.mkForce [
         {
           size = "300, 50";
           outline_thickness = 2;
           dots_size = 0.2;
           dots_spacing = 0.5;
-          outer_color = "rgb(d79921)";
-          inner_color = "rgb(282828)";
-          font_color = "rgb(ebdbb2)";
+          outer_color = "rgb(${colors.yellow})";
+          inner_color = "rgb(${colors.bg1})";
+          font_color = "rgb(${colors.fg})";
           fade_on_empty = false;
           placeholder_text = "<i>Password...</i>";
           position = "0, -20";
@@ -266,9 +359,6 @@
     settings = {
       default-timeout = 5000;
       border-radius = 5;
-      background-color = "#282828";
-      text-color = "#ebdbb2";
-      border-color = "#d79921";
     };
   };
 }

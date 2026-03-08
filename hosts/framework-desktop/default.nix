@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ./boot.nix
     ./desktop.nix
+    ./stylix.nix
     ./system.nix
     ./user.nix
     ./inference.nix

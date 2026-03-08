@@ -10,8 +10,7 @@ lib.mkIf pkgs.stdenv.isLinux {
 
   xdg.configFile."voxtype/config.toml".text = ''
     [hotkey]
-    enabled = true
-    key = "F13"
+    enabled = false
 
     [audio]
     device = "default"
@@ -46,7 +45,7 @@ lib.mkIf pkgs.stdenv.isLinux {
     };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.voxtype}/bin/voxtype daemon";
+      ExecStart = "${pkgs.voxtype}/bin/voxtype daemon --no-hotkey";
       Restart = "on-failure";
       RestartSec = 5;
       Environment = "XDG_RUNTIME_DIR=%t";

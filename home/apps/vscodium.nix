@@ -45,11 +45,7 @@ jnoortheen.nix-ide
           opentofu.vscode-opentofu
           continue.continue
         ]);
-      userSettings = {
-        "editor.fontFamily" = "MonaspiceAr Nerd Font";
-        "terminal.integrated.fontFamily" = "MonaspiceAr Nerd Font";
-        "workbench.colorTheme" = "Gruvbox Dark Hard";
-      };
+      userSettings = { };
     };
   };
 }
