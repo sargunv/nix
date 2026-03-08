@@ -2,6 +2,20 @@
 { pkgs, vscode-extensions, ... }:
 
 {
+  home.file.".continue/config.yaml".text = builtins.toJSON {
+    models = [
+      {
+        name = "Local Autocomplete";
+        provider = "openai";
+        apiBase = "http://localhost:8000/v1";
+        model = "qwen2.5-coder-1.5b";
+        apiKey = "none";
+        roles = [ "autocomplete" ];
+        useLegacyCompletionsEndpoint = true;
+      }
+    ];
+  };
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
@@ -26,6 +40,7 @@ jnoortheen.nix-ide
           github.vscode-github-actions
           mkhl.mkhl-just
           opentofu.vscode-opentofu
+          continue.continue
         ]);
       userSettings = {
         "editor.fontFamily" = "MonaspiceAr Nerd Font";

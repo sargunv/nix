@@ -264,6 +264,7 @@ in
       require("cursortab").setup({
         provider = {
           type = "sweep",
+          model = "sweep-next-edit-1.5b",
         },
       })
     '';

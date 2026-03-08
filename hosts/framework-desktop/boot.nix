@@ -12,6 +12,7 @@
 
   # Kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [ "amdgpu.gttsize=114688" ];
 
   # LUKS password passthrough to KWallet via auto-login
   boot.initrd.systemd.enable = true;
