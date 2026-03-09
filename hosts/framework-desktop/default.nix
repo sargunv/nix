@@ -6,12 +6,14 @@
     ../../nixos/stylix.nix
     ../../nixos/system.nix
     ../../nixos/user.nix
+    ../../nixos/boot.nix
     ../../nixos/inference.nix
     ./hardware-configuration.nix
-    ./boot.nix
   ];
 
   networking.hostName = "framework-desktop";
+
+  local.boot.extraKernelParams = [ "amdgpu.gttsize=114688" ]; # 112 GB GTT (system memory for GPU)
 
   local.desktop = {
     monitors = [
