@@ -45,7 +45,9 @@
           opentofu.vscode-opentofu
           continue.continue
         ]);
-      userSettings = { };
+      userSettings = {
+        "window.titleBarStyle" = "native";
+      };
     };
   };
 }
