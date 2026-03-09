@@ -1,5 +1,5 @@
-# System basics: hostname, networking, locale, nix settings, and system packages.
-{ pkgs, ... }:
+# System basics: hostname, networking, locale, and nix settings.
+{ ... }:
 
 {
   # Networking
@@ -30,13 +30,6 @@
     dates = "04:00";
     allowReboot = false;
   };
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    sbctl
-    git
-    wget
-  ];
 
   # Firmware updates
   services.fwupd.enable = true;
