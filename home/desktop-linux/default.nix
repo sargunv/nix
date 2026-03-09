@@ -35,6 +35,7 @@ in
     # Wayland utilities
     playerctl
     grimblast
+    satty
     wl-clipboard
     brightnessctl
     pamixer
@@ -57,9 +58,11 @@ in
     onlyoffice-desktopeditors
     gnome-disk-utility
 
-    # TUI utilities for waybar
-    bluetui
-    wiremix
+    # GUI utilities for waybar
+    networkmanagerapplet
+    overskride
+    pavucontrol
+    wdisplays
     wttrbar
   ];
 

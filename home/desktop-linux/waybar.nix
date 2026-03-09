@@ -77,14 +77,14 @@
         ];
         tooltip-format = "{desc}";
         reverse-scrolling = true;
-        on-click = "kitty wiremix";
+        on-click = "pavucontrol";
       };
       bluetooth = {
         format = "󰂲";
         format-on = "󰂯";
         format-connected = "󰂱 {num_connections}";
         tooltip-format-connected = "{device_alias}\t{device_battery_percentage}%";
-        on-click = "kitty bluetui";
+        on-click = "overskride";
       };
       network = {
         format-ethernet = "󰈀";
@@ -92,7 +92,7 @@
         format-disconnected = "󰖪";
         tooltip-format-ethernet = "{ifname}: {ipaddr}\n↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}";
         tooltip-format-wifi = "{essid} ({signalStrength}%)\n↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}";
-        on-click = "kitty nmtui";
+        on-click = "nm-connection-editor";
       };
       cpu = {
         format = "󰻠 {icon}";

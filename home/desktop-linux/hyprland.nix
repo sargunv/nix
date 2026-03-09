@@ -47,6 +47,16 @@ in
       monitor = osConfig.local.desktop.monitors;
       workspace = osConfig.local.desktop.workspaces;
 
+      windowrule = [
+        "float on, match:class nm-connection-editor"
+        "float on, match:class io.github.kaii_lb.Overskride"
+        "float on, match:class org.pulseaudio.pavucontrol"
+        "float on, match:class wdisplays"
+        "float on, match:class org.gnome.Weather"
+        "float on, match:class com.gabm.satty"
+        "size 50% 50%, match:class com.gabm.satty"
+      ];
+
       general = {
         gaps_in = 5;
         gaps_out = 10;
@@ -160,10 +170,10 @@ in
         "$mod, mouse_down, workspace, e+1"
         "$mod, mouse_up, workspace, e-1"
 
-        # Screenshots: F14 = monitor, SUPER+F14 = window, SHIFT+F14 = region
-        ", F14, exec, grimblast copy output"
-        "$mod, F14, exec, grimblast copy active"
-        "SHIFT, F14, exec, grimblast copy area"
+        # Screenshots: F14 = region, SUPER+F14 = monitor, SUPER+SHIFT+F14 = all monitors
+        ", XF86Launch5, exec, grimblast save area - | satty -f -"
+        "$mod, XF86Launch5, exec, grimblast save output - | satty -f -"
+        "$mod SHIFT, XF86Launch5, exec, grimblast save screen - | satty -f -"
 
         "$mod, M, exec, ${power-menu}" # [M]enu
         "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
