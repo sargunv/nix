@@ -33,6 +33,9 @@ in
     hyprsunset
     hyprpicker
     nautilus
+    imv
+    evince
+    mpv
     bluetui
     wiremix
   ];
@@ -320,15 +323,35 @@ in
 
   # Hide desktop entries that clutter the app launcher
   xdg.desktopEntries = {
-    vim = { name = "Vim"; exec = "vim"; noDisplay = true; };
-    gvim = { name = "GVim"; exec = "gvim"; noDisplay = true; };
     nixos-manual = { name = "NixOS Manual"; exec = "nixos-help"; noDisplay = true; };
     cups = { name = "CUPS"; exec = "xdg-open http://localhost:631"; noDisplay = true; };
     qt5ct = { name = "Qt5 Settings"; exec = "qt5ct"; noDisplay = true; };
     qt6ct = { name = "Qt6 Settings"; exec = "qt6ct"; noDisplay = true; };
     nvim = { name = "Neovim wrapper"; exec = "nvim"; noDisplay = true; };
     kvantummanager = { name = "Kvantum Manager"; exec = "kvantummanager"; noDisplay = true; };
+    rofi = { name = "Rofi"; exec = "rofi"; noDisplay = true; };
     rofi-theme-selector = { name = "Rofi Theme Selector"; exec = "rofi-theme-selector"; noDisplay = true; };
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = "org.gnome.Nautilus.desktop";
+      "application/pdf" = "org.gnome.Evince.desktop";
+      "image/png" = "imv-dir.desktop";
+      "image/jpeg" = "imv-dir.desktop";
+      "image/gif" = "imv-dir.desktop";
+      "image/webp" = "imv-dir.desktop";
+      "image/bmp" = "imv-dir.desktop";
+      "image/svg+xml" = "imv-dir.desktop";
+      "video/mp4" = "mpv.desktop";
+      "video/webm" = "mpv.desktop";
+      "video/x-matroska" = "mpv.desktop";
+      "video/quicktime" = "mpv.desktop";
+      "audio/mpeg" = "mpv.desktop";
+      "audio/flac" = "mpv.desktop";
+      "audio/ogg" = "mpv.desktop";
+    };
   };
 
   programs.rofi = {

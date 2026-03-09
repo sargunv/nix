@@ -13,6 +13,8 @@
 
   home.packages = with pkgs; [ ugrep proton-pass-cli nixfmt fd fastfetch bat ];
 
+  programs.btop.enable = true;
+
   programs.ripgrep = {
     enable = true;
     arguments = [
