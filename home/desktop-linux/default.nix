@@ -33,6 +33,7 @@ in
 
   home.packages = with pkgs; [
     # Wayland utilities
+    playerctl
     grimblast
     wl-clipboard
     brightnessctl

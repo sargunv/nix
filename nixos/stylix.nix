@@ -28,7 +28,7 @@ lib.mkIf (!config.local.headless) {
     };
     fonts.monospace = {
       package = pkgs.nerd-fonts.monaspace;
-      name = "MonaspiceAr Nerd Font";
+      name = "MonaspiceAr Nerd Font Propo";
     };
   };
 }

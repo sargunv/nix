@@ -1,5 +1,5 @@
 # Waybar status bar.
-{ config, ... }:
+{ ... }:
 
 {
   programs.waybar = {
@@ -10,35 +10,59 @@
       position = "top";
       height = 30;
       spacing = 4;
-      modules-left = [ "hyprland/workspaces" ];
-      modules-center = [ "hyprland/submap" ];
+      modules-left = [ "hyprland/workspaces" "hyprland/submap" "systemd-failed-units" ];
+      modules-center = [ "hyprland/window" ];
       modules-right = [
-        "tray"
-        "custom/weather"
-        "custom/brightness"
+        "mpris"
+        "privacy"
+        "idle_inhibitor"
         "pulseaudio"
         "bluetooth"
         "network"
+        "cpu"
+        "memory"
+        "battery"
         "clock"
-        "custom/voxtype"
+        "custom/weather"
       ];
-      "hyprland/submap" = {
+      "hyprland/window" = {
         format = "{}";
-        tooltip = false;
+        separate-outputs = true;
+      };
+      mpris = {
+        format = "{player_icon} {title}";
+        format-paused = "{player_icon} {status_icon} {title}";
+        player-icons = {
+          default = "▶";
+          spotify = "󰓇";
+          firefox = "󰈹";
+        };
+        status-icons = {
+          paused = "⏸";
+        };
+        title-len = 30;
+        tooltip-format = "{artist} — {title} ({album})";
+      };
+      privacy = {
+        icon-size = 14;
+        icon-spacing = 4;
+      };
+      idle_inhibitor = {
+        format = "{icon}";
+        format-icons = {
+          activated = "󰅶";
+          deactivated = "󰾪";
+        };
+        tooltip-format-activated = "Idle inhibitor on";
+        tooltip-format-deactivated = "Idle inhibitor off";
       };
       "custom/weather" = {
-        format = "{}°";
+        format = "{}";
         tooltip = true;
         interval = 3600;
-        exec = "wttrbar";
+        exec = "wttrbar --fahrenheit --custom-indicator '{ICON}'";
         return-type = "json";
         on-click = "gnome-weather";
-      };
-      "custom/brightness" = {
-        format = "󰃠 ";
-        interval = "once";
-        tooltip = false;
-        on-click = "kitty display-settings-tui";
       };
       clock = {
         format = "{:%H:%M}";
@@ -65,29 +89,44 @@
       };
       network = {
         format-ethernet = "󰈀";
-        format-wifi = "󰖩 {signalStrength}%";
+        format-wifi = "󰖩";
         format-disconnected = "󰖪";
-        tooltip-format-ethernet = "{ifname}: {ipaddr}";
-        tooltip-format-wifi = "{essid} ({signalStrength}%)";
+        tooltip-format-ethernet = "{ifname}: {ipaddr}\n↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}";
+        tooltip-format-wifi = "{essid} ({signalStrength}%)\n↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}";
         on-click = "kitty nmtui";
       };
-      # https://raw.githubusercontent.com/peteonrails/voxtype/main/docs/WAYBAR.md
-      "custom/voxtype" = {
-        exec = "voxtype status --follow --format json";
-        return-type = "json";
-        format = "{} ";
-        tooltip = true;
+      cpu = {
+        format = "󰻠 {icon}";
+        format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+        tooltip-format = "{usage}%";
+        on-click = "kitty btop";
+      };
+      memory = {
+        format = "󰍛 {icon}";
+        format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+        tooltip-format = "{percentage}% ({used:0.1f}G / {total:0.1f}G)";
+        on-click = "kitty btop";
+      };
+      battery = {
+        format = "{icon} {capacity}%";
+        format-charging = "󰂄 {capacity}%";
+        format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+        states = {
+          warning = 20;
+          critical = 10;
+        };
+      };
+      systemd-failed-units = {
+        format = "✗ {nr_failed}";
+        hide-on-ok = true;
       };
     };
     style = ''
-      #tray {
-        margin-right: 4px;
+      #pulseaudio {
+        min-width: 20px;
       }
-      #custom-voxtype.recording {
-        color: #${config.lib.stylix.colors.base08};
-      }
-      #custom-voxtype.transcribing {
-        color: #${config.lib.stylix.colors.base0A};
+      #systemd-failed-units {
+        color: @base08;
       }
     '';
   };
