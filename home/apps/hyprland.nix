@@ -14,7 +14,7 @@
     hyprpolkitagent
     hyprshutdown
     hyprsunset
-    hyprsysteminfo
+
     hyprpwcenter
     hyprpicker
     nautilus
@@ -139,7 +139,7 @@
       # NOTE: update waybar keyhints label when changing these binds
       bind = [
         "$mod, Return, exec, kitty"
-        "$mod, L, exec, rofi -show drun" # [L]aunch
+        "$mod, L, exec, rofi -show drun -show-icons" # [L]aunch
         "$mod, Q, killactive," # [Q]uit
         "$mod, F, togglefloating," # [F]loat
         "$mod, Z, fullscreen, 1" # [Z]en
@@ -295,6 +295,7 @@
     qt6ct = { name = "Qt6 Settings"; exec = "qt6ct"; noDisplay = true; };
     nvim = { name = "Neovim wrapper"; exec = "nvim"; noDisplay = true; };
     kvantummanager = { name = "Kvantum Manager"; exec = "kvantummanager"; noDisplay = true; };
+    rofi-theme-selector = { name = "Rofi Theme Selector"; exec = "rofi-theme-selector"; noDisplay = true; };
   };
 
   programs.rofi = {
