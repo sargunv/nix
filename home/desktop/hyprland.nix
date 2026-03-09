@@ -3,7 +3,7 @@
 {
   config,
   pkgs,
-  hostDesktop,
+  osConfig,
   ...
 }:
 
@@ -44,8 +44,8 @@ in
       ];
 
       # Host-specific monitor and workspace layout
-      monitor = hostDesktop.monitors;
-      workspace = hostDesktop.workspaces;
+      monitor = osConfig.local.desktop.monitors;
+      workspace = osConfig.local.desktop.workspaces;
 
       general = {
         gaps_in = 5;
@@ -112,7 +112,7 @@ in
       exec-once = [
         "hyprpolkitagent"
         "hyprsunset"
-        "xrdb -merge <<< 'Xft.dpi:${toString hostDesktop.xwaylandDpi}' "
+        "xrdb -merge <<< 'Xft.dpi:${toString osConfig.local.desktop.xwaylandDpi}' "
       ];
 
       bind = [
