@@ -117,8 +117,9 @@ in
 
       bind = [
         "$mod, Return, exec, kitty"
-        "$mod, L, exec, rofi -show drun -show-icons" # [L]aunch
+        "$mod, Space, exec, rofi -show drun -show-icons" # Launch
         "$mod, Q, killactive," # [Q]uit
+        "$mod, P, pseudo," # [P]seudotile
         "$mod, F, togglefloating," # [F]loat
         "$mod, Z, fullscreen, 1" # [Z]en
 
