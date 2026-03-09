@@ -74,6 +74,31 @@ in
         settings = {
           healthCheckTimeout = 300;
           models = llmModels;
+          groups =
+            let
+              persistentMembers = lib.filter (name: llmModels.${name}.persistent or false) (
+                lib.attrNames llmModels
+              );
+              onDemandMembers = lib.filter (
+                name: !(llmModels.${name}.persistent or false)
+              ) (lib.attrNames llmModels);
+            in
+            { }
+            // lib.optionalAttrs (persistentMembers != [ ]) {
+              always-on = {
+                swap = false;
+                exclusive = false;
+                persistent = true;
+                members = persistentMembers;
+              };
+            }
+            // lib.optionalAttrs (onDemandMembers != [ ]) {
+              on-demand = {
+                swap = true;
+                exclusive = false;
+                members = onDemandMembers;
+              };
+            };
         };
       };
     })
