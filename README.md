@@ -1,21 +1,42 @@
-# my nix system
+# NixOS Configuration
 
-supports:
+## Bootstrapping a new host
 
-- NixOS (host = `framework-desktop`)
-- macOS (TODO)
+1. Install NixOS with the graphical or minimal installer (secure boot off).
 
-new NixOS setup:
+2. Clone the repo:
 
-- Install NixOS with secure boot disabled
-- Copy the generated /etc/nixos/hardware-configuration.nix to the appropriate host in this project
-- `nix-shell -p sbctl`
-- `sudo sbctl create-keys`
-- `sudo nixos-rebuild switch --flake .#HOST`
-  - replace `HOST` with the supported host name
-- `sudo sbctl enroll-keys --microsoft`
-- Reboot and enable secure boot
+   ```sh
+   nix-shell -p git --run "git clone https://github.com/sargunv/nix ~/Code/nix"
+   cd ~/Code/nix
+   ```
 
-new macOS setup:
+3. Create secure boot keys for Lanzaboote:
 
-- TODO
+   ```sh
+   nix-shell -p sbctl --run "sudo sbctl create-keys"
+   ```
+
+4. Create a new host directory:
+
+   ```sh
+   mkdir -p hosts/new-hostname
+   cp /etc/nixos/hardware-configuration.nix hosts/new-hostname/
+   ```
+
+5. Create `hosts/new-hostname/default.nix` with host-specific settings (see
+   `hosts/framework-desktop/default.nix` for reference).
+
+6. Add a `nixosConfigurations.new-hostname` entry in `flake.nix`.
+
+7. Build and switch:
+
+   ```sh
+   sudo nixos-rebuild switch --flake .#new-hostname
+   ```
+
+8. Reboot, then enroll secure boot keys and enable secure boot in BIOS:
+
+   ```sh
+   sudo sbctl enroll-keys --microsoft
+   ```
