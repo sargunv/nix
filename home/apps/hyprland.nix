@@ -356,6 +356,9 @@ in
         padding: 0;
         font-size: 0;
       }
+      #tray {
+        margin-right: 8px;
+      }
       #custom-voxtype {
         min-width: 20px;
       }
