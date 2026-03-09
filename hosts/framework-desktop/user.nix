@@ -7,6 +7,7 @@
     description = "Sargun Vohra";
     shell = pkgs.zsh;
     extraGroups = [
+      "i2c"
       "networkmanager"
       "wheel"
     ];

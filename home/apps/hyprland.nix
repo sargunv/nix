@@ -2,6 +2,71 @@
 # https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/
 { config, pkgs, ... }:
 
+let
+  # Adapted from https://github.com/nlabrad/hypr-smart-brightness
+  brightness = pkgs.writeShellScript "brightness" ''
+    export PATH="${pkgs.lib.makeBinPath [ pkgs.hyprland pkgs.jq pkgs.brightnessctl pkgs.ddcutil pkgs.coreutils pkgs.gawk ]}:$PATH"
+
+    STEP=''${2:-5}
+    CACHE_DIR="/tmp/hypr-smart-brightness"
+    mkdir -p "$CACHE_DIR"
+
+    FOCUSED_MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true).name')
+    [ -z "$FOCUSED_MONITOR" ] && exit 1
+
+    CACHE_FILE="$CACHE_DIR/$FOCUSED_MONITOR"
+    BUS_CACHE="$CACHE_DIR/bus_$FOCUSED_MONITOR"
+
+    get_bus() {
+      if [ -f "$BUS_CACHE" ]; then
+        cat "$BUS_CACHE"
+      else
+        BUS=$(ddcutil detect --terse 2>/dev/null | grep -B 1 "card1-$FOCUSED_MONITOR" | grep "I2C bus" | awk -F'-' '{print $2}')
+        [ -n "$BUS" ] && echo "$BUS" > "$BUS_CACHE"
+        echo "$BUS"
+      fi
+    }
+
+    get_current() {
+      if [ -f "$CACHE_FILE" ]; then
+        cat "$CACHE_FILE"
+      else
+        BUS=$(get_bus)
+        BUS_ARG=""
+        [ -n "$BUS" ] && BUS_ARG="--bus $BUS"
+        VAL=$(ddcutil getvcp 10 -t $BUS_ARG --skip-ddc-checks 2>/dev/null | awk '{print $4}')
+        [ -z "$VAL" ] && VAL=50
+        echo "$VAL" > "$CACHE_FILE"
+        echo "$VAL"
+      fi
+    }
+
+    case "$1" in
+      get)
+        get_current
+        ;;
+      up|down)
+        CURRENT=$(get_current)
+        if [ "$1" = "up" ]; then
+          NEW=$(( (CURRENT / STEP + 1) * STEP ))
+        else
+          NEW=$(( (CURRENT - 1) / STEP * STEP ))
+        fi
+        [ "$NEW" -gt 100 ] && NEW=100
+        [ "$NEW" -lt 0 ] && NEW=0
+        echo "$NEW" > "$CACHE_FILE"
+
+        BUS=$(get_bus)
+        BUS_ARG=""
+        [ -n "$BUS" ] && BUS_ARG="--bus $BUS"
+        (ddcutil setvcp 10 "$NEW" $BUS_ARG --skip-ddc-checks --sleep-multiplier 0 > /dev/null 2>&1 &)
+
+        pkill -RTMIN+9 waybar
+        ;;
+    esac
+  '';
+in
+
 {
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -10,14 +75,14 @@
     wl-clipboard
     brightnessctl
     pamixer
-    networkmanagerapplet
+    ddcutil
     hyprpolkitagent
     hyprshutdown
     hyprsunset
-
-    hyprpwcenter
     hyprpicker
     nautilus
+    bluetui
+    wiremix
   ];
 
   wayland.windowManager.hyprland = {
@@ -114,7 +179,6 @@
       };
 
       input = {
-        follow_mouse = 0;
         natural_scroll = true;
         scroll_method = "on_button_down";
         scroll_button = 274; # middle mouse
@@ -131,7 +195,6 @@
       misc.disable_hyprland_logo = true;
 
       exec-once = [
-        "nm-applet --indicator"
         "hyprpolkitagent"
         "hyprsunset"
       ];
@@ -196,8 +259,8 @@
       bindel = [
         ", XF86AudioRaiseVolume, exec, pamixer -i 5"
         ", XF86AudioLowerVolume, exec, pamixer -d 5"
-        ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
-        ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+        ", XF86MonBrightnessUp, exec, ${brightness} up"
+        ", XF86MonBrightnessDown, exec, ${brightness} down"
       ];
 
       bindl = [
@@ -223,7 +286,7 @@
       height = 30;
       modules-left = [ "hyprland/workspaces" ];
       modules-center = [ "custom/keyhints" "hyprland/submap" ];
-      modules-right = [ "custom/voxtype" "pulseaudio" "network" "tray" "clock" ];
+      modules-right = [ "tray" "custom/brightness" "pulseaudio" "bluetooth" "network" "custom/voxtype" "clock" ];
       "hyprland/submap" = {
         format = "{}";
         tooltip = false;
@@ -244,20 +307,40 @@
         format = "{}";
         tooltip = false;
       };
+      "custom/brightness" = {
+        format = "󰃠 {}%";
+        interval = "once";
+        signal = 9;
+        exec = "${brightness} get";
+        on-scroll-up = "${brightness} down";
+        on-scroll-down = "${brightness} up";
+      };
       clock = {
         format = "{:%H:%M}";
         tooltip-format = "{:%Y-%m-%d | %H:%M}";
       };
       pulseaudio = {
-        format = "{volume}% {icon}";
-        format-muted = "muted";
-        format-icons.default = [ "" "" "" ];
-        on-click = "pamixer -t";
+        format = "{icon} {volume}%";
+        format-muted = "󰝟 muted";
+        format-icons.default = [ "󰕿" "󰖀" "󰕾" ];
+        tooltip-format = "{desc}";
+        reverse-scrolling = true;
+        on-click = "kitty wiremix";
+      };
+      bluetooth = {
+        format = "󰂲";
+        format-on = "󰂯";
+        format-connected = "󰂱 {num_connections}";
+        tooltip-format-connected = "{device_alias}\t{device_battery_percentage}%";
+        on-click = "kitty bluetui";
       };
       network = {
-        format-ethernet = "connected";
-        format-wifi = "{essid} ({signalStrength}%)";
-        format-disconnected = "disconnected";
+        format-ethernet = "󰈀";
+        format-wifi = "󰖩 {signalStrength}%";
+        format-disconnected = "󰖪";
+        tooltip-format-ethernet = "{ifname}: {ipaddr}";
+        tooltip-format-wifi = "{essid} ({signalStrength}%)";
+        on-click = "kitty nmtui";
       };
       # https://raw.githubusercontent.com/peteonrails/voxtype/main/docs/WAYBAR.md
       "custom/voxtype" = {
