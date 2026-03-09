@@ -1,5 +1,10 @@
 # Boot configuration: Lanzaboote secure boot, kernel, and LUKS auto-login passthrough.
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Lanzaboote secure boot
@@ -12,7 +17,14 @@
 
   # Kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "amdgpu.gttsize=114688" "quiet" "splash" "boot.shell_on_fail" "udev.log_priority=3" "rd.systemd.show_status=auto" ];
+  boot.kernelParams = [
+    "amdgpu.gttsize=114688" # 112 GB GTT (system memory for GPU)
+    "quiet"
+    "splash"
+    "boot.shell_on_fail"
+    "udev.log_priority=3"
+    "rd.systemd.show_status=auto"
+  ];
   boot.consoleLogLevel = 3;
   boot.initrd.verbose = false;
   boot.plymouth.enable = true;

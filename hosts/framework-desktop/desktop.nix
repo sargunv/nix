@@ -34,7 +34,7 @@
   services.udev.extraRules = ''
     KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
   '';
-  users.groups.i2c = {};
+  users.groups.i2c = { };
 
   # Steam
   programs.steam.enable = true;

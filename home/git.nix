@@ -2,10 +2,11 @@
 { lib, gitignore, ... }:
 
 let
-  readIgnoreFile = path:
-    builtins.filter
-      (line: line != "" && !lib.hasPrefix "#" line)
-      (lib.splitString "\n" (builtins.readFile path));
+  readIgnoreFile =
+    path:
+    builtins.filter (line: line != "" && !lib.hasPrefix "#" line) (
+      lib.splitString "\n" (builtins.readFile path)
+    );
 in
 {
   programs.git = {

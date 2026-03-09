@@ -37,15 +37,15 @@ in
       healthCheckTimeout = 300;
       models = {
         "sweep-next-edit-1.5b" = {
-          cmd = ''${llama-server} --port ''${PORT} -m ${models.sweep-next-edit} -c 4096 --cache-reuse 1 -ngl 99 --no-webui'';
+          cmd = "${llama-server} --port \${PORT} -m ${models.sweep-next-edit} -c 4096 --cache-reuse 1 -ngl 99 --no-webui";
           persistent = true;
         };
         "qwen2.5-coder-1.5b" = {
-          cmd = ''${llama-server} --port ''${PORT} -m ${models.qwen25-coder} -c 4096 --cache-reuse 1 -ngl 99 --no-webui'';
+          cmd = "${llama-server} --port \${PORT} -m ${models.qwen25-coder} -c 4096 --cache-reuse 1 -ngl 99 --no-webui";
           persistent = true;
         };
         "qwen3.5-35b-a3b" = {
-          cmd = ''${llama-server} --port ''${PORT} -m ${models.qwen35-35b} -c 32768 --cache-reuse 1 -ngl 99 --no-webui'';
+          cmd = "${llama-server} --port \${PORT} -m ${models.qwen35-35b} -c 32768 --cache-reuse 1 -ngl 99 --no-webui";
         };
       };
     };

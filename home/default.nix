@@ -1,8 +1,11 @@
 # Home Manager configuration for sargunv.
+# Desktop environment (home/desktop) is imported per-host in flake.nix.
 {
   imports = [
-    ./tools
-    ./apps
+    ./shell
+    ./git.nix
+    ./editors
+    ./packages.nix
   ];
 
   home.username = "sargunv";

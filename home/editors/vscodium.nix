@@ -26,7 +26,7 @@
     profiles.default = {
       extensions =
         (with pkgs.vscode-extensions; [
-jnoortheen.nix-ide
+          jnoortheen.nix-ide
           rust-lang.rust-analyzer
           llvm-vs-code-extensions.vscode-clangd
           bradlc.vscode-tailwindcss

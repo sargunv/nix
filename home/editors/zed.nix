@@ -2,7 +2,14 @@
 {
   programs.zed-editor = {
     enable = true;
-    extensions = [ "nix" "toml" "dockerfile" "gruvbox" "git-firefly" "just" ];
+    extensions = [
+      "nix"
+      "toml"
+      "dockerfile"
+      "gruvbox"
+      "git-firefly"
+      "just"
+    ];
     userSettings = {
       load_direnv = "shell_hook";
       edit_predictions = {
