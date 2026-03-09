@@ -56,6 +56,7 @@ in
     evince
     mpv
     onlyoffice-desktopeditors
+    baobab
     gnome-disk-utility
 
     # GUI utilities for waybar

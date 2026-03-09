@@ -1,4 +1,12 @@
+{ pkgs, ... }:
+
 {
+  home.packages = with pkgs; [
+    ncdu
+    dust
+    duf
+  ];
+
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
