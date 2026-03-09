@@ -12,7 +12,6 @@
     pamixer
     networkmanagerapplet
     hyprpolkitagent
-    hyprlauncher
     hyprshutdown
     hyprsunset
     hyprsysteminfo
@@ -140,7 +139,7 @@
       # NOTE: update waybar keyhints label when changing these binds
       bind = [
         "$mod, Return, exec, kitty"
-        "$mod, L, exec, hyprlauncher" # [L]aunch
+        "$mod, L, exec, rofi -show drun" # [L]aunch
         "$mod, Q, killactive," # [Q]uit
         "$mod, F, togglefloating," # [F]loat
         "$mod, Z, fullscreen, 1" # [Z]en
@@ -295,6 +294,12 @@
     qt5ct = { name = "Qt5 Settings"; exec = "qt5ct"; noDisplay = true; };
     qt6ct = { name = "Qt6 Settings"; exec = "qt6ct"; noDisplay = true; };
     nvim = { name = "Neovim wrapper"; exec = "nvim"; noDisplay = true; };
+    kvantummanager = { name = "Kvantum Manager"; exec = "kvantummanager"; noDisplay = true; };
+  };
+
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi;
   };
 
   programs.hyprlock = {
