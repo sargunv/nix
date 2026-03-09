@@ -1,5 +1,10 @@
 # T3 Code - AI code editor by Ping
-{ pkgs, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   version = "0.0.4";
@@ -53,7 +58,7 @@ let
     '';
   };
 in
-{
+lib.mkIf config.local.gui.enable {
   home.packages = [
     (if pkgs.stdenv.isDarwin then t3code-darwin else t3code-linux)
   ];

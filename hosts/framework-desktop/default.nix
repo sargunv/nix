@@ -1,11 +1,12 @@
 # NixOS configuration for framework-desktop.
 {
   imports = [
-    ../../modules/desktop.nix
-    ../../modules/stylix.nix
-    ../../modules/system.nix
-    ../../modules/user.nix
-    ../../modules/inference.nix
+    ../../nixos/home.nix
+    ../../nixos/desktop.nix
+    ../../nixos/stylix.nix
+    ../../nixos/system.nix
+    ../../nixos/user.nix
+    ../../nixos/inference.nix
     ./hardware-configuration.nix
     ./boot.nix
   ];

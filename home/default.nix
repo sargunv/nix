@@ -1,5 +1,6 @@
 # Home Manager configuration for sargunv.
-# Desktop environment (home/desktop) is imported per-host in flake.nix.
+# Desktop environment (home/desktop-linux) is imported per-host via nixos/desktop.nix.
+{ lib, pkgs, ... }:
 {
   imports = [
     ./shell
@@ -8,13 +9,19 @@
     ./packages.nix
   ];
 
-  home.username = "sargunv";
-  home.homeDirectory = "/home/sargunv";
+  options.local.gui = {
+    enable = lib.mkEnableOption "GUI applications";
+  };
 
-  xdg.enable = true;
+  config = {
+    home.username = "sargunv";
+    home.homeDirectory = if pkgs.stdenv.isDarwin then "/Users/sargunv" else "/home/sargunv";
 
-  # Restart user services when their config changes on rebuild
-  systemd.user.startServices = "sd-switch";
+    xdg.enable = true;
 
-  home.stateVersion = "25.11";
+    # Restart user services when their config changes on rebuild
+    systemd.user.startServices = lib.mkIf pkgs.stdenv.isLinux "sd-switch";
+
+    home.stateVersion = "25.11";
+  };
 }

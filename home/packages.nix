@@ -1,51 +1,62 @@
 # Standalone packages and programs.
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    # CLI tools
-    ugrep
-    fd
-    bat
-    fastfetch
-    chafa
-    nixfmt
-    pastel
+  home.packages =
+    (with pkgs; [
+      # CLI tools
+      ugrep
+      fd
+      bat
+      fastfetch
+      chafa
+      nixfmt
+      pastel
 
-    # Container tools
-    lazydocker
+      # Container tools
+      lazydocker
 
-    # Disk utilities
-    try
-    caligula
+      # Disk utilities
+      try
+      caligula
 
-    # Communication
-    beeper
-    slack
-    discord
+      # Security (CLI)
+      proton-pass-cli
+      proton-vpn-cli
+    ])
+    ++ lib.optionals config.local.gui.enable (
+      with pkgs;
+      [
+        # Communication
+        beeper
+        slack
+        discord
 
-    # Browsers
-    vivaldi
+        # Browsers
+        vivaldi
 
-    # Media
-    spotify
-    pinta
-    obs-studio
-    kdePackages.kdenlive
+        # Media
+        spotify
+        pinta
+        obs-studio
 
-    # Productivity
-    obsidian
-    typora
-    localsend
+        # Productivity
+        obsidian
+        typora
+        localsend
 
-    # Security
-    proton-pass
-    proton-pass-cli
-    proton-vpn-cli
+        # Security (GUI)
+        proton-pass
 
-    # Gaming
-    prismlauncher
-  ];
+        # Gaming
+        prismlauncher
+      ]
+    );
 
   programs.btop.enable = true;
 

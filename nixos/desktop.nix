@@ -9,6 +9,12 @@
   };
 
   config = {
+    # Wire desktop-linux home-manager config and enable GUI apps
+    home-manager.users.sargunv = {
+      imports = [ ../home/desktop-linux ];
+      local.gui.enable = true;
+    };
+
     # Display manager
     services.greetd = {
       enable = true;

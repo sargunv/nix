@@ -69,10 +69,9 @@
         modules = [
           lanzaboote.nixosModules.lanzaboote
           nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
-          ./hosts/framework-desktop
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
-          ./modules/home.nix
+          ./hosts/framework-desktop
         ];
       };
     };

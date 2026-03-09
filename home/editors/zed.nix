@@ -1,5 +1,7 @@
 # Zed editor.
-{
+{ config, lib, ... }:
+
+lib.mkIf config.local.gui.enable {
   programs.zed-editor = {
     enable = true;
     extensions = [

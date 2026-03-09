@@ -12,8 +12,5 @@
   home-manager.backupFileExtension = "bak";
   home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
   home-manager.extraSpecialArgs = { inherit gitignore vscode-extensions; };
-  home-manager.users.sargunv.imports = [
-    ../home
-    ../home/desktop
-  ];
+  home-manager.users.sargunv.imports = [ ../home ];
 }
