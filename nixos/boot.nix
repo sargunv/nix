@@ -15,7 +15,7 @@
     };
   };
 
-  config = {
+  config = lib.mkIf (!config.local.headless) {
     # Lanzaboote secure boot
     boot.loader.systemd-boot.enable = false;
     boot.lanzaboote = {

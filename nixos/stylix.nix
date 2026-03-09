@@ -1,7 +1,13 @@
 # Stylix: system-wide Gruvbox Dark Hard color scheme and fonts.
-{ pkgs, gruvbox-wallpapers, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  gruvbox-wallpapers,
+  ...
+}:
+
+lib.mkIf (!config.local.headless) {
   stylix = {
     image = "${
       gruvbox-wallpapers.packages.${pkgs.stdenv.hostPlatform.system}.default

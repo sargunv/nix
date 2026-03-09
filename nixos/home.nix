@@ -1,6 +1,7 @@
 # Home-manager wiring: receives flake inputs via NixOS specialArgs and
 # forwards them to home-manager.
 {
+  config,
   nixvim,
   gitignore,
   vscode-extensions,
@@ -13,4 +14,5 @@
   home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
   home-manager.extraSpecialArgs = { inherit gitignore vscode-extensions; };
   home-manager.users.sargunv.imports = [ ../home ];
+  home-manager.users.sargunv.local.headless = config.local.headless;
 }

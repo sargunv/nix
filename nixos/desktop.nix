@@ -1,6 +1,11 @@
 # Desktop environment: greetd, Hyprland, audio (PipeWire), and printing (CUPS).
 # https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   options.local.desktop = {
     monitors = lib.mkOption { type = lib.types.listOf lib.types.str; };
@@ -8,11 +13,10 @@
     xwaylandDpi = lib.mkOption { type = lib.types.int; };
   };
 
-  config = {
-    # Wire desktop-linux home-manager config and enable GUI apps
+  config = lib.mkIf (!config.local.headless) {
+    # Wire desktop-linux home-manager config
     home-manager.users.sargunv = {
       imports = [ ../home/desktop-linux ];
-      local.gui.enable = true;
     };
 
     # Display manager

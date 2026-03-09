@@ -29,7 +29,7 @@
       proton-pass-cli
       proton-vpn-cli
     ])
-    ++ lib.optionals config.local.gui.enable (
+    ++ lib.optionals (!config.local.headless) (
       with pkgs;
       [
         # Communication

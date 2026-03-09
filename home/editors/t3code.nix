@@ -58,7 +58,7 @@ let
     '';
   };
 in
-lib.mkIf config.local.gui.enable {
+lib.mkIf (!config.local.headless) {
   home.packages = [
     (if pkgs.stdenv.isDarwin then t3code-darwin else t3code-linux)
   ];

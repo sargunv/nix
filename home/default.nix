@@ -9,9 +9,7 @@
     ./packages.nix
   ];
 
-  options.local.gui = {
-    enable = lib.mkEnableOption "GUI applications";
-  };
+  options.local.headless = lib.mkEnableOption "headless mode (no GUI)";
 
   config = {
     home.username = "sargunv";

@@ -7,7 +7,7 @@
   ...
 }:
 
-lib.mkIf config.local.gui.enable {
+lib.mkIf (!config.local.headless) {
   home.file.".continue/config.yaml".text = builtins.toJSON {
     name = "Local";
     version = "1.0.0";
