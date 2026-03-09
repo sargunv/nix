@@ -3,6 +3,16 @@
 { config, pkgs, ... }:
 
 let
+  power-menu = pkgs.writeShellScript "power-menu" ''
+    choice=$(printf "Lock\nLogout\nReboot\nShutdown" | ${pkgs.rofi}/bin/rofi -dmenu -p "Power" -show-icons)
+    case "$choice" in
+      Lock) hyprlock ;;
+      Logout) hyprshutdown ;;
+      Reboot) hyprshutdown -t 'Restarting...' --post-cmd 'reboot' ;;
+      Shutdown) hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0' ;;
+    esac
+  '';
+
   display-settings-tui = pkgs.buildGoModule {
     pname = "display-settings-tui";
     version = "unstable-2025-07-12";
@@ -20,6 +30,9 @@ in
 
 {
   home.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  # Remove minimize/maximize buttons from CSD windows (no-op on tiling WM)
+  dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu:close";
 
   home.packages = with pkgs; [
     grimblast
@@ -39,24 +52,12 @@ in
     onlyoffice-desktopeditors
     bluetui
     wiremix
+    wttrbar
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      submap = [L]ock  [E]xit  [R]eboot  [S]hutdown
-      bind = , L, exec, hyprlock
-      bind = , L, submap, reset
-      bind = , E, exec, hyprshutdown
-      bind = , E, submap, reset
-      bind = , R, exec, hyprshutdown -t 'Restarting...' --post-cmd 'reboot'
-      bind = , R, submap, reset
-      bind = , S, exec, hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'
-      bind = , S, submap, reset
-      bind = , escape, submap, reset
-      bind = $mod, M, submap, reset
-      submap = reset
-
       submap = Resize: [arrows] resize  [Esc] exit
       binde = , left, resizeactive, -20 0
       binde = , right, resizeactive, 20 0
@@ -155,7 +156,6 @@ in
         "hyprsunset"
       ];
 
-      # NOTE: update waybar keyhints label when changing these binds
       bind = [
         "$mod, Return, exec, kitty"
         "$mod, L, exec, rofi -show drun -show-icons" # [L]aunch
@@ -205,7 +205,7 @@ in
         "$mod, F14, exec, grimblast copy active"
         "SHIFT, F14, exec, grimblast copy area"
 
-        "$mod, M, submap, [L]ock  [E]xit  [R]eboot  [S]hutdown" # [M]enu
+        "$mod, M, exec, ${power-menu}" # [M]enu
         "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
         "$mod, R, submap, Resize: [arrows] resize  [Esc] exit" # [R]esize
 
@@ -241,27 +241,18 @@ in
       position = "top";
       height = 30;
       modules-left = [ "hyprland/workspaces" ];
-      modules-center = [ "custom/keyhints" "hyprland/submap" ];
-      modules-right = [ "tray" "custom/brightness" "pulseaudio" "bluetooth" "network" "clock" "custom/voxtype" ];
+      modules-center = [ "hyprland/submap" ];
+      modules-right = [ "tray" "custom/weather" "custom/brightness" "pulseaudio" "bluetooth" "network" "clock" "custom/voxtype" ];
       "hyprland/submap" = {
         format = "{}";
         tooltip = false;
       };
-      "custom/keyhints" = {
-        exec = pkgs.writeShellScript "keyhints" ''
-          default="[L]aunch  [Q]uit  [F]loat  [Z]en  [R]esize  [M]enu"
-          echo '{"text": "'"$default"'", "class": "visible"}'
-          ${pkgs.socat}/bin/socat -U - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r line; do
-            if echo "$line" | grep -q "^submap>>$"; then
-              echo '{"text": "'"$default"'", "class": "visible"}'
-            elif echo "$line" | grep -q "^submap>>"; then
-              echo '{"text": "", "class": "hidden"}'
-            fi
-          done
-        '';
+      "custom/weather" = {
+        format = "{}°";
+        tooltip = true;
+        interval = 3600;
+        exec = "wttrbar";
         return-type = "json";
-        format = "{}";
-        tooltip = false;
       };
       "custom/brightness" = {
         format = "󰃠 ";
@@ -305,11 +296,6 @@ in
       };
     };
     style = ''
-      #custom-keyhints.hidden {
-        margin: 0;
-        padding: 0;
-        font-size: 0;
-      }
       #tray {
         margin-right: 8px;
       }

@@ -11,7 +11,7 @@
     ./opencode.nix
   ];
 
-  home.packages = with pkgs; [ ugrep proton-pass-cli nixfmt fd fastfetch bat ];
+  home.packages = with pkgs; [ ugrep proton-pass-cli nixfmt fd fastfetch bat chafa lazydocker try caligula pastel ];
 
   programs.btop.enable = true;
 

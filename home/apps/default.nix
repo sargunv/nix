@@ -17,5 +17,15 @@
     proton-pass
     proton-vpn-cli
     nerd-fonts.monaspace
+    slack
+    discord
+    spotify
+    pinta
+    obs-studio
+    kdePackages.kdenlive
+    localsend
+    obsidian
+    typora
+    gnome-disk-utility
   ];
 }
