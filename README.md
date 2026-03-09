@@ -16,10 +16,6 @@ new NixOS setup:
 - `sudo sbctl enroll-keys --microsoft`
 - Reboot and enable secure boot
 
-post-setup:
-
-- In KDE System Settings > Shortcuts, add a custom command `voxtype record-toggle` bound to F13
-
 new macOS setup:
 
 - TODO
