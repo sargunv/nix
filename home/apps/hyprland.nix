@@ -33,9 +33,10 @@ in
     hyprsunset
     hyprpicker
     nautilus
-    imv
+    gthumb
     evince
     mpv
+    onlyoffice-desktopeditors
     bluetui
     wiremix
   ];
@@ -338,12 +339,12 @@ in
     defaultApplications = {
       "inode/directory" = "org.gnome.Nautilus.desktop";
       "application/pdf" = "org.gnome.Evince.desktop";
-      "image/png" = "imv-dir.desktop";
-      "image/jpeg" = "imv-dir.desktop";
-      "image/gif" = "imv-dir.desktop";
-      "image/webp" = "imv-dir.desktop";
-      "image/bmp" = "imv-dir.desktop";
-      "image/svg+xml" = "imv-dir.desktop";
+      "image/png" = "org.gnome.gThumb.desktop";
+      "image/jpeg" = "org.gnome.gThumb.desktop";
+      "image/gif" = "org.gnome.gThumb.desktop";
+      "image/webp" = "org.gnome.gThumb.desktop";
+      "image/bmp" = "org.gnome.gThumb.desktop";
+      "image/svg+xml" = "org.gnome.gThumb.desktop";
       "video/mp4" = "mpv.desktop";
       "video/webm" = "mpv.desktop";
       "video/x-matroska" = "mpv.desktop";

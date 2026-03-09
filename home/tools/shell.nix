@@ -24,9 +24,14 @@
         };
       }
       {
-        name = "zsh-clipboard";
-        src = pkgs.zsh-clipboard;
-        file = "share/zsh/plugins/clipboard/clipboard.plugin.zsh";
+        name = "zpm-clipboard";
+        src = pkgs.fetchFromGitHub {
+          owner = "zpm-zsh";
+          repo = "clipboard";
+          rev = "c3a4a054cefe313d853dc9c32debb1b18aa7513c";
+          hash = "sha256-XtS5HQ2HFYBoBZikuI82XT4MDcXsaPJioI7zNyBoIhs=";
+        };
+        file = "clipboard.plugin.zsh";
       }
     ];
     initContent = ''
@@ -54,6 +59,7 @@
       zegrep = "ug -zE";
       zfgrep = "ug -zF";
       # utilities
+      open = "xdg-open";
       xdump = "ugrep -X \"\"";
       zmore = "ugrep+ -z -I -+ --pager \"\"";
     };
