@@ -34,8 +34,7 @@
         format-paused = "{player_icon} {status_icon} {title}";
         player-icons = {
           default = "▶";
-          spotify = "󰓇";
-          firefox = "󰈹";
+          vivaldi = "󰖟";
         };
         status-icons = {
           paused = "⏸";

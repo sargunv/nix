@@ -40,7 +40,6 @@
         vivaldi
 
         # Media
-        spotify
         pinta
         obs-studio
 
