@@ -1,9 +1,8 @@
-# System basics: hostname, networking, locale, and nix settings.
+# System basics: networking, locale, and nix settings.
 { ... }:
 
 {
   # Networking
-  networking.hostName = "framework-desktop";
   networking.networkmanager.enable = true;
 
   # Locale
