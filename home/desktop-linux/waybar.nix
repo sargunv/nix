@@ -23,7 +23,6 @@
         "memory"
         "battery"
         "clock"
-        "custom/weather"
       ];
       "hyprland/window" = {
         format = "{}";
@@ -54,14 +53,6 @@
         };
         tooltip-format-activated = "Idle inhibitor on";
         tooltip-format-deactivated = "Idle inhibitor off";
-      };
-      "custom/weather" = {
-        format = "{}";
-        tooltip = true;
-        interval = 3600;
-        exec = "wttrbar --fahrenheit --custom-indicator '{ICON}'";
-        return-type = "json";
-        on-click = "gnome-weather";
       };
       clock = {
         format = "{:%H:%M}";

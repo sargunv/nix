@@ -64,7 +64,6 @@ in
     overskride
     pavucontrol
     wdisplays
-    wttrbar
   ];
 
   # Terminal emulator
