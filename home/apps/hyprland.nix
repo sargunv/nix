@@ -3,68 +3,19 @@
 { config, pkgs, ... }:
 
 let
-  # Adapted from https://github.com/nlabrad/hypr-smart-brightness
-  brightness = pkgs.writeShellScript "brightness" ''
-    export PATH="${pkgs.lib.makeBinPath [ pkgs.hyprland pkgs.jq pkgs.brightnessctl pkgs.ddcutil pkgs.coreutils pkgs.gawk ]}:$PATH"
-
-    STEP=''${2:-5}
-    CACHE_DIR="/tmp/hypr-smart-brightness"
-    mkdir -p "$CACHE_DIR"
-
-    FOCUSED_MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true).name')
-    [ -z "$FOCUSED_MONITOR" ] && exit 1
-
-    CACHE_FILE="$CACHE_DIR/$FOCUSED_MONITOR"
-    BUS_CACHE="$CACHE_DIR/bus_$FOCUSED_MONITOR"
-
-    get_bus() {
-      if [ -f "$BUS_CACHE" ]; then
-        cat "$BUS_CACHE"
-      else
-        BUS=$(ddcutil detect --terse 2>/dev/null | grep -B 1 "card1-$FOCUSED_MONITOR" | grep "I2C bus" | awk -F'-' '{print $2}')
-        [ -n "$BUS" ] && echo "$BUS" > "$BUS_CACHE"
-        echo "$BUS"
-      fi
-    }
-
-    get_current() {
-      if [ -f "$CACHE_FILE" ]; then
-        cat "$CACHE_FILE"
-      else
-        BUS=$(get_bus)
-        BUS_ARG=""
-        [ -n "$BUS" ] && BUS_ARG="--bus $BUS"
-        VAL=$(ddcutil getvcp 10 -t $BUS_ARG --skip-ddc-checks 2>/dev/null | awk '{print $4}')
-        [ -z "$VAL" ] && VAL=50
-        echo "$VAL" > "$CACHE_FILE"
-        echo "$VAL"
-      fi
-    }
-
-    case "$1" in
-      get)
-        get_current
-        ;;
-      up|down)
-        CURRENT=$(get_current)
-        if [ "$1" = "up" ]; then
-          NEW=$(( (CURRENT / STEP + 1) * STEP ))
-        else
-          NEW=$(( (CURRENT - 1) / STEP * STEP ))
-        fi
-        [ "$NEW" -gt 100 ] && NEW=100
-        [ "$NEW" -lt 0 ] && NEW=0
-        echo "$NEW" > "$CACHE_FILE"
-
-        BUS=$(get_bus)
-        BUS_ARG=""
-        [ -n "$BUS" ] && BUS_ARG="--bus $BUS"
-        (ddcutil setvcp 10 "$NEW" $BUS_ARG --skip-ddc-checks --sleep-multiplier 0 > /dev/null 2>&1 &)
-
-        pkill -RTMIN+9 waybar
-        ;;
-    esac
-  '';
+  display-settings-tui = pkgs.buildGoModule {
+    pname = "display-settings-tui";
+    version = "unstable-2025-07-12";
+    src = pkgs.fetchFromGitHub {
+      owner = "navinreddy23";
+      repo = "DisplaySettingsTUI";
+      rev = "41cef6e250654df450e07a79c255f31702c4c419";
+      hash = "sha256-lzqnZdyciF4xiZxNAgxDkcN3eEHkntKDriYH+yWtoDU=";
+    };
+    vendorHash = "sha256-g8sHKFih0ZZIZzrDtvOmrWdiuHd08APVkamYjzuZI6E=";
+    subPackages = [ "cmd" ];
+    postInstall = "mv $out/bin/cmd $out/bin/display-settings-tui";
+  };
 in
 
 {
@@ -76,6 +27,7 @@ in
     brightnessctl
     pamixer
     ddcutil
+    display-settings-tui
     hyprpolkitagent
     hyprshutdown
     hyprsunset
@@ -259,8 +211,8 @@ in
       bindel = [
         ", XF86AudioRaiseVolume, exec, pamixer -i 5"
         ", XF86AudioLowerVolume, exec, pamixer -d 5"
-        ", XF86MonBrightnessUp, exec, ${brightness} up"
-        ", XF86MonBrightnessDown, exec, ${brightness} down"
+        ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
+        ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
       ];
 
       bindl = [
@@ -286,7 +238,7 @@ in
       height = 30;
       modules-left = [ "hyprland/workspaces" ];
       modules-center = [ "custom/keyhints" "hyprland/submap" ];
-      modules-right = [ "tray" "custom/brightness" "pulseaudio" "bluetooth" "network" "custom/voxtype" "clock" ];
+      modules-right = [ "tray" "custom/brightness" "pulseaudio" "bluetooth" "network" "clock" "custom/voxtype" ];
       "hyprland/submap" = {
         format = "{}";
         tooltip = false;
@@ -308,12 +260,10 @@ in
         tooltip = false;
       };
       "custom/brightness" = {
-        format = "󰃠 {}%";
+        format = "󰃠 ";
         interval = "once";
-        signal = 9;
-        exec = "${brightness} get";
-        on-scroll-up = "${brightness} down";
-        on-scroll-down = "${brightness} up";
+        tooltip = false;
+        on-click = "kitty display-settings-tui";
       };
       clock = {
         format = "{:%H:%M}";
@@ -346,7 +296,7 @@ in
       "custom/voxtype" = {
         exec = "voxtype status --follow --format json";
         return-type = "json";
-        format = "{}";
+        format = "{} ";
         tooltip = true;
       };
     };
@@ -358,9 +308,6 @@ in
       }
       #tray {
         margin-right: 8px;
-      }
-      #custom-voxtype {
-        min-width: 20px;
       }
       #custom-voxtype.recording {
         color: #${config.lib.stylix.colors.base08};
