@@ -26,6 +26,7 @@
     localsend
     obsidian
     typora
+    prismlauncher
     gnome-disk-utility
   ];
 }

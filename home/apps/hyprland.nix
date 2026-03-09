@@ -45,7 +45,9 @@ in
     hyprshutdown
     hyprsunset
     hyprpicker
+    xrdb
     nautilus
+    gnome-weather
     gthumb
     evince
     mpv
@@ -154,6 +156,7 @@ in
       exec-once = [
         "hyprpolkitagent"
         "hyprsunset"
+        ''xrdb -merge <<< 'Xft.dpi:160' '' # Fix scaling for XWayland apps
       ];
 
       bind = [
@@ -240,6 +243,7 @@ in
       layer = "top";
       position = "top";
       height = 30;
+      spacing = 4;
       modules-left = [ "hyprland/workspaces" ];
       modules-center = [ "hyprland/submap" ];
       modules-right = [ "tray" "custom/weather" "custom/brightness" "pulseaudio" "bluetooth" "network" "clock" "custom/voxtype" ];
@@ -253,6 +257,7 @@ in
         interval = 3600;
         exec = "wttrbar";
         return-type = "json";
+        on-click = "gnome-weather";
       };
       "custom/brightness" = {
         format = "󰃠 ";
@@ -297,7 +302,7 @@ in
     };
     style = ''
       #tray {
-        margin-right: 8px;
+        margin-right: 4px;
       }
       #custom-voxtype.recording {
         color: #${config.lib.stylix.colors.base08};
@@ -331,6 +336,7 @@ in
       "image/webp" = "org.gnome.gThumb.desktop";
       "image/bmp" = "org.gnome.gThumb.desktop";
       "image/svg+xml" = "org.gnome.gThumb.desktop";
+      "text/markdown" = "typora.desktop";
       "video/mp4" = "mpv.desktop";
       "video/webm" = "mpv.desktop";
       "video/x-matroska" = "mpv.desktop";
