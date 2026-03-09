@@ -10,7 +10,6 @@
   home.packages =
     (with pkgs; [
       # CLI tools
-      ugrep
       fd
       bat
       fastfetch
