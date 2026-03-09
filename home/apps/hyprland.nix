@@ -12,12 +12,32 @@
     pamixer
     networkmanagerapplet
     hyprpolkitagent
+    hyprlauncher
+    hyprshutdown
+    hyprsunset
+    hyprsysteminfo
+    hyprpwcenter
+    hyprpicker
+    nautilus
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      submap = resize
+      submap = [L]ock  [E]xit  [R]eboot  [S]hutdown
+      bind = , L, exec, hyprlock
+      bind = , L, submap, reset
+      bind = , E, exec, hyprshutdown
+      bind = , E, submap, reset
+      bind = , R, exec, hyprshutdown -t 'Restarting...' --post-cmd 'reboot'
+      bind = , R, submap, reset
+      bind = , S, exec, hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'
+      bind = , S, submap, reset
+      bind = , escape, submap, reset
+      bind = $mod, M, submap, reset
+      submap = reset
+
+      submap = Resize: [arrows] resize  [Esc] exit
       binde = , left, resizeactive, -20 0
       binde = , right, resizeactive, 20 0
       binde = , up, resizeactive, 0 -20
@@ -95,6 +115,7 @@
       };
 
       input = {
+        follow_mouse = 0;
         natural_scroll = true;
         scroll_method = "on_button_down";
         scroll_button = 274; # middle mouse
@@ -113,16 +134,16 @@
       exec-once = [
         "nm-applet --indicator"
         "hyprpolkitagent"
+        "hyprsunset"
       ];
 
+      # NOTE: update waybar keyhints label when changing these binds
       bind = [
         "$mod, Return, exec, kitty"
-        "$mod, D, exec, fuzzel"
-        "$mod, Q, killactive,"
-        "$mod, F, fullscreen, 1"
-        "$mod, V, togglefloating,"
-        "$mod, P, pseudo,"
-        "$mod, S, togglesplit,"
+        "$mod, L, exec, hyprlauncher" # [L]aunch
+        "$mod, Q, killactive," # [Q]uit
+        "$mod, F, togglefloating," # [F]loat
+        "$mod, Z, fullscreen, 1" # [Z]en
 
         # Move focus
         "$mod, left, movefocus, l"
@@ -166,23 +187,9 @@
         "$mod, F14, exec, grimblast copy active"
         "SHIFT, F14, exec, grimblast copy area"
 
-        # Lock screen
-        "$mod, L, exec, hyprlock"
-
-        # Logout menu
-        "$mod, M, exec, ${pkgs.writeShellScript "power-menu" ''
-          sel=$(printf 'Lock\nLogout\nReboot\nShutdown' | fuzzel --dmenu)
-          case $sel in
-            Lock) hyprlock;;
-            Logout) hyprctl dispatch exit;;
-            Reboot) systemctl reboot;;
-            Shutdown) systemctl poweroff;;
-          esac
-        ''}"
-
-        # Resize mode
+        "$mod, M, submap, [L]ock  [E]xit  [R]eboot  [S]hutdown" # [M]enu
         "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
-        "$mod, R, submap, resize"
+        "$mod, R, submap, Resize: [arrows] resize  [Esc] exit" # [R]esize
 
       ];
 
@@ -216,8 +223,28 @@
       position = "top";
       height = 30;
       modules-left = [ "hyprland/workspaces" ];
-      modules-center = [ "clock" ];
-      modules-right = [ "custom/voxtype" "pulseaudio" "network" "tray" ];
+      modules-center = [ "custom/keyhints" "hyprland/submap" ];
+      modules-right = [ "custom/voxtype" "pulseaudio" "network" "tray" "clock" ];
+      "hyprland/submap" = {
+        format = "{}";
+        tooltip = false;
+      };
+      "custom/keyhints" = {
+        exec = pkgs.writeShellScript "keyhints" ''
+          default="[L]aunch  [Q]uit  [F]loat  [Z]en  [R]esize  [M]enu"
+          echo '{"text": "'"$default"'", "class": "visible"}'
+          ${pkgs.socat}/bin/socat -U - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r line; do
+            if echo "$line" | grep -q "^submap>>$"; then
+              echo '{"text": "'"$default"'", "class": "visible"}'
+            elif echo "$line" | grep -q "^submap>>"; then
+              echo '{"text": "", "class": "hidden"}'
+            fi
+          done
+        '';
+        return-type = "json";
+        format = "{}";
+        tooltip = false;
+      };
       clock = {
         format = "{:%H:%M}";
         tooltip-format = "{:%Y-%m-%d | %H:%M}";
@@ -242,6 +269,11 @@
       };
     };
     style = ''
+      #custom-keyhints.hidden {
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+      }
       #custom-voxtype {
         min-width: 20px;
       }
@@ -263,14 +295,6 @@
     qt5ct = { name = "Qt5 Settings"; exec = "qt5ct"; noDisplay = true; };
     qt6ct = { name = "Qt6 Settings"; exec = "qt6ct"; noDisplay = true; };
     nvim = { name = "Neovim wrapper"; exec = "nvim"; noDisplay = true; };
-  };
-
-  programs.fuzzel = {
-    enable = true;
-    settings.main = {
-      terminal = "kitty";
-      layer = "overlay";
-    };
   };
 
   programs.hyprlock.enable = true;
