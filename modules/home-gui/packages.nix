@@ -16,6 +16,7 @@
     obs-studio
 
     # Productivity
+    anki
     obsidian
     typora
     localsend
