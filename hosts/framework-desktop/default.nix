@@ -1,7 +1,8 @@
 # NixOS configuration for framework-desktop.
 {
   imports = [
-    ../../nixos
+    ../../modules/nixos-base
+    ../../modules/nixos-desktop
     ./hardware-configuration.nix
   ];
 

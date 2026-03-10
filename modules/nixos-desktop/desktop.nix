@@ -1,7 +1,6 @@
 # Desktop environment: greetd, Hyprland, audio (PipeWire), and printing (CUPS).
 # https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
 {
-  config,
   lib,
   pkgs,
   ...
@@ -13,10 +12,10 @@
     xwaylandDpi = lib.mkOption { type = lib.types.int; };
   };
 
-  config = lib.mkIf (!config.local.headless) {
+  config = {
     # Wire desktop-linux home-manager config
     home-manager.users.sargunv = {
-      imports = [ ../home/desktop-linux ];
+      imports = [ ../../home/desktop-linux ];
     };
 
     # Display manager
@@ -52,6 +51,7 @@
       KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
     '';
     users.groups.i2c = { };
+    users.users.sargunv.extraGroups = [ "i2c" ];
 
     # Steam
     programs.steam.enable = true;

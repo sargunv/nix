@@ -1,10 +1,5 @@
 # User account and login shell.
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   users.users.sargunv = {
@@ -14,8 +9,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-    ]
-    ++ lib.optionals (!config.local.headless) [ "i2c" ];
+    ];
   };
 
   programs.zsh.enable = true;

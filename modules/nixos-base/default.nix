@@ -1,11 +1,9 @@
-# Shared NixOS modules, imported by all hosts.
+# Shared NixOS modules, imported by all NixOS hosts.
 {
   imports = [
     ./boot.nix
-    ./desktop.nix
     ./home.nix
     ./inference.nix
-    ./stylix.nix
     ./system.nix
     ./user.nix
   ];
