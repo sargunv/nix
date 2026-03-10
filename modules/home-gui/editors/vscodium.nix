@@ -1,13 +1,11 @@
 # VSCodium editor.
 {
-  config,
-  lib,
   pkgs,
   vscode-extensions,
   ...
 }:
 
-lib.mkIf (!config.local.headless) {
+{
   home.file.".continue/config.yaml".text = builtins.toJSON {
     name = "Local";
     version = "1.0.0";

@@ -1,10 +1,7 @@
-# Code editors, AI coding tools, and editorconfig.
+# CLI code editors, AI coding tools, and editorconfig.
 {
   imports = [
     ./neovim
-    ./vscodium.nix
-    ./zed.nix
-    ./t3code.nix
     ./claude-code.nix
     ./codex.nix
     ./opencode.nix

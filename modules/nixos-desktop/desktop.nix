@@ -13,9 +13,12 @@
   };
 
   config = {
-    # Wire desktop-linux home-manager config
+    # Wire GUI and Hyprland home-manager config
     home-manager.users.sargunv = {
-      imports = [ ../../home/desktop-linux ];
+      imports = [
+        ../home-gui
+        ../home-hyprland
+      ];
     };
 
     # Display manager

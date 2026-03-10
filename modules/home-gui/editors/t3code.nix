@@ -1,7 +1,5 @@
 # T3 Code - AI code editor by Ping
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -58,7 +56,7 @@ let
     '';
   };
 in
-lib.mkIf (!config.local.headless) {
+{
   home.packages = [
     (if pkgs.stdenv.isDarwin then t3code-darwin else t3code-linux)
   ];
