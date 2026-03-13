@@ -7,4 +7,7 @@
     ./editors/zed.nix
     ./editors/t3code.nix
   ];
+
+  # JetBrains Toolbox scripts
+  home.sessionPath = [ "$HOME/.local/share/JetBrains/Toolbox/scripts" ];
 }

@@ -61,6 +61,8 @@
     programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ];
 
     # Run unpatched binaries, AppImages, and Flatpaks
+    # /bin/bash needed for JetBrains Toolbox scripts
+    systemd.tmpfiles.rules = [ "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash" ];
     programs.nix-ld.enable = true;
     programs.appimage = {
       enable = true;

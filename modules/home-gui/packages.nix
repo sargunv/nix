@@ -18,6 +18,7 @@
     # Productivity
     anki
     obsidian
+    jetbrains-toolbox
     # Security (GUI)
     proton-pass
 
