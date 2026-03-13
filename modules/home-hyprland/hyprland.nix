@@ -37,8 +37,6 @@
 
       windowrule = [
         "float on, match:class nm-connection-editor"
-        "float on, match:class io.github.kaii_lb.Overskride"
-        "float on, match:class org.pulseaudio.pavucontrol"
         "float on, match:class wdisplays"
         "float on, match:class org.gnome.Weather"
         "float on, match:class com.gabm.satty"

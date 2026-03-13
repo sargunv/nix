@@ -20,7 +20,7 @@ in
 {
   imports = [
     ./hyprland.nix
-    ./waybar.nix
+    ./ashell.nix
     ./lockscreen.nix
     ./notifications.nix
     ./voxtype.nix
@@ -65,10 +65,7 @@ in
     baobab
     gnome-disk-utility
 
-    # GUI utilities for waybar
-    networkmanagerapplet
-    overskride
-    pavucontrol
+    # GUI utilities
     wdisplays
 
   ];
