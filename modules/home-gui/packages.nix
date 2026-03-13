@@ -19,8 +19,6 @@
     anki
     obsidian
     typora
-    localsend
-
     # Security (GUI)
     proton-pass
 

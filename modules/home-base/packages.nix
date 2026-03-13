@@ -6,6 +6,8 @@
     # CLI tools
     fd
     bat
+    jq
+    numr
     fastfetch
     chafa
     nixfmt

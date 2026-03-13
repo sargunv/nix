@@ -2,6 +2,7 @@
 {
   imports = [
     ./packages.nix
+    ./localsend.nix
     ./editors/vscodium.nix
     ./editors/zed.nix
     ./editors/t3code.nix
