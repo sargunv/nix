@@ -163,14 +163,22 @@
 
       # Volume and brightness (repeatable, works while locked)
       bindeld = [
-        ", XF86AudioRaiseVolume, Volume up, exec, pamixer -i 5"
-        ", XF86AudioLowerVolume, Volume down, exec, pamixer -d 5"
-        ", XF86MonBrightnessUp, Brightness up, exec, brightnessctl s +5%"
-        ", XF86MonBrightnessDown, Brightness down, exec, brightnessctl s 5%-"
+        ", XF86AudioRaiseVolume, Volume up, exec, swayosd-client --output-volume raise"
+        ", XF86AudioLowerVolume, Volume down, exec, swayosd-client --output-volume lower"
+        ", XF86MonBrightnessUp, Brightness up, exec, swayosd-client --brightness raise"
+        ", XF86MonBrightnessDown, Brightness down, exec, swayosd-client --brightness lower"
       ];
 
+      # Non-repeatable, works while locked
       bindld = [
-        ", XF86AudioMute, Toggle mute, exec, pamixer -t"
+        ", XF86AudioMute, Toggle mute, exec, swayosd-client --output-volume mute-toggle"
+        ", XF86AudioMicMute, Toggle mic mute, exec, swayosd-client --input-volume mute-toggle"
+        ", XF86AudioPlay, Play/pause, exec, swayosd-client --playerctl play-pause"
+        ", XF86AudioNext, Next track, exec, swayosd-client --playerctl next"
+        ", XF86AudioPrev, Previous track, exec, swayosd-client --playerctl previous"
+        ", Caps_Lock, Caps Lock, exec, swayosd-client --caps-lock"
+        ", Num_Lock, Num Lock, exec, swayosd-client --num-lock"
+        ", Scroll_Lock, Scroll Lock, exec, swayosd-client --scroll-lock"
         ", XF86Tools, Toggle voice dictation, exec, voxtype record toggle"
       ];
 

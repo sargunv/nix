@@ -29,6 +29,9 @@ in
 
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  # Volume/brightness on-screen display
+  services.swayosd.enable = true;
+
   # Remove window buttons from CSD windows (no-op on tiling WM)
   dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu:";
 
