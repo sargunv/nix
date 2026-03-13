@@ -70,7 +70,6 @@ in
 
     # Desktop apps (Linux default handlers)
     nautilus
-    gnome-weather
     gthumb
     evince
     mpv
@@ -80,21 +79,12 @@ in
     gnome-disk-utility
     fragments
     gnome-text-editor
-    gnome-maps
     snapshot
 
     # GUI utilities
     wdisplays
 
   ];
-
-  # Fix Weather desktop entry (uses gapplication which isn't on PATH)
-  xdg.desktopEntries."org.gnome.Weather" = {
-    name = "Weather";
-    exec = "gnome-weather";
-    icon = "org.gnome.Weather";
-    categories = [ "Utility" ];
-  };
 
   # Terminal emulator
   stylix.opacity.terminal = 0.85;

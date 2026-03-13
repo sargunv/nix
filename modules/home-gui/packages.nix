@@ -18,7 +18,7 @@
     # Productivity
     anki
     obsidian
-    jetbrains-toolbox
+    android-studio
     # Security (GUI)
     proton-pass
 

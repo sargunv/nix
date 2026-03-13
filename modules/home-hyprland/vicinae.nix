@@ -35,7 +35,6 @@ in
       "nix"
       "zed-recents"
       "vscode-recents"
-      "jetbrains-recent-projects"
     ];
   };
 }
