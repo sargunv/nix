@@ -22,7 +22,11 @@
   programs.mise = {
     enable = true;
     enableZshIntegration = true;
-    globalConfig.settings.trusted_config_paths = [ "~/Code" ];
+    globalConfig.settings = {
+      trusted_config_paths = [ "~/Code" ];
+      node.compile = false;
+      python.compile = false;
+    };
   };
 
   programs.direnv = {

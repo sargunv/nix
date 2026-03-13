@@ -38,10 +38,16 @@
       windowrule = [
         "float on, match:class nm-connection-editor"
         "float on, match:class wdisplays"
-        "float on, match:class org.gnome.Weather"
         "float on, match:class com.gabm.satty"
         "float on, match:class localsend_app"
         "size 900 600, match:class com.gabm.satty"
+        # JetBrains IDE fixes: https://github.com/hyprwm/Hyprland/issues/2412
+        "center true, match:class jetbrains-.*, match:title splash, match:float true"
+        "no_focus true, match:class jetbrains-.*, match:title splash, match:float true"
+        "no_focus true, match:class jetbrains-.*, match:title win.*, match:float true"
+        "no_blur true, match:class jetbrains-.*, match:float true"
+        "no_initial_focus true, match:class jetbrains-.*, match:float true"
+        "opacity 1 override 1 override 1, match:class jetbrains-.*, match:float true"
       ];
 
       general = {
