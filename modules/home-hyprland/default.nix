@@ -65,8 +65,13 @@ in
     evince
     mpv
     onlyoffice-desktopeditors
+    apostrophe
     baobab
     gnome-disk-utility
+    fragments
+    gnome-text-editor
+    gnome-maps
+    snapshot
 
     # GUI utilities
     wdisplays
@@ -102,8 +107,8 @@ in
       "image/webp" = "org.gnome.gThumb.desktop";
       "image/bmp" = "org.gnome.gThumb.desktop";
       "image/svg+xml" = "org.gnome.gThumb.desktop";
-      "text/plain" = "dev.zed.Zed.desktop";
-      "text/markdown" = "dev.zed.Zed.desktop";
+      "text/plain" = "org.gnome.TextEditor.desktop";
+      "text/markdown" = "org.gnome.gitlab.somas.Apostrophe.desktop";
       "video/mp4" = "mpv.desktop";
       "video/webm" = "mpv.desktop";
       "video/x-matroska" = "mpv.desktop";

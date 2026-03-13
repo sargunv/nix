@@ -119,6 +119,7 @@
         "$mod, P, Toggle pseudotile, pseudo,"
         "$mod, F, Toggle floating, togglefloating,"
         "$mod, Z, Toggle zen mode, fullscreen, 1"
+        "$mod, N, Toggle notifications, exec, swaync-client -t -sw"
 
         "$mod, left, Focus left, movefocus, l"
         "$mod, right, Focus right, movefocus, r"

@@ -25,6 +25,9 @@ in
             vscodeFlavour = "VSCodium";
           };
         };
+        system = {
+          entrypoints.browse-apps.enabled = true;
+        };
       };
     };
     extensions = map mkExt [
