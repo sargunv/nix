@@ -1,5 +1,5 @@
 # Linux desktop environment: Wayland compositor, terminal, and GUI utilities.
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   display-settings-tui = pkgs.buildGoModule {
@@ -34,6 +34,16 @@ in
 
   # Remove window buttons from CSD windows (no-op on tiling WM)
   dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu:";
+
+  # GNOME Text Editor preferences
+  dconf.settings."org/gnome/TextEditor" = {
+    highlight-current-line = true;
+    indent-style = "space";
+    show-line-numbers = true;
+    show-map = true;
+    show-right-margin = true;
+    tab-width = lib.hm.gvariant.mkUint32 4;
+  };
 
   # Hide desktop entries for Qt/Kvantum settings apps (managed by Stylix)
   xdg.desktopEntries.qt5ct = { name = "Qt5 Settings"; noDisplay = true; };
