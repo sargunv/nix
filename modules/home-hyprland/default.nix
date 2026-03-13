@@ -24,6 +24,7 @@ in
     ./lockscreen.nix
     ./notifications.nix
     ./voxtype.nix
+    ./vicinae.nix
   ];
 
   home.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -64,6 +65,7 @@ in
     overskride
     pavucontrol
     wdisplays
+
   ];
 
   # Terminal emulator
@@ -74,12 +76,6 @@ in
       window_padding_width = 8;
       active_tab_font_style = "bold";
     };
-  };
-
-  # App launcher
-  programs.rofi = {
-    enable = true;
-    package = pkgs.rofi;
   };
 
   # Hide desktop entries that clutter the app launcher
@@ -114,16 +110,6 @@ in
       exec = "kvantummanager";
       noDisplay = true;
     };
-    rofi = {
-      name = "Rofi";
-      exec = "rofi";
-      noDisplay = true;
-    };
-    rofi-theme-selector = {
-      name = "Rofi Theme Selector";
-      exec = "rofi-theme-selector";
-      noDisplay = true;
-    };
   };
 
   xdg.mimeApps = {
@@ -137,7 +123,8 @@ in
       "image/webp" = "org.gnome.gThumb.desktop";
       "image/bmp" = "org.gnome.gThumb.desktop";
       "image/svg+xml" = "org.gnome.gThumb.desktop";
-      "text/markdown" = "typora.desktop";
+      "text/plain" = "dev.zed.Zed.desktop";
+      "text/markdown" = "dev.zed.Zed.desktop";
       "video/mp4" = "mpv.desktop";
       "video/webm" = "mpv.desktop";
       "video/x-matroska" = "mpv.desktop";

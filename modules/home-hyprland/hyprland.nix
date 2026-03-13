@@ -7,27 +7,6 @@
   ...
 }:
 
-let
-  file-search = pkgs.writeShellScript "file-search" ''
-    selected=$(${pkgs.plocate}/bin/plocate "$HOME/" \
-      | ${pkgs.gnugrep}/bin/grep -v '/\.' \
-      | ${pkgs.rofi}/bin/rofi -dmenu -p "Open file" -i)
-    if [ -n "$selected" ]; then
-      ${pkgs.xdg-utils}/bin/xdg-open "$selected"
-    fi
-  '';
-
-  power-menu = pkgs.writeShellScript "power-menu" ''
-    choice=$(printf "Lock\nLogout\nReboot\nShutdown" | ${pkgs.rofi}/bin/rofi -dmenu -p "Power" -show-icons)
-    case "$choice" in
-      Lock) hyprlock ;;
-      Logout) hyprshutdown ;;
-      Reboot) hyprshutdown -t 'Restarting...' --post-cmd 'reboot' ;;
-      Shutdown) hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0' ;;
-    esac
-  '';
-in
-
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -137,7 +116,7 @@ in
 
       bind = [
         "$mod, Return, exec, kitty"
-        "$mod, Space, exec, rofi -show drun -show-icons" # Launch
+        "$mod, Space, exec, vicinae toggle" # Launch
         "$mod, Q, killactive," # [Q]uit
         "$mod, P, pseudo," # [P]seudotile
         "$mod, F, togglefloating," # [F]loat
@@ -185,8 +164,6 @@ in
         "$mod, XF86Launch5, exec, grimblast save output - | satty -f -"
         "$mod SHIFT, XF86Launch5, exec, grimblast save screen - | satty -f -"
 
-        "$mod, O, exec, ${file-search}" # [O]pen file
-        "$mod, M, exec, ${power-menu}" # [M]enu
         "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
         "$mod, R, submap, Resize: [arrows] resize  [Esc] exit" # [R]esize
 

@@ -18,7 +18,6 @@
     # Productivity
     anki
     obsidian
-    typora
     # Security (GUI)
     proton-pass
 
