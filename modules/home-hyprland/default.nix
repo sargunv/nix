@@ -28,8 +28,8 @@ in
 
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  # Remove minimize/maximize buttons from CSD windows (no-op on tiling WM)
-  dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu:close";
+  # Remove window buttons from CSD windows (no-op on tiling WM)
+  dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu:";
 
   home.packages = with pkgs; [
     # Wayland utilities

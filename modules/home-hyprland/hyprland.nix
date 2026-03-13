@@ -8,6 +8,15 @@
 }:
 
 let
+  file-search = pkgs.writeShellScript "file-search" ''
+    selected=$(${pkgs.plocate}/bin/plocate "$HOME/" \
+      | ${pkgs.gnugrep}/bin/grep -v '/\.' \
+      | ${pkgs.rofi}/bin/rofi -dmenu -p "Open file" -i)
+    if [ -n "$selected" ]; then
+      ${pkgs.xdg-utils}/bin/xdg-open "$selected"
+    fi
+  '';
+
   power-menu = pkgs.writeShellScript "power-menu" ''
     choice=$(printf "Lock\nLogout\nReboot\nShutdown" | ${pkgs.rofi}/bin/rofi -dmenu -p "Power" -show-icons)
     case "$choice" in
@@ -54,7 +63,8 @@ in
         "float on, match:class wdisplays"
         "float on, match:class org.gnome.Weather"
         "float on, match:class com.gabm.satty"
-        "size 50% 50%, match:class com.gabm.satty"
+        "float on, match:class localsend_app"
+        "size 900 600, match:class com.gabm.satty"
       ];
 
       general = {
@@ -175,6 +185,7 @@ in
         "$mod, XF86Launch5, exec, grimblast save output - | satty -f -"
         "$mod SHIFT, XF86Launch5, exec, grimblast save screen - | satty -f -"
 
+        "$mod, O, exec, ${file-search}" # [O]pen file
         "$mod, M, exec, ${power-menu}" # [M]enu
         "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
         "$mod, R, submap, Resize: [arrows] resize  [Esc] exit" # [R]esize

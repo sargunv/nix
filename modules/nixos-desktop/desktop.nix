@@ -68,6 +68,13 @@
     };
     services.flatpak.enable = true;
 
+    # File search index
+    services.locate = {
+      enable = true;
+      package = pkgs.plocate;
+      interval = "hourly";
+    };
+
     # Bluetooth
     hardware.bluetooth.enable = true;
 
