@@ -1,5 +1,9 @@
 # Zed editor.
+{ pkgs, ... }:
 {
+  # Symlink zeditor to zed (nixpkgs uses "zeditor" to avoid conflicts)
+  home.file.".local/bin/zed".source = "${pkgs.zed-editor}/bin/zeditor";
+
   programs.zed-editor = {
     enable = true;
     extensions = [

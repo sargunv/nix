@@ -106,10 +106,6 @@
           critical = 10;
         };
       };
-      systemd-failed-units = {
-        format = "✗ {nr_failed}";
-        hide-on-ok = true;
-      };
     };
     style = ''
       #pulseaudio {

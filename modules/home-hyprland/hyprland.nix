@@ -11,15 +11,15 @@
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      submap = Resize: [arrows] resize  [Esc] exit
-      binde = , left, resizeactive, -20 0
-      binde = , right, resizeactive, 20 0
-      binde = , up, resizeactive, 0 -20
-      binde = , down, resizeactive, 0 20
-      bind = , escape, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base0D})'
-      bind = , escape, submap, reset
-      bind = $mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base0D})'
-      bind = $mod, R, submap, reset
+      submap = Resize
+      binded = , left, Shrink left, resizeactive, -20 0
+      binded = , right, Grow right, resizeactive, 20 0
+      binded = , up, Shrink up, resizeactive, 0 -20
+      binded = , down, Grow down, resizeactive, 0 20
+      bindd = , escape, Exit resize mode, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base0D})'
+      bindd = , escape, Exit resize mode, submap, reset
+      bindd = $mod, R, Exit resize mode, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base0D})'
+      bindd = $mod, R, Exit resize mode, submap, reset
       submap = reset
     '';
     settings = {
@@ -114,79 +114,72 @@
         "xrdb -merge <<< 'Xft.dpi:${toString osConfig.local.desktop.xwaylandDpi}' "
       ];
 
-      bind = [
-        "$mod, Return, exec, kitty"
-        "$mod, Space, exec, vicinae toggle" # Launch
-        "$mod, Q, killactive," # [Q]uit
-        "$mod, P, pseudo," # [P]seudotile
-        "$mod, F, togglefloating," # [F]loat
-        "$mod, Z, fullscreen, 1" # [Z]en
+      bindd = [
+        "$mod, Return, Open terminal, exec, kitty"
+        "$mod, Space, Open launcher, exec, vicinae toggle"
+        "$mod, Q, Kill active window, killactive,"
+        "$mod, P, Toggle pseudotile, pseudo,"
+        "$mod, F, Toggle floating, togglefloating,"
+        "$mod, Z, Toggle zen mode, fullscreen, 1"
 
-        # Move focus
-        "$mod, left, movefocus, l"
-        "$mod, right, movefocus, r"
-        "$mod, up, movefocus, u"
-        "$mod, down, movefocus, d"
+        "$mod, left, Focus left, movefocus, l"
+        "$mod, right, Focus right, movefocus, r"
+        "$mod, up, Focus up, movefocus, u"
+        "$mod, down, Focus down, movefocus, d"
 
-        # Move window
-        "$mod SHIFT, left, movewindow, l"
-        "$mod SHIFT, right, movewindow, r"
-        "$mod SHIFT, up, movewindow, u"
-        "$mod SHIFT, down, movewindow, d"
+        "$mod SHIFT, left, Move window left, movewindow, l"
+        "$mod SHIFT, right, Move window right, movewindow, r"
+        "$mod SHIFT, up, Move window up, movewindow, u"
+        "$mod SHIFT, down, Move window down, movewindow, d"
 
-        # Workspaces
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
+        "$mod, 1, Workspace 1, workspace, 1"
+        "$mod, 2, Workspace 2, workspace, 2"
+        "$mod, 3, Workspace 3, workspace, 3"
+        "$mod, 4, Workspace 4, workspace, 4"
+        "$mod, 5, Workspace 5, workspace, 5"
+        "$mod, 6, Workspace 6, workspace, 6"
+        "$mod, 7, Workspace 7, workspace, 7"
+        "$mod, 8, Workspace 8, workspace, 8"
+        "$mod, 9, Workspace 9, workspace, 9"
 
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
+        "$mod SHIFT, 1, Move to workspace 1, movetoworkspace, 1"
+        "$mod SHIFT, 2, Move to workspace 2, movetoworkspace, 2"
+        "$mod SHIFT, 3, Move to workspace 3, movetoworkspace, 3"
+        "$mod SHIFT, 4, Move to workspace 4, movetoworkspace, 4"
+        "$mod SHIFT, 5, Move to workspace 5, movetoworkspace, 5"
+        "$mod SHIFT, 6, Move to workspace 6, movetoworkspace, 6"
+        "$mod SHIFT, 7, Move to workspace 7, movetoworkspace, 7"
+        "$mod SHIFT, 8, Move to workspace 8, movetoworkspace, 8"
+        "$mod SHIFT, 9, Move to workspace 9, movetoworkspace, 9"
 
-        # Scroll through workspaces
-        "$mod, mouse_down, workspace, e+1"
-        "$mod, mouse_up, workspace, e-1"
+        "$mod, mouse_down, Scroll to next workspace, workspace, e+1"
+        "$mod, mouse_up, Scroll to previous workspace, workspace, e-1"
 
-        # Screenshots: F14 = region, SUPER+F14 = monitor, SUPER+SHIFT+F14 = all monitors
-        ", XF86Launch5, exec, grimblast save area - | satty -f -"
-        "$mod, XF86Launch5, exec, grimblast save output - | satty -f -"
-        "$mod SHIFT, XF86Launch5, exec, grimblast save screen - | satty -f -"
+        ", XF86Launch5, Screenshot region, exec, grimblast save area - | satty -f -"
+        "$mod, XF86Launch5, Screenshot monitor, exec, grimblast save output - | satty -f -"
+        "$mod SHIFT, XF86Launch5, Screenshot all monitors, exec, grimblast save screen - | satty -f -"
 
-        "$mod, R, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
-        "$mod, R, submap, Resize: [arrows] resize  [Esc] exit" # [R]esize
-
+        "$mod, R, Enter resize mode, exec, hyprctl keyword general:col.active_border 'rgb(${config.lib.stylix.colors.base08})'"
+        "$mod, R, Enter resize mode, submap, Resize"
       ];
 
       # Volume and brightness (repeatable, works while locked)
-      bindel = [
-        ", XF86AudioRaiseVolume, exec, pamixer -i 5"
-        ", XF86AudioLowerVolume, exec, pamixer -d 5"
-        ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
-        ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+      bindeld = [
+        ", XF86AudioRaiseVolume, Volume up, exec, pamixer -i 5"
+        ", XF86AudioLowerVolume, Volume down, exec, pamixer -d 5"
+        ", XF86MonBrightnessUp, Brightness up, exec, brightnessctl s +5%"
+        ", XF86MonBrightnessDown, Brightness down, exec, brightnessctl s 5%-"
       ];
 
-      bindl = [
-        ", XF86AudioMute, exec, pamixer -t"
-        # Voxtype toggle-to-talk (key sends XF86Tools instead of F13 on this keyboard)
-        ", XF86Tools, exec, voxtype record toggle"
+      bindld = [
+        ", XF86AudioMute, Toggle mute, exec, pamixer -t"
+        ", XF86Tools, Toggle voice dictation, exec, voxtype record toggle"
       ];
 
       # Mouse bindings
-      bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
+      bindmd = [
+        "$mod, mouse:272, Move window, movewindow"
+        "$mod, mouse:273, Resize window, resizewindow"
       ];
     };
   };

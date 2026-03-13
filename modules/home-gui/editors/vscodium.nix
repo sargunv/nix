@@ -51,6 +51,7 @@
         ]);
       userSettings = {
         "window.titleBarStyle" = "native";
+        "window.menuBarVisibility" = "toggle";
       };
     };
   };

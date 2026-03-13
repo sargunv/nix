@@ -32,6 +32,11 @@ in
   # Remove window buttons from CSD windows (no-op on tiling WM)
   dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu:";
 
+  # Hide desktop entries for Qt/Kvantum settings apps (managed by Stylix)
+  xdg.desktopEntries.qt5ct = { name = "Qt5 Settings"; noDisplay = true; };
+  xdg.desktopEntries.qt6ct = { name = "Qt6 Settings"; noDisplay = true; };
+  xdg.desktopEntries.kvantummanager = { name = "Kvantum Manager"; noDisplay = true; };
+
   home.packages = with pkgs; [
     # Wayland utilities
     playerctl
@@ -68,6 +73,14 @@ in
 
   ];
 
+  # Fix Weather desktop entry (uses gapplication which isn't on PATH)
+  xdg.desktopEntries."org.gnome.Weather" = {
+    name = "Weather";
+    exec = "gnome-weather";
+    icon = "org.gnome.Weather";
+    categories = [ "Utility" ];
+  };
+
   # Terminal emulator
   stylix.opacity.terminal = 0.85;
   programs.kitty = {
@@ -75,40 +88,6 @@ in
     settings = {
       window_padding_width = 8;
       active_tab_font_style = "bold";
-    };
-  };
-
-  # Hide desktop entries that clutter the app launcher
-  xdg.desktopEntries = {
-    nixos-manual = {
-      name = "NixOS Manual";
-      exec = "nixos-help";
-      noDisplay = true;
-    };
-    cups = {
-      name = "CUPS";
-      exec = "xdg-open http://localhost:631";
-      noDisplay = true;
-    };
-    qt5ct = {
-      name = "Qt5 Settings";
-      exec = "qt5ct";
-      noDisplay = true;
-    };
-    qt6ct = {
-      name = "Qt6 Settings";
-      exec = "qt6ct";
-      noDisplay = true;
-    };
-    nvim = {
-      name = "Neovim wrapper";
-      exec = "nvim";
-      noDisplay = true;
-    };
-    kvantummanager = {
-      name = "Kvantum Manager";
-      exec = "kvantummanager";
-      noDisplay = true;
     };
   };
 
