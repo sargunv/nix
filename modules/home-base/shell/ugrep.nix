@@ -3,7 +3,7 @@
 {
   home.packages = [ pkgs.ugrep ];
 
-  programs.zsh.shellAliases = {
+  home.shellAliases = {
     # ugrep shortcuts
     uq = "ug -Q";
     uz = "ug -z";

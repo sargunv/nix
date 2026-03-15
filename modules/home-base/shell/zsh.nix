@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -49,9 +48,6 @@
       bindkey '^[[1;5H' beginning-of-line
       bindkey '^[[1;5F' end-of-line
     '';
-    shellAliases = lib.optionalAttrs pkgs.stdenv.isLinux {
-      open = "xdg-open";
-    };
     history = {
       size = 100000;
       save = 100000;

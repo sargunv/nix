@@ -11,7 +11,7 @@
         style = "dimmed";
       };
       directory.truncate_to_repo = false;
-      right_format = "$time";
+      right_format = "$shell$time";
 
       direnv = {
         disabled = false;
@@ -22,6 +22,12 @@
         allowed_msg = "";
         not_allowed_msg = "";
         denied_msg = "";
+      };
+
+      shell = {
+        disabled = false;
+        format = "[$indicator]($style) ";
+        style = "bright-black";
       };
 
       mise = {

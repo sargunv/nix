@@ -19,6 +19,13 @@
     FNOX_AGE_KEY_FILE = "~/.ssh/id_ed25519";
   };
 
+  home.packages = lib.optionals pkgs.stdenv.isLinux [
+    (pkgs.runCommand "open" { } ''
+      mkdir -p $out/bin
+      ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open
+    '')
+  ];
+
   xdg.enable = true;
 
   # Restart user services when their config changes on rebuild
