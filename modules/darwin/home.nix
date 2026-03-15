@@ -1,4 +1,4 @@
-# Home-manager wiring: receives flake inputs via NixOS specialArgs and
+# Home-manager wiring: receives flake inputs via darwin specialArgs and
 # forwards them to home-manager.
 {
   nixvim,

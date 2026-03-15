@@ -86,16 +86,6 @@ in
 
   ];
 
-  # Terminal emulator
-  stylix.opacity.terminal = 0.85;
-  programs.kitty = {
-    enable = true;
-    settings = {
-      window_padding_width = 8;
-      active_tab_font_style = "bold";
-    };
-  };
-
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {

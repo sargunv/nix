@@ -20,6 +20,7 @@ in
         name = "Sargun Vohra";
         email = "sargunv@users.noreply.github.com";
       };
+      init.defaultBranch = "main";
       branch.sort = "-committerdate";
       push = {
         autoSetupRemote = true;

@@ -1,4 +1,6 @@
-# NixOS system management tasks
+# System management tasks
+
+rebuild := if os() == "macos" { "darwin-rebuild" } else { "nixos-rebuild" }
 
 # Choose a recipe to run
 _default:
@@ -6,7 +8,8 @@ _default:
 
 # Reconfigure the machine
 apply:
-    sudo nixos-rebuild switch --flake .
+    {{ rebuild }} build --flake . -vL
+    sudo ./result/activate
 
 # Validate flake without building
 check:
@@ -15,3 +18,9 @@ check:
 # Update flake.lock
 update:
     nix flake update
+
+# Install Setapp apps from the managed AppList (macOS only)
+[macos]
+setapp:
+    setapp-cli bundle install
+    setapp-cli bundle cleanup

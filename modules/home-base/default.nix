@@ -5,11 +5,20 @@
     ./shell
     ./git.nix
     ./editors
+    ./terminals.nix
     ./packages.nix
   ];
 
   home.username = "sargunv";
-  home.homeDirectory = if pkgs.stdenv.isDarwin then "/Users/sargunv" else "/home/sargunv";
+  home.homeDirectory = lib.mkForce (
+    if pkgs.stdenv.isDarwin then "/Users/sargunv" else "/home/sargunv"
+  );
+
+  home.sessionVariables = {
+    PAGER = "less -RF --mouse";
+    DELTA_PAGER = "less -RF --mouse";
+    FNOX_AGE_KEY_FILE = "~/.ssh/id_ed25519";
+  };
 
   xdg.enable = true;
 

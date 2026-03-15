@@ -1,5 +1,6 @@
-# VSCodium editor.
+# VSCodium editor: config and extensions (package installed via cask on macOS).
 {
+  lib,
   pkgs,
   vscode-extensions,
   ...
@@ -25,10 +26,18 @@
 
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium;
-    mutableExtensionsDir = false;
+    package =
+      if pkgs.stdenv.isDarwin then
+        pkgs.emptyDirectory // {
+          pname = "vscodium";
+          version = "0";
+          meta = { mainProgram = "codium"; };
+        }
+      else
+        pkgs.vscodium;
+    mutableExtensionsDir = pkgs.stdenv.isDarwin;
     profiles.default = {
-      extensions =
+      extensions = lib.mkIf pkgs.stdenv.isLinux (
         (with pkgs.vscode-extensions; [
           jnoortheen.nix-ide
           rust-lang.rust-analyzer
@@ -48,7 +57,8 @@
           github.vscode-github-actions
           opentofu.vscode-opentofu
           continue.continue
-        ]);
+        ])
+      );
       userSettings = {
         "window.titleBarStyle" = "native";
         "window.menuBarVisibility" = "toggle";

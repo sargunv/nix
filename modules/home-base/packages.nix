@@ -1,5 +1,5 @@
 # Standalone packages and programs.
-{ pkgs, ... }:
+{ lib, pkgs, try-cli-package, ... }:
 
 {
   home.packages = with pkgs; [
@@ -18,11 +18,12 @@
     lazydocker
 
     # Disk utilities
-    try
+    try-cli-package
     caligula
 
     # Security (CLI)
     proton-pass-cli
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
     proton-vpn-cli
   ];
 

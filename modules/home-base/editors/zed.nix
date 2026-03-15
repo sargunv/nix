@@ -1,11 +1,23 @@
-# Zed editor.
-{ pkgs, ... }:
+# Zed editor: config and extensions (package installed via cask on macOS).
+{ lib, pkgs, zed-package, ... }:
+
 {
   # Symlink zeditor to zed (nixpkgs uses "zeditor" to avoid conflicts)
-  home.file.".local/bin/zed".source = "${pkgs.zed-editor}/bin/zeditor";
+  home.file.".local/bin/zed" = lib.mkIf pkgs.stdenv.isLinux {
+    source = "${zed-package}/bin/zeditor";
+  };
 
   programs.zed-editor = {
     enable = true;
+    package =
+      if pkgs.stdenv.isDarwin then
+        pkgs.emptyDirectory // {
+          pname = "zed-editor";
+          version = "0";
+          meta = { mainProgram = "zeditor"; };
+        }
+      else
+        zed-package;
     extensions = [
       "nix"
       "toml"

@@ -1,4 +1,4 @@
-# System basics: networking, locale, and nix settings.
+# NixOS system basics: networking, locale, scheduling, and hardware services.
 {
   # Networking
   networking.networkmanager.enable = true;
@@ -7,18 +7,8 @@
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Nix settings
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
-  };
-  nix.settings.auto-optimise-store = true;
+  # NixOS-specific gc scheduling
+  nix.gc.dates = "weekly";
 
   # Auto-upgrade from GitHub
   system.autoUpgrade = {
