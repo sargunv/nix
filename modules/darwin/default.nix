@@ -7,6 +7,7 @@
     ../stylix.nix
     ./defaults.nix
     ./homebrew.nix
+    ./auto-upgrade.nix
     ./home.nix
   ];
 }

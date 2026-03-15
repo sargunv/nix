@@ -18,3 +18,13 @@ check:
 # Update flake.lock
 update:
     nix flake update
+
+# View the auto-upgrade log (macOS only)
+[macos]
+upgrade-log:
+    tail -f /var/log/darwin-auto-upgrade.log
+
+# Trigger an auto-upgrade now and follow the log (macOS only)
+[macos]
+upgrade-now: && upgrade-log
+    sudo launchctl kickstart system/org.nixos.darwin-auto-upgrade
