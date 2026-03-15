@@ -6,13 +6,17 @@
   vscode-extensions,
   zed-package,
   try-cli-package,
+  nix-index-database,
   ...
 }:
 {
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.backupFileExtension = "bak";
-  home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
+  home-manager.sharedModules = [
+    nixvim.homeModules.nixvim
+    nix-index-database.hmModules.nix-index
+  ];
   home-manager.extraSpecialArgs = {
     inherit
       gitignore

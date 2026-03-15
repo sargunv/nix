@@ -13,4 +13,7 @@
   };
 
   nix.settings.auto-optimise-store = true;
+
+  nix.channel.enable = false;
+  nix.nixPath = [ ];
 }

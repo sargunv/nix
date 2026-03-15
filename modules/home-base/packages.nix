@@ -4,6 +4,7 @@
 {
   home.packages = with pkgs; [
     # CLI tools
+    comma
     fd
     bat
     jq

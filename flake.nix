@@ -48,6 +48,10 @@
       url = "https://raw.githubusercontent.com/AngelJumbo/gruvbox-wallpapers/refs/heads/main/wallpapers/vector%20graphics/cosy-retreat-sunset.png";
       flake = false;
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -64,6 +68,7 @@
       try-cli,
       gruvbox-wallpaper,
       brew-nix,
+      nix-index-database,
       ...
     }:
     let
@@ -93,7 +98,7 @@
         in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit gitignore nixvim gruvbox-wallpaper;
+            inherit gitignore nixvim gruvbox-wallpaper nix-index-database;
             vscode-extensions = nix-vscode-extensions.extensions.${system};
             zed-package = pkgs.zed-editor;
             try-cli-package = try-cli.packages.${system}.default;
@@ -114,7 +119,7 @@
         in
         nix-darwin.lib.darwinSystem {
           specialArgs = {
-            inherit gitignore nixvim gruvbox-wallpaper;
+            inherit gitignore nixvim gruvbox-wallpaper nix-index-database;
             vscode-extensions = nix-vscode-extensions.extensions.${system};
             zed-package = pkgs.zed-editor;
             try-cli-package = try-cli.packages.${system}.default;
