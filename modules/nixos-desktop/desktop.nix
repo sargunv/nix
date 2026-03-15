@@ -16,7 +16,7 @@
     # Wire GUI and Hyprland home-manager config
     home-manager.users.sargunv = {
       imports = [
-        ./home
+        ../home-desktop
         ../home-hyprland
       ];
     };

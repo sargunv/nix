@@ -10,14 +10,7 @@
   programs.zed-editor = {
     enable = true;
     package =
-      if pkgs.stdenv.isDarwin then
-        pkgs.emptyDirectory // {
-          pname = "zed-editor";
-          version = "0";
-          meta = { mainProgram = "zeditor"; };
-        }
-      else
-        zed-package;
+      if pkgs.stdenv.isDarwin then pkgs.brewCasks.zed else zed-package;
     extensions = [
       "nix"
       "toml"

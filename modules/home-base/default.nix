@@ -5,7 +5,6 @@
     ./shell
     ./git.nix
     ./editors
-    ./terminals.nix
     ./packages.nix
   ];
 

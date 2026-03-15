@@ -21,5 +21,5 @@
       try-cli-package
       ;
   };
-  home-manager.users.sargunv.imports = [ ../home-base ];
+  home-manager.users.sargunv.imports = [ ../home-base ../home-desktop ];
 }

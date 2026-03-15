@@ -27,17 +27,10 @@
   programs.vscode = {
     enable = true;
     package =
-      if pkgs.stdenv.isDarwin then
-        pkgs.emptyDirectory // {
-          pname = "vscodium";
-          version = "0";
-          meta = { mainProgram = "codium"; };
-        }
-      else
-        pkgs.vscodium;
-    mutableExtensionsDir = pkgs.stdenv.isDarwin;
+      if pkgs.stdenv.isDarwin then pkgs.brewCasks.vscodium else pkgs.vscodium;
+    mutableExtensionsDir = false;
     profiles.default = {
-      extensions = lib.mkIf pkgs.stdenv.isLinux (
+      extensions =
         (with pkgs.vscode-extensions; [
           jnoortheen.nix-ide
           rust-lang.rust-analyzer
@@ -57,9 +50,10 @@
           github.vscode-github-actions
           opentofu.vscode-opentofu
           continue.continue
-        ])
-      );
+        ]);
       userSettings = {
+        "mise.checkForNewMiseVersion" = false;
+      } // lib.optionalAttrs pkgs.stdenv.isLinux {
         "window.titleBarStyle" = "native";
         "window.menuBarVisibility" = "toggle";
       };

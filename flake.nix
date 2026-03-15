@@ -36,6 +36,14 @@
       url = "github:tobi/try-cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    brew-nix = {
+      url = "github:BatteredBunny/brew-nix";
+      inputs.brew-api.follows = "brew-api";
+    };
+    brew-api = {
+      url = "github:BatteredBunny/brew-api";
+      flake = false;
+    };
     gruvbox-wallpaper = {
       url = "https://raw.githubusercontent.com/AngelJumbo/gruvbox-wallpapers/refs/heads/main/wallpapers/vector%20graphics/cosy-retreat-sunset.png";
       flake = false;
@@ -55,6 +63,7 @@
       stylix,
       try-cli,
       gruvbox-wallpaper,
+      brew-nix,
       ...
     }:
     let
@@ -111,6 +120,7 @@
             try-cli-package = try-cli.packages.${system}.default;
           };
           modules = [
+            { nixpkgs.overlays = [ brew-nix.overlays.default ]; }
             stylix.darwinModules.stylix
             home-manager.darwinModules.home-manager
             ./hosts/Sarguns-MacBook-Pro
