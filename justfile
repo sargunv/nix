@@ -18,9 +18,3 @@ check:
 # Update flake.lock
 update:
     nix flake update
-
-# Install Setapp apps from the managed AppList (macOS only)
-[macos]
-setapp:
-    setapp-cli bundle install
-    setapp-cli bundle cleanup

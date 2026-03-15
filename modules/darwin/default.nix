@@ -7,7 +7,6 @@
     ../stylix.nix
     ./defaults.nix
     ./homebrew.nix
-    ./setapp.nix
     ./home.nix
   ];
 }

@@ -17,6 +17,6 @@
     enable = true;
     package = pkgs.brewCasks.ghostty;
     settings.macos-window-shadow = false;
-    settings.background-blur = "macos-glass-clear";
+    settings.background-blur = "macos-glass-regular";
   };
 }

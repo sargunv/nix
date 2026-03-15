@@ -1,6 +1,5 @@
-# Setapp: declarative app list and CLI tool.
-# Apps are listed here but installed manually via `just setapp`.
-{ pkgs, ... }:
+# Setapp: declarative app list and CLI tool (macOS only).
+{ pkgs, config, lib, ... }:
 
 let
   setapp-cli-unwrapped = pkgs.stdenv.mkDerivation rec {
@@ -24,20 +23,31 @@ let
 
   appList = [
     "Archiver"
-    "CleanMyMac"
     "CleanShot X"
     "DevUtils"
     "ForkLift"
     "Lungo"
     "Numi"
-    "RapidAPI"
+    "Supercharge"
     "Swish"
     "TablePlus"
   ];
 in
-{
-  environment.systemPackages = [ setapp-cli ];
+lib.mkIf pkgs.stdenv.isDarwin {
+  home.packages = [ setapp-cli ];
 
-  home-manager.users.sargunv.home.file.".setapp/AppList".text =
+  home.file.".setapp/AppList".text =
     builtins.concatStringsSep "\n" appList + "\n";
+
+  # Symlink so setapp-cli can find Setapp.app (it only checks ~/Applications and /Applications)
+  home.file."Applications/Setapp.app".source =
+    config.lib.file.mkOutOfStoreSymlink
+      (config.home.homeDirectory + "/Applications/Home Manager Apps/Setapp.app");
+
+  # Sync Setapp apps on activation
+  home.activation.setapp-sync =
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      ${setapp-cli}/bin/setapp-cli bundle install
+      ${setapp-cli}/bin/setapp-cli bundle cleanup
+    '';
 }

@@ -70,6 +70,7 @@ in
     raspberry-pi-imager
     raycast # vicinae on linux (via home-hyprland)
     proton-drive
+    proton-mail-bridge
     protonvpn
   ]);
 }

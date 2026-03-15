@@ -5,5 +5,6 @@
     ./terminals.nix
     ./packages.nix
     ./localsend.nix
+    ./setapp.nix
   ];
 }

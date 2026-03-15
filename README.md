@@ -77,5 +77,4 @@ NixOS and nix-darwin configurations managed with flakes.
 just apply    # rebuild and switch
 just check    # validate flake without building
 just update   # update flake.lock
-just setapp   # install Setapp apps from AppList (macOS only)
 ```
