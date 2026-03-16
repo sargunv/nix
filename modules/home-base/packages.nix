@@ -14,6 +14,7 @@
     chafa
     nixfmt
     pastel
+    sox
 
     # Container tools
     lazydocker

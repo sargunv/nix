@@ -15,7 +15,7 @@
   home-manager.backupFileExtension = "bak";
   home-manager.sharedModules = [
     nixvim.homeModules.nixvim
-    nix-index-database.hmModules.nix-index
+    nix-index-database.homeModules.nix-index
   ];
   home-manager.extraSpecialArgs = {
     inherit

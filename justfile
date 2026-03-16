@@ -6,9 +6,12 @@ rebuild := if os() == "macos" { "darwin-rebuild" } else { "nixos-rebuild" }
 _default:
     @just --choose
 
-# Reconfigure the machine
-apply:
+# Build the system configuration
+build:
     {{ rebuild }} build --flake . -vL
+
+# Activate the built configuration
+apply: build
     sudo ./result/activate
 
 # Validate flake without building
