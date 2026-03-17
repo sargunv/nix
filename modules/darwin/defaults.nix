@@ -17,5 +17,9 @@
     dock.autohide = true;
     dock.show-recents = false;
     dock.mru-spaces = false;
+    dock.persistent-apps = [
+      "/Users/sargunv/Applications/Home Manager Apps/Ghostty.app"
+      "/Applications/Vivaldi.app"
+    ];
   };
 }

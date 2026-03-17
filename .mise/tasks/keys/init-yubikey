@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+#MISE description="Register a YubiKey's SSH public key"
+#MISE raw=true
+set -euo pipefail
+
+read -rp "name for this YubiKey: " name
+
+if [ -f "keys/yubikeys/${name}/public-key" ]; then
+    echo ""
+    echo "existing SSH key for '${name}':"
+    echo "  $(cat "keys/yubikeys/${name}/public-key")"
+    echo ""
+    read -rp "replace it? [y/N] " confirm
+    if [[ "${confirm}" != [yY] ]]; then
+        exit 0
+    fi
+fi
+
+echo ""
+echo "checking YubiKey for existing resident SSH keys..."
+
+tmpdir=$(mktemp -d)
+ssh_pub=""
+pushd "$tmpdir" >/dev/null
+keygen_args=(-K)
+if [ "$(uname)" = "Darwin" ]; then keygen_args+=(-w /usr/lib/ssh-keychain.dylib); fi
+if ssh-keygen "${keygen_args[@]}" 2>/dev/null; then
+    pubfile=$(find "$tmpdir" -name '*_sk*.pub' -type f | head -1)
+    if [ -n "$pubfile" ]; then
+        ssh_pub=$(cat "$pubfile")
+        echo "found existing SSH key: ${ssh_pub}"
+        echo ""
+        read -rp "use this key? [Y/n] " use_existing_ssh
+        if [[ "${use_existing_ssh}" == [nN] ]]; then
+            ssh_pub=""
+        fi
+    fi
+fi
+popd >/dev/null
+
+if [ -z "$ssh_pub" ]; then
+    rm -rf "$tmpdir"
+    tmpdir=$(mktemp -d)
+    echo "generating resident FIDO2 SSH key on YubiKey..."
+    echo "(touch YubiKey when it blinks)"
+    if [ "$(uname)" = "Darwin" ]; then
+        ssh-keygen -t ed25519-sk -O resident -w /usr/lib/ssh-keychain.dylib -f "${tmpdir}/id_ed25519_sk" -N ""
+    else
+        ssh-keygen -t ed25519-sk -O resident -f "${tmpdir}/id_ed25519_sk" -N ""
+    fi
+    ssh_pub=$(cat "${tmpdir}/id_ed25519_sk.pub")
+fi
+rm -rf "$tmpdir"
+
+mkdir -p "keys/yubikeys/${name}"
+echo "${ssh_pub}" > "keys/yubikeys/${name}/public-key"
+
+echo ""
+echo "YubiKey '${name}' SSH key saved to keys/yubikeys/${name}/public-key"
+echo "Run 'load-yubikey' on each machine to install the key handle."

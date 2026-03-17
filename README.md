@@ -2,42 +2,60 @@
 
 NixOS and nix-darwin configurations managed with flakes.
 
+## Day-to-day usage
+
+```sh
+mise run apply    # rebuild and switch
+mise run check    # validate flake without building
+mise run update   # update flake.lock
+```
+
 ## Bootstrapping a NixOS host
 
-1. Install NixOS with the graphical or minimal installer (secure boot off).
+1. Install NixOS (secure boot off).
 
-2. Clone the repo:
+2. Clone and enter the repo:
 
    ```sh
    nix-shell -p git --run "git clone https://github.com/sargunv/nix ~/Code/nix"
    cd ~/Code/nix
+   nix develop
    ```
 
-3. Create secure boot keys for Lanzaboote:
+3. Create secure boot keys:
 
    ```sh
    nix-shell -p sbctl --run "sudo sbctl create-keys"
    ```
 
-4. Create a new host directory:
+4. Set up host config:
 
    ```sh
    mkdir -p hosts/new-hostname
    cp /etc/nixos/hardware-configuration.nix hosts/new-hostname/
    ```
 
-5. Create `hosts/new-hostname/default.nix` with host-specific settings (see
-   `hosts/framework-desktop/default.nix` for reference).
+   Create `hosts/new-hostname/default.nix` and add a `nixosConfigurations` entry in `flake.nix`.
 
-6. Add a `nixosConfigurations.new-hostname` entry in `flake.nix`.
+5. Register this host's SSH key:
 
-7. Build and switch:
+   ```sh
+   mise run keys:init-host
+   ```
+
+6. Build and switch:
 
    ```sh
    sudo nixos-rebuild switch --flake .#new-hostname
    ```
 
-8. Reboot, then enroll secure boot keys and enable secure boot in BIOS:
+7. If a YubiKey is registered, install its SSH key handle:
+
+   ```sh
+   load-yubikey
+   ```
+
+8. Reboot, enable secure boot in BIOS, then enroll keys:
 
    ```sh
    sudo sbctl enroll-keys --microsoft
@@ -47,34 +65,54 @@ NixOS and nix-darwin configurations managed with flakes.
 
 1. Install [Lix](https://lix.systems/install/#on-any-other-linuxmacos-system).
 
-2. Clone the repo:
+2. Clone and enter the repo:
 
    ```sh
    git clone https://github.com/sargunv/nix ~/Code/nix
    cd ~/Code/nix
+   nix develop
    ```
 
-3. Create `hosts/Your-Hostname/default.nix` with host-specific settings (see
-   `hosts/Sarguns-MacBook-Pro/default.nix` for reference).
+3. Create `hosts/Your-Hostname/default.nix` and add a `darwinConfigurations` entry in `flake.nix`.
 
-4. Add a `darwinConfigurations.Your-Hostname` entry in `flake.nix`.
+4. Register this host's SSH key:
 
-5. First build (nix-darwin isn't installed yet):
+   ```sh
+   mise run keys:init-host
+   ```
+
+5. First build:
 
    ```sh
    sudo nix run nix-darwin -- switch --flake .
    ```
 
-6. Subsequent rebuilds:
+6. If a YubiKey is registered, install its SSH key handle:
 
    ```sh
-   just apply
+   load-yubikey
    ```
 
-## Day-to-day usage
+7. Subsequent rebuilds:
+
+   ```sh
+   mise run apply
+   ```
+
+## Key management
+
+SSH public keys are stored in `keys/` and distributed via nix (authorized_keys on NixOS).
 
 ```sh
-just apply    # rebuild and switch
-just check    # validate flake without building
-just update   # update flake.lock
+mise run keys:init-host       # ensure hardware-backed SSH key, register it
+mise run keys:init-yubikey    # register a YubiKey's SSH key
+load-yubikey                  # download YubiKey SSH handle to ~/.ssh/ (on PATH via nix)
 ```
+
+### Decommissioning a host
+
+Remove its key from `keys/hosts/` and its config from `hosts/` and `flake.nix`.
+
+### Removing a YubiKey
+
+Delete `keys/yubikeys/<name>/`.

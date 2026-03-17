@@ -8,6 +8,7 @@
     ./defaults.nix
     ./homebrew.nix
     ./auto-upgrade.nix
+    ../ssh.nix
     ./home.nix
   ];
 }

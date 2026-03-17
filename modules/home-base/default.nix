@@ -6,6 +6,7 @@
     ./git.nix
     ./editors
     ./packages.nix
+    ./ssh.nix
   ];
 
   home.username = "sargunv";
@@ -16,7 +17,6 @@
   home.sessionVariables = {
     PAGER = "less -RF --mouse";
     DELTA_PAGER = "less -RF --mouse";
-    FNOX_AGE_KEY_FILE = "~/.ssh/id_ed25519";
   };
 
   home.packages = lib.optionals pkgs.stdenv.isLinux [

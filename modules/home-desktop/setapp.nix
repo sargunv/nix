@@ -47,7 +47,8 @@ lib.mkIf pkgs.stdenv.isDarwin {
   # Sync Setapp apps on activation
   home.activation.setapp-sync =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${setapp-cli}/bin/setapp-cli bundle install
-      ${setapp-cli}/bin/setapp-cli bundle cleanup
+      ${setapp-cli}/bin/setapp-cli bundle install && \
+      ${setapp-cli}/bin/setapp-cli bundle cleanup || \
+        echo "setapp-cli: skipping sync (Setapp may not be installed or logged in yet)"
     '';
 }

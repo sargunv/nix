@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#MISE description="Ensure hardware-backed SSH key exists and its public key is registered"
+#MISE raw=true
+set -euo pipefail
+
+hostname=$(hostname -s)
+mkdir -p keys/hosts
+
+case "$(uname)" in
+    Darwin)
+        # macOS: Secure Enclave via platform FIDO2 authenticator
+        # Requires macOS Sequoia 15.x+, Apple Silicon or T2 Mac
+        # Key is non-extractable, Touch ID required per SSH operation
+
+        if ! sc_auth list-ctk-identities 2>/dev/null | grep -q 'SSH'; then
+            echo "generating Secure Enclave SSH key (Touch ID protected)..."
+            sc_auth create-ctk-identity -k p-256-ne -t bio -l 'SSH Key'
+            echo "Secure Enclave identity created"
+        fi
+
+        echo "exporting public key from Secure Enclave..."
+        cd ~/.ssh
+        SSH_ASKPASS_REQUIRE=force SSH_ASKPASS=true ssh-keygen -w /usr/lib/ssh-keychain.dylib -K
+        cd - >/dev/null
+
+        pubkey_file=$(ls -t ~/.ssh/id_ecdsa_sk_rk*.pub 2>/dev/null | head -1)
+        if [ -z "$pubkey_file" ]; then
+            echo "error: could not find exported public key"
+            exit 1
+        fi
+
+        cp "$pubkey_file" "keys/hosts/${hostname}"
+        echo "public key saved to keys/hosts/${hostname}"
+        ;;
+
+    Linux)
+        # Linux: TPM 2.0 via ssh-tpm-agent
+        # Requires TPM 2.0 hardware, ssh-tpm-agent package
+        # Key is non-extractable, sealed to TPM chip
+
+        if ! command -v ssh-tpm-keygen &>/dev/null; then
+            echo "error: ssh-tpm-keygen not found"
+            echo "ensure ssh-tpm-agent is installed (available in nixpkgs)"
+            exit 1
+        fi
+
+        if [ ! -f ~/.ssh/id_ecdsa_tpm ]; then
+            echo "generating TPM-backed SSH key..."
+            ssh-tpm-keygen -f ~/.ssh/id_ecdsa_tpm
+            echo ""
+        fi
+
+        cp ~/.ssh/id_ecdsa_tpm.pub "keys/hosts/${hostname}"
+        echo "public key saved to keys/hosts/${hostname}"
+        ;;
+
+    *)
+        echo "error: unsupported platform $(uname)"
+        echo "use a YubiKey instead: mise run keys:init-yubikey"
+        exit 1
+        ;;
+esac

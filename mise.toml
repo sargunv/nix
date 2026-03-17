@@ -1,0 +1,33 @@
+[tasks.build]
+description = "Build the system configuration"
+run = """
+if [ "$(uname)" = "Darwin" ]; then
+  darwin-rebuild build --flake . -vL
+else
+  nixos-rebuild build --flake . -vL
+fi
+"""
+
+[tasks.apply]
+description = "Build and activate the system configuration"
+depends = ["build"]
+run = "sudo ./result/activate"
+
+[tasks.check]
+description = "Validate flake without building"
+run = "nix flake check --no-build"
+
+[tasks.update]
+description = "Update flake.lock"
+run = "nix flake update"
+
+[tasks.darwin-upgrade-log]
+description = "View the auto-upgrade log (macOS only)"
+run = "tail -f /var/log/darwin-auto-upgrade.log"
+
+[tasks.darwin-upgrade-now]
+description = "Trigger an auto-upgrade now and follow the log (macOS only)"
+run = """
+sudo launchctl kickstart system/org.nixos.darwin-auto-upgrade
+tail -f /var/log/darwin-auto-upgrade.log
+"""

@@ -5,6 +5,7 @@
     ./boot.nix
     ./home.nix
     ./inference.nix
+    ../ssh.nix
     ./system.nix
     ./user.nix
   ];
