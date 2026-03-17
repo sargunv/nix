@@ -30,12 +30,15 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = lib.mkIf pkgs.stdenv.isDarwin {
-      extraOptions.SecurityKeyProvider = "/usr/lib/ssh-keychain.dylib";
-    };
   };
 
   home.packages = [ load-yubikey ];
+
+  # macOS: tell ssh-keygen where to find the Secure Enclave provider
+  # (needed for git SSH signing, which calls ssh-keygen -Y sign)
+  home.sessionVariables = lib.mkIf pkgs.stdenv.isDarwin {
+    SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
+  };
 
   home.file.".ssh/authorized_keys".text =
     builtins.concatStringsSep "\n" allSshKeys + "\n";

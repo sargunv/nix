@@ -1,7 +1,18 @@
 # Git and GitHub CLI configuration.
-{ lib, gitignore, ... }:
+{ lib, pkgs, gitignore, ... }:
 
 let
+  keys = import ../../keys.nix;
+  email = "sargunv@users.noreply.github.com";
+
+  allSshKeys =
+    builtins.attrValues keys.hostSshKeys
+    ++ builtins.attrValues keys.yubikeySshKeys;
+
+  allowedSignersFile = pkgs.writeText "allowed-signers"
+    (builtins.concatStringsSep "\n"
+      (map (key: "${email} ${key}") allSshKeys) + "\n");
+
   readIgnoreFile =
     path:
     builtins.filter (line: line != "" && !lib.hasPrefix "#" line) (
@@ -18,7 +29,8 @@ in
     settings = {
       user = {
         name = "Sargun Vohra";
-        email = "sargunv@users.noreply.github.com";
+        email = email;
+        signingKey = "~/.ssh/signing_key.pub";
       };
       init.defaultBranch = "main";
       branch.sort = "-committerdate";
@@ -30,6 +42,10 @@ in
       rebase.autoStash = true;
       diff.algorithm = "histogram";
       merge.conflictstyle = "zdiff3";
+      gpg.format = "ssh";
+      gpg.ssh.allowedSignersFile = "${allowedSignersFile}";
+      commit.gpgSign = true;
+      tag.gpgSign = true;
     };
   };
 
@@ -46,5 +62,8 @@ in
   programs.gh = {
     enable = true;
     settings.git_protocol = "https";
+    gitCredentialHelper = {
+      enable = true;
+    };
   };
 }

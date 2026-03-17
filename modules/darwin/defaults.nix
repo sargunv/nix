@@ -21,5 +21,12 @@
       "/Users/sargunv/Applications/Home Manager Apps/Ghostty.app"
       "/Applications/Vivaldi.app"
     ];
+
+    CustomUserPreferences."com.jordanbaird.Ice" = {
+      ItemSpacingOffset = "-16";
+      SUAutomaticallyUpdate = false;
+      SUEnableAutomaticChecks = false;
+      SUHasLaunchedBefore = true;
+    };
   };
 }

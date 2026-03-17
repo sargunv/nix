@@ -19,8 +19,10 @@ case "$(uname)" in
         fi
 
         echo "exporting public key from Secure Enclave..."
+        mkdir -p ~/.ssh
+        rm -f ~/.ssh/id_ecdsa_sk_rk ~/.ssh/id_ecdsa_sk_rk.pub
         cd ~/.ssh
-        SSH_ASKPASS_REQUIRE=force SSH_ASKPASS=true ssh-keygen -w /usr/lib/ssh-keychain.dylib -K
+        SSH_ASKPASS_REQUIRE=force SSH_ASKPASS=true ssh-keygen -f id_ecdsa_sk_rk -w /usr/lib/ssh-keychain.dylib -K
         cd - >/dev/null
 
         pubkey_file=$(ls -t ~/.ssh/id_ecdsa_sk_rk*.pub 2>/dev/null | head -1)
@@ -30,6 +32,8 @@ case "$(uname)" in
         fi
 
         cp "$pubkey_file" "keys/hosts/${hostname}"
+        cp ~/.ssh/id_ecdsa_sk_rk ~/.ssh/signing_key
+        cp "$pubkey_file" ~/.ssh/signing_key.pub
         echo "public key saved to keys/hosts/${hostname}"
         ;;
 
@@ -44,6 +48,7 @@ case "$(uname)" in
             exit 1
         fi
 
+        mkdir -p ~/.ssh
         if [ ! -f ~/.ssh/id_ecdsa_tpm ]; then
             echo "generating TPM-backed SSH key..."
             ssh-tpm-keygen -f ~/.ssh/id_ecdsa_tpm
@@ -51,6 +56,8 @@ case "$(uname)" in
         fi
 
         cp ~/.ssh/id_ecdsa_tpm.pub "keys/hosts/${hostname}"
+        cp ~/.ssh/id_ecdsa_tpm ~/.ssh/signing_key
+        cp ~/.ssh/id_ecdsa_tpm.pub ~/.ssh/signing_key.pub
         echo "public key saved to keys/hosts/${hostname}"
         ;;
 
