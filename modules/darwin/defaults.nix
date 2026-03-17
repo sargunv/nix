@@ -28,5 +28,34 @@
       SUEnableAutomaticChecks = false;
       SUHasLaunchedBefore = true;
     };
+
+    CustomUserPreferences."com.setapp.DesktopClient" = {
+      # System presence
+      ShouldLoadFinderSyncExtensionOnLaunch = false;
+
+      # App behavior
+      LaunchAppAfterInstall = false;
+      shouldDisableRateRecentAppWindow = true;
+      shouldDisableFeedbackWindow = true;
+
+      # Notifications
+      shouldBlockNewAppsNotifications = true;
+      shouldBlockSpecialOffersNotifications = true;
+      shouldBlockSuccessfulAppUpdatesNotifications = true;
+      shouldDisableNotificationBadgeInDockTile = false;
+
+      # Updates
+      SUAutomaticallyUpdate = false;
+      SUEnableAutomaticChecks = false;
+    };
+
+    CustomUserPreferences."com.getcleanshot.app-setapp" = {
+      transparentWindowBackground = true;
+    };
+
+    CustomUserPreferences."com.mitchellh.ghostty" = {
+      SUEnableAutomaticChecks = false;
+      SUHasLaunchedBefore = true;
+    };
   };
 }
