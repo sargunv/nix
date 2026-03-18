@@ -5,6 +5,7 @@
   programs.claude-code = {
     enable = true;
     settings = {
+      voiceEnabled = true;
       skipDangerousModePermissionPrompt = true;
       enabledPlugins = {
         "feature-dev@claude-plugins-official" = true;

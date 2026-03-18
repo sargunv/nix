@@ -28,7 +28,7 @@
     enable = true;
     package =
       if pkgs.stdenv.isDarwin then pkgs.brewCasks.vscodium else pkgs.vscodium;
-    mutableExtensionsDir = false;
+    mutableExtensionsDir = true;
     profiles.default = {
       extensions =
         (with pkgs.vscode-extensions; [
