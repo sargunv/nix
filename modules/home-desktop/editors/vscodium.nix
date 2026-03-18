@@ -32,6 +32,7 @@
     profiles.default = {
       extensions =
         (with pkgs.vscode-extensions; [
+          anthropic.claude-code
           jnoortheen.nix-ide
           rust-lang.rust-analyzer
           llvm-vs-code-extensions.vscode-clangd
@@ -52,6 +53,7 @@
         ])
         ++ (with vscode-extensions.vscode-marketplace; [
           voidzero.vite-plus-extension-pack
+          typespec.typespec-vscode
         ]);
       userSettings = {
         "mise.checkForNewMiseVersion" = false;
