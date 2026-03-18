@@ -44,15 +44,28 @@
           github.vscode-pull-request-github
           vitest.explorer
           tombi-toml.tombi
-          oxc.oxc-vscode
+          golang.go
           hverlin.mise-vscode
           dprint.dprint
           github.vscode-github-actions
           opentofu.vscode-opentofu
           continue.continue
+        ])
+        ++ (with vscode-extensions.vscode-marketplace; [
+          voidzero.vite-plus-extension-pack
         ]);
       userSettings = {
         "mise.checkForNewMiseVersion" = false;
+        "json.schemaDownload.trustedDomains" = {
+          "https://schemastore.azurewebsites.net/" = true;
+          "https://raw.githubusercontent.com/microsoft/vscode/" = true;
+          "https://raw.githubusercontent.com/devcontainers/spec/" = true;
+          "https://www.schemastore.org/" = true;
+          "https://json.schemastore.org/" = true;
+          "https://json-schema.org/" = true;
+          "https://developer.microsoft.com/json-schemas/" = true;
+          "https://dprint.dev" = true;
+        };
       } // lib.optionalAttrs pkgs.stdenv.isLinux {
         "window.titleBarStyle" = "native";
         "window.menuBarVisibility" = "toggle";
