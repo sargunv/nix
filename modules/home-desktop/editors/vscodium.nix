@@ -38,7 +38,6 @@
           bradlc.vscode-tailwindcss
         ])
         ++ (with vscode-extensions.open-vsx; [
-          jdinhlife.gruvbox
           joaopaulocmarra.inline-blame-mini
           ms-python.python
           github.vscode-pull-request-github

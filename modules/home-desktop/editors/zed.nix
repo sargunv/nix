@@ -15,7 +15,6 @@
       "nix"
       "toml"
       "dockerfile"
-      "gruvbox"
       "git-firefly"
       "just"
     ];

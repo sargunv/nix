@@ -63,11 +63,6 @@ in
       showmode = false;
     };
 
-    colorschemes.gruvbox = {
-      enable = true;
-      settings.contrast = "hard";
-    };
-
     extraPlugins = [ cursortab-nvim ];
 
     extraConfigLua = ''
