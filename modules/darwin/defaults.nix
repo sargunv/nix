@@ -2,6 +2,11 @@
 {  # Touch ID for sudo
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToEscape = true;
+  };
+
   system.defaults = {
     # Keyboard: fast repeat, no press-and-hold
     NSGlobalDomain.InitialKeyRepeat = 15;
