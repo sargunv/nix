@@ -40,7 +40,6 @@
         ])
         ++ (with vscode-extensions.open-vsx; [
           joaopaulocmarra.inline-blame-mini
-          ms-python.python
           github.vscode-pull-request-github
           vitest.explorer
           tombi-toml.tombi
