@@ -28,7 +28,7 @@
     ];
 
     CustomUserPreferences."com.jordanbaird.Ice" = {
-      ItemSpacingOffset = "-16";
+      ItemSpacingOffset = "-8";
       SUAutomaticallyUpdate = false;
       SUEnableAutomaticChecks = false;
       SUHasLaunchedBefore = true;
