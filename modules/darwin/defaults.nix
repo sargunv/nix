@@ -13,6 +13,9 @@
     NSGlobalDomain.KeyRepeat = 2;
     NSGlobalDomain.ApplePressAndHoldEnabled = false;
 
+    # 24-hour clock
+    NSGlobalDomain.AppleICUForce24HourTime = true;
+
     # Finder: show extensions, pathbar, and status bar
     NSGlobalDomain.AppleShowAllExtensions = true;
     finder.ShowPathbar = true;

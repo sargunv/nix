@@ -1,14 +1,14 @@
 # Stylix: Tokyo Night Dark color scheme, wallpaper, and monospace font.
 {
   pkgs,
-  gruvbox-wallpaper,
+  wallpaper,
   ...
 }:
 
 {
   stylix = {
     enable = true;
-    image = gruvbox-wallpaper;
+    image = wallpaper;
     polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
     fonts.monospace = {

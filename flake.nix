@@ -44,8 +44,8 @@
       url = "github:BatteredBunny/brew-api";
       flake = false;
     };
-    gruvbox-wallpaper = {
-      url = "https://raw.githubusercontent.com/AngelJumbo/gruvbox-wallpapers/refs/heads/main/wallpapers/vector%20graphics/cosy-retreat-sunset.png";
+    wallpaper = {
+      url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/void_upscayl_realesrgan-x4plus_x2.png";
       flake = false;
     };
     nix-index-database = {
@@ -66,7 +66,7 @@
       gitignore,
       stylix,
       try-cli,
-      gruvbox-wallpaper,
+      wallpaper,
       brew-nix,
       nix-index-database,
       ...
@@ -98,7 +98,7 @@
         in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit gitignore nixvim gruvbox-wallpaper nix-index-database;
+            inherit gitignore nixvim wallpaper nix-index-database;
             vscode-extensions = nix-vscode-extensions.extensions.${system};
             zed-package = pkgs.zed-editor;
             try-cli-package = try-cli.packages.${system}.default;
@@ -119,7 +119,7 @@
         in
         nix-darwin.lib.darwinSystem {
           specialArgs = {
-            inherit gitignore nixvim gruvbox-wallpaper nix-index-database;
+            inherit gitignore nixvim wallpaper nix-index-database;
             vscode-extensions = nix-vscode-extensions.extensions.${system};
             zed-package = pkgs.zed-editor;
             try-cli-package = try-cli.packages.${system}.default;
