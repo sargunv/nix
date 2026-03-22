@@ -69,6 +69,7 @@ in
     hyprpicker
 
     # Desktop apps (Linux default handlers)
+    pinta
     nautilus
     gthumb
     evince

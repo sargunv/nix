@@ -47,8 +47,13 @@ in
     (app { linux = pkgs.slack;           darwin = pkgs.brewCasks.slack; })
 
     # Media
-    (app { linux = pkgs.pinta;           darwin = pkgs.brewCasks.pinta; })
     (app { linux = pkgs.obs-studio;      darwin = pkgs.brewCasks.obs; })
+    (app { linux = pkgs.audacity;        darwin = pkgs.brewCasks.audacity; })
+
+    # 3D Printing
+    (app { linux = pkgs.bambu-studio;   darwin = pkgs.brewCasks.bambu-studio; })
+    (app { linux = pkgs.freecad-wayland; darwin = pkgs.brewCasks.freecad; })
+    (app { linux = pkgs.openscad-unstable; darwin = pkgs.brewCasks.openscad; })
 
     # Productivity
     (app { linux = pkgs.anki;            darwin = pkgs.brewCasks.anki; })
@@ -59,6 +64,12 @@ in
 
     # Security
     (app { linux = pkgs.proton-pass;     darwin = pkgs.brewCasks.proton-pass; })
+
+    # Game Dev
+    (app { linux = pkgs.godot_4;         darwin = pkgs.brewCasks.godot; })
+    (app { linux = pkgs.blender;         darwin = pkgs.brewCasks.blender; })
+    (app { linux = pkgs.aseprite;       darwin = pkgs.aseprite; })
+    (app { linux = pkgs.tiled;           darwin = pkgs.brewCasks.tiled; })
 
     # Gaming
     (app { linux = pkgs.prismlauncher;   darwin = pkgs.brewCasks.prismlauncher; })
