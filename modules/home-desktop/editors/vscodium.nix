@@ -55,6 +55,10 @@
           typespec.typespec-vscode
         ]);
       userSettings = {
+        "go.alternateTools" = {
+          "go" = "~/.local/share/mise/shims/go";
+        };
+        "update.mode" = "none";
         "mise.checkForNewMiseVersion" = false;
         "json.schemaDownload.trustedDomains" = {
           "https://schemastore.azurewebsites.net/" = true;
