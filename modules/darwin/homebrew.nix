@@ -11,6 +11,7 @@
     # Casks that don't work with brew-nix (missing hashes)
     casks = [
       "handy"
+      "orion"
       "sdformatter"
       "steam"
       "vivaldi"
