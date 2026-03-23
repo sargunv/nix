@@ -15,6 +15,7 @@
 
     # 24-hour clock
     NSGlobalDomain.AppleICUForce24HourTime = true;
+    menuExtraClock.Show24Hour = true;
 
     # Finder: show extensions, pathbar, and status bar
     NSGlobalDomain.AppleShowAllExtensions = true;
