@@ -28,8 +28,10 @@
 
   xdg.enable = true;
 
+  programs.man.generateCaches = lib.mkIf pkgs.stdenv.isDarwin false;
+
   # Restart user services when their config changes on rebuild
   systemd.user.startServices = lib.mkIf pkgs.stdenv.isLinux "sd-switch";
 
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 }
