@@ -53,6 +53,7 @@
         ++ (with vscode-extensions.vscode-marketplace; [
           voidzero.vite-plus-extension-pack
           typespec.typespec-vscode
+          tchoupinax.tilt
         ]);
       userSettings = {
         "go.alternateTools" = {
