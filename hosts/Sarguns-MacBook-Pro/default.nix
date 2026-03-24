@@ -7,5 +7,10 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   networking.hostName = "Sarguns-MacBook-Pro";
 
+  local.inference = {
+    sweepNextEdit = true;
+    qwenCoder = true;
+  };
+
   system.stateVersion = 6;
 }

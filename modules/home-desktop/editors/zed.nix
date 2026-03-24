@@ -7,6 +7,8 @@
     source = "${zed-package}/bin/zeditor";
   };
 
+  home.shellAliases.zed = "zed &>/dev/null & disown";
+
   programs.zed-editor = {
     enable = true;
     package =

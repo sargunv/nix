@@ -24,6 +24,8 @@
     ];
   };
 
+  home.shellAliases.vscodium = "vscodium &>/dev/null & disown";
+
   programs.vscode = {
     enable = true;
     package =

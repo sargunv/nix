@@ -7,6 +7,7 @@
     ../stylix.nix
     ./defaults.nix
     ./homebrew.nix
+    ./inference.nix
     ./auto-upgrade.nix
     ../ssh.nix
     ./home.nix

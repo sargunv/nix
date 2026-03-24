@@ -18,6 +18,9 @@
     allowReboot = false;
   };
 
+  # TPM 2.0 (needed for ssh-tpm-agent)
+  security.tpm2.enable = true;
+
   # Firmware updates
   services.fwupd.enable = true;
 

@@ -83,5 +83,6 @@ in
     proton-drive
     proton-mail-bridge
     protonvpn
+    rectangle
   ]);
 }
