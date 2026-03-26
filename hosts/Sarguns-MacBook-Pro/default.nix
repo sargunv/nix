@@ -10,6 +10,7 @@
   local.inference = {
     sweepNextEdit = true;
     qwenCoder = true;
+    qwen35b = true;
   };
 
   system.stateVersion = 6;

@@ -34,7 +34,6 @@
     profiles.default = {
       extensions =
         (with pkgs.vscode-extensions; [
-          anthropic.claude-code
           jnoortheen.nix-ide
           rust-lang.rust-analyzer
           llvm-vs-code-extensions.vscode-clangd
