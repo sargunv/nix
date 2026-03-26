@@ -10,6 +10,7 @@
 
     # Casks that don't work with brew-nix (missing hashes)
     casks = [
+      "conductor"
       "handy"
       "orion"
       "sdformatter"
