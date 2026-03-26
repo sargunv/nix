@@ -24,9 +24,14 @@ let
       hash = "sha256-S1JPnoUJa1kICcHTXnthaQDQ2XfRLS907sFoUs3YXtY=";
     };
 
-    qwen35-35b = pkgs.fetchurl {
+    qwen35-35b-q8 = pkgs.fetchurl {
       url = "https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/Qwen3.5-35B-A3B-UD-Q8_K_XL.gguf";
       hash = "sha256-hqr2RkkfYjzgp9aYPqh4jjawnVnlVDpHmczFfuOvFak=";
+    };
+
+    qwen35-35b-q4 = pkgs.fetchurl {
+      url = "https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/Qwen3.5-35B-A3B-UD-Q4_K_XL.gguf";
+      hash = "sha256-GwrGN9+gkru6J5OXfblIWkDE+LQt9f40LwB21htmroM=";
     };
 
     whisper-large-v3-turbo = pkgs.fetchurl {
@@ -51,7 +56,7 @@ let
     }
     // lib.optionalAttrs cfg.qwen35b {
       "qwen3.5-35b-a3b" = {
-        cmd = "${llama-server} --port \${PORT} -m ${models.qwen35-35b} -c 32768 --cache-reuse 1 -ngl 99 --no-webui";
+        cmd = "${llama-server} --port \${PORT} -m ${cfg.qwen35bModel} -c ${toString cfg.qwen35bContext} --cache-reuse 1 -ngl 99 --no-webui";
       };
     };
 
@@ -83,7 +88,24 @@ in
     sweepNextEdit = lib.mkEnableOption "sweep-next-edit 1.5B (persistent in llama-swap)";
     qwenCoder = lib.mkEnableOption "Qwen 2.5 Coder 1.5B (persistent in llama-swap)";
     qwen35b = lib.mkEnableOption "Qwen 3.5 35B-A3B (on-demand in llama-swap)";
+    qwen35bModel = lib.mkOption {
+      type = lib.types.path;
+      default = models.qwen35-35b-q8;
+      description = "GGUF model file for Qwen 3.5 35B-A3B.";
+    };
+    qwen35bContext = lib.mkOption {
+      type = lib.types.int;
+      default = 32768;
+      description = "Context size for Qwen 3.5 35B-A3B.";
+    };
     whisper = lib.mkEnableOption "Whisper Large V3 Turbo";
+
+    _models = lib.mkOption {
+      type = lib.types.attrs;
+      internal = true;
+      readOnly = true;
+      default = models;
+    };
 
     _llmModels = lib.mkOption {
       type = lib.types.attrs;
