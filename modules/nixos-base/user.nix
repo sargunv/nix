@@ -10,6 +10,7 @@
       "networkmanager"
       "wheel"
       "tss"
+      "docker"
     ];
   };
 

@@ -10,6 +10,7 @@
     ./inference.nix
     ./auto-upgrade.nix
     ../ssh.nix
+    ./docker.nix
     ./home.nix
   ];
 }

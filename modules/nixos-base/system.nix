@@ -24,6 +24,9 @@
   # Firmware updates
   services.fwupd.enable = true;
 
+  # Docker
+  virtualisation.docker.enable = true;
+
   # Compressed swap in RAM for OOM protection
   zramSwap = {
     enable = true;
