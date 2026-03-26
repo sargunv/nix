@@ -28,7 +28,7 @@
     dock.mru-spaces = false;
     dock.persistent-apps = [
       "/Users/sargunv/Applications/Home Manager Apps/Ghostty.app"
-      "/Applications/Vivaldi.app"
+      "/Applications/Orion.app"
     ];
 
     CustomUserPreferences."com.jordanbaird.Ice" = {
