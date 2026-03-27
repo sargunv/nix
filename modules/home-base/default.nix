@@ -7,6 +7,7 @@
     ./editors
     ./packages.nix
     ./ssh.nix
+    ./thaw.nix
   ];
 
   home.username = "sargunv";

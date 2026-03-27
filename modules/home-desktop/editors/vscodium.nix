@@ -1,12 +1,21 @@
 # VSCodium editor: config and extensions (package installed via cask on macOS).
 {
+  config,
   lib,
   pkgs,
   vscode-extensions,
   ...
 }:
 
+let
+  settingsPath =
+    if pkgs.stdenv.isDarwin then
+      "Library/Application Support/VSCodium/User/settings.json"
+    else
+      ".config/VSCodium/User/settings.json";
+in
 {
+  thaw.paths = [ settingsPath ];
   home.file.".continue/config.yaml".text = builtins.toJSON {
     name = "Local";
     version = "1.0.0";

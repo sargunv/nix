@@ -1,5 +1,7 @@
 # Claude Code CLI configuration.
 {
+  thaw.paths = [ ".claude/settings.json" ];
+
   home.shellAliases.clauded = "claude --dangerously-skip-permissions";
 
   programs.claude-code = {
