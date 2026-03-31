@@ -3,6 +3,8 @@
 {
   lib,
   pkgs,
+  vscode-extensions,
+  zed-package,
   ...
 }:
 {
@@ -14,6 +16,9 @@
 
   config = {
     # Wire GUI and Hyprland home-manager config
+    home-manager.extraSpecialArgs = {
+      inherit vscode-extensions zed-package;
+    };
     home-manager.users.sargunv = {
       imports = [
         ../home-desktop

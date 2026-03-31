@@ -3,8 +3,6 @@
 {
   nixvim,
   gitignore,
-  vscode-extensions,
-  zed-package,
   try-cli-package,
   nix-index-database,
   ...
@@ -20,8 +18,6 @@
   home-manager.extraSpecialArgs = {
     inherit
       gitignore
-      vscode-extensions
-      zed-package
       try-cli-package
       ;
   };

@@ -8,6 +8,7 @@
 
 {
   options.local.boot = {
+    secureBoot = lib.mkEnableOption "Lanzaboote secure boot" // { default = true; };
     extraKernelParams = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
@@ -16,9 +17,9 @@
   };
 
   config = {
-    # Lanzaboote secure boot
-    boot.loader.systemd-boot.enable = false;
-    boot.lanzaboote = {
+    # Boot loader
+    boot.loader.systemd-boot.enable = !config.local.boot.secureBoot;
+    boot.lanzaboote = lib.mkIf config.local.boot.secureBoot {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };

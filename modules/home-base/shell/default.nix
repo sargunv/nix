@@ -1,3 +1,4 @@
+{ try-cli-package, ... }:
 {
   imports = [
     ./zsh.nix
@@ -7,6 +8,12 @@
     ./tools.nix
   ];
 
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      eval (${try-cli-package}/bin/try init ~/Code/tries | string collect)
+    '';
+  };
+
   programs.nushell.enable = true;
 }
