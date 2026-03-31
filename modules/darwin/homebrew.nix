@@ -44,14 +44,12 @@
 
       # macOS-only apps
       "bettermouse"
-      "conductor"
       "ghostty"
       "handy"
       "jordanbaird-ice"
       "lunar"
       "orion"
       "proton-drive"
-      "proton-mail-bridge"
       "protonvpn"
       "raspberry-pi-imager"
       "raycast"
