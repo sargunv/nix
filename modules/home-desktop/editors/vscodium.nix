@@ -1,4 +1,4 @@
-# VSCodium editor: config and extensions (package installed via cask on macOS).
+# VSCodium editor: config and extensions (cask on macOS, nixpkgs on Linux).
 {
   config,
   lib,
@@ -33,12 +33,18 @@ in
     ];
   };
 
-  home.shellAliases.vscodium = "vscodium &>/dev/null & disown";
-
   programs.vscode = {
     enable = true;
     package =
-      if pkgs.stdenv.isDarwin then pkgs.brewCasks.vscodium else pkgs.vscodium;
+      if pkgs.stdenv.isDarwin then
+        # Stub: Homebrew cask manages the app; HM only manages config/extensions.
+        pkgs.emptyDirectory // {
+          pname = "vscodium";
+          version = "9999";
+          meta = { mainProgram = "vscodium"; };
+        }
+      else
+        pkgs.vscodium;
     mutableExtensionsDir = true;
     profiles.default = {
       extensions =
@@ -69,7 +75,6 @@ in
         "go.alternateTools" = {
           "go" = "~/.local/share/mise/shims/go";
         };
-        "update.mode" = "none";
         "mise.checkForNewMiseVersion" = false;
         "json.schemaDownload.trustedDomains" = {
           "https://schemastore.azurewebsites.net/" = true;

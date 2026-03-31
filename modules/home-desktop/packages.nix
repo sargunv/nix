@@ -1,16 +1,9 @@
 # User GUI applications.
-# On macOS, most apps come from brew-nix; on Linux, from nixpkgs.
+# Linux apps are from nixpkgs; macOS apps are managed via Homebrew casks.
 { pkgs, lib, ... }:
 
 let
   inherit (pkgs.stdenv) isLinux isDarwin;
-
-  # Helper: pick the right package per platform.
-  # Usage: app { linux = pkgs.foo; darwin = pkgs.brewCasks.foo; }
-  app = { linux ? null, darwin ? null }:
-    if isLinux && linux != null then linux
-    else if isDarwin && darwin != null then darwin
-    else null;
 
   t3code-appimage =
     let
@@ -40,49 +33,43 @@ let
     };
 in
 {
-  home.packages = builtins.filter (p: p != null) [
-    # Communication
-    (app { linux = pkgs.beeper;          darwin = pkgs.brewCasks.beeper; })
-    (app { linux = pkgs.discord;         darwin = pkgs.brewCasks.discord; })
-    (app { linux = pkgs.slack;           darwin = pkgs.brewCasks.slack; })
+  home.packages =
+    lib.optionals isLinux (with pkgs; [
+      # Communication
+      beeper
+      discord
+      slack
 
-    # Media
-    (app { linux = pkgs.obs-studio;      darwin = pkgs.brewCasks.obs; })
-    (app { linux = pkgs.audacity;        darwin = pkgs.brewCasks.audacity; })
+      # Media
+      obs-studio
+      audacity
 
-    # 3D Printing
-    (app { linux = pkgs.bambu-studio;   darwin = pkgs.brewCasks.bambu-studio; })
-    (app { linux = pkgs.freecad-wayland; darwin = pkgs.brewCasks.freecad; })
-    (app { linux = pkgs.openscad-unstable; darwin = pkgs.brewCasks.openscad; })
+      # 3D Printing
+      bambu-studio
+      freecad-wayland
+      openscad-unstable
 
-    # Productivity
-    (app { linux = pkgs.anki;            darwin = pkgs.brewCasks.anki; })
-    (app { linux = pkgs.obsidian;        darwin = pkgs.brewCasks.obsidian; })
-    (app { linux = pkgs.android-studio;  darwin = pkgs.brewCasks.jetbrains-toolbox; })
-    (app { linux = t3code-appimage;      darwin = pkgs.brewCasks.t3-code; })
-    (app { linux = pkgs.localsend;       darwin = pkgs.brewCasks.localsend; })
+      # Productivity
+      anki
+      obsidian
+      android-studio
+      t3code-appimage
+      localsend
 
-    # Security
-    (app { linux = pkgs.proton-pass;     darwin = pkgs.brewCasks.proton-pass; })
+      # Security
+      proton-pass
 
-    # Game Dev
-    (app { linux = pkgs.godot_4;         darwin = pkgs.brewCasks.godot; })
-    (app { linux = pkgs.blender;         darwin = pkgs.brewCasks.blender; })
-    (app { linux = pkgs.aseprite;       darwin = pkgs.aseprite; })
-    (app { linux = pkgs.tiled;           darwin = pkgs.brewCasks.tiled; })
+      # Game Dev
+      godot_4
+      blender
+      aseprite
+      tiled
 
-    # Gaming
-    (app { linux = pkgs.prismlauncher;   darwin = pkgs.brewCasks.prismlauncher; })
-  ] ++ lib.optionals isDarwin (with pkgs.brewCasks; [
-    # macOS-only apps
-    setapp
-    jordanbaird-ice
-    lunar
-    raspberry-pi-imager
-    raycast # vicinae on linux (via home-hyprland)
-    proton-drive
-    proton-mail-bridge
-    protonvpn
-    rectangle
-  ]);
+      # Gaming
+      prismlauncher
+    ])
+    ++ lib.optionals isDarwin (with pkgs; [
+      # Apps built from source via nixpkgs (no Homebrew cask available)
+      aseprite
+    ]);
 }

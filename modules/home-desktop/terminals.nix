@@ -1,4 +1,4 @@
-# Terminal emulators: kitty on Linux, ghostty on macOS.
+# Terminal emulators: kitty on Linux, ghostty (cask) on macOS.
 { pkgs, lib, ... }:
 
 {
@@ -15,7 +15,7 @@
 
   programs.ghostty = lib.mkIf pkgs.stdenv.isDarwin {
     enable = true;
-    package = pkgs.brewCasks.ghostty;
+    package = null;
     settings.macos-window-shadow = false;
     settings.background-blur = "macos-glass-regular";
   };

@@ -1,6 +1,6 @@
-# Homebrew: Mac App Store apps (casks managed via brew-nix).
+# Homebrew: casks and Mac App Store apps.
 {
-  # Ensure Homebrew is on PATH (still needed for mas)
+  # Ensure Homebrew is on PATH (needed for mas and cask management)
   environment.systemPath = [ "/opt/homebrew/bin" ];
 
   homebrew = {
@@ -8,14 +8,59 @@
     onActivation.cleanup = "zap";
     onActivation.extraFlags = [ "--verbose" ];
 
-    # Casks that don't work with brew-nix (missing hashes)
     casks = [
-      "conductor"
-      "handy"
-      "orion"
-      "sdformatter"
+      # Communication
+      "beeper"
+      "discord"
+      "slack"
+
+      # Media
+      "obs"
+      "audacity"
+
+      # 3D Printing
+      "bambu-studio"
+      "freecad"
+      "openscad"
+
+      # Productivity
+      "anki"
+      "obsidian"
+      "jetbrains-toolbox"
+      "t3-code"
+      "localsend"
+
+      # Security
+      "proton-pass"
+
+      # Game Dev
+      "godot"
+      "blender"
+      "tiled"
+
+      # Gaming
+      "prismlauncher"
       "steam"
+
+      # macOS-only apps
+      "bettermouse"
+      "conductor"
+      "ghostty"
+      "handy"
+      "jordanbaird-ice"
+      "lunar"
+      "orion"
+      "proton-drive"
+      "proton-mail-bridge"
+      "protonvpn"
+      "raspberry-pi-imager"
+      "raycast"
+      "rectangle"
+      "sdformatter"
+      "setapp"
       "vivaldi"
+      "vscodium"
+      "zed"
     ];
 
     masApps = {

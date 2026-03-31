@@ -43,6 +43,16 @@ in
   config = {
     home.packages = [ thaw ];
 
+    # Remove stale .bak files before HM's link check so backups don't collide.
+    home.activation.thaw-cleanup = lib.mkIf (config.thaw.paths != [ ]) (
+      lib.hm.dag.entryBefore [ "checkLinkTargets" ] (
+        lib.concatMapStringsSep "\n" (
+          p: ''rm -f "${config.home.homeDirectory}/${p}.bak"''
+        ) config.thaw.paths
+      )
+    );
+
+    # Materialize symlinks into mutable copies after HM writes them.
     home.activation.thaw-configs = lib.mkIf (config.thaw.paths != [ ]) (
       lib.hm.dag.entryAfter [ "writeBoundary" ] (
         lib.concatMapStringsSep "\n" (

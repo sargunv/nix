@@ -36,14 +36,6 @@
       url = "github:tobi/try-cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    brew-nix = {
-      url = "github:BatteredBunny/brew-nix";
-      inputs.brew-api.follows = "brew-api";
-    };
-    brew-api = {
-      url = "github:BatteredBunny/brew-api";
-      flake = false;
-    };
     wallpaper = {
       url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/void_upscayl_realesrgan-x4plus_x2.png";
       flake = false;
@@ -67,7 +59,6 @@
       stylix,
       try-cli,
       wallpaper,
-      brew-nix,
       nix-index-database,
       ...
     }:
@@ -125,7 +116,6 @@
             try-cli-package = try-cli.packages.${system}.default;
           };
           modules = [
-            { nixpkgs.overlays = [ brew-nix.overlays.default ]; }
             stylix.darwinModules.stylix
             home-manager.darwinModules.home-manager
             ./hosts/Sarguns-MacBook-Pro

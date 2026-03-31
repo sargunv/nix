@@ -41,8 +41,7 @@ lib.mkIf pkgs.stdenv.isDarwin {
 
   # Symlink so setapp-cli can find Setapp.app (it only checks ~/Applications and /Applications)
   home.file."Applications/Setapp.app".source =
-    config.lib.file.mkOutOfStoreSymlink
-      (config.home.homeDirectory + "/Applications/Home Manager Apps/Setapp.app");
+    config.lib.file.mkOutOfStoreSymlink "/Applications/Setapp.app";
 
   # Sync Setapp apps on activation
   home.activation.setapp-sync =

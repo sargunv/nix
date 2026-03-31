@@ -1,4 +1,4 @@
-# Zed editor: config and extensions (package installed via cask on macOS).
+# Zed editor: config and extensions (cask on macOS, nixpkgs on Linux).
 { lib, pkgs, zed-package, ... }:
 
 {
@@ -7,12 +7,10 @@
     source = "${zed-package}/bin/zeditor";
   };
 
-  home.shellAliases.zed = "zed &>/dev/null & disown";
-
   programs.zed-editor = {
     enable = true;
     package =
-      if pkgs.stdenv.isDarwin then pkgs.brewCasks.zed else zed-package;
+      if pkgs.stdenv.isDarwin then null else zed-package;
     extensions = [
       "nix"
       "toml"
