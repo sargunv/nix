@@ -49,14 +49,14 @@ case "$(uname)" in
         fi
 
         mkdir -p ~/.ssh
-        if [ ! -f ~/.ssh/id_ecdsa_tpm ]; then
+        if [ ! -f ~/.ssh/id_ecdsa_tpm.tpm ]; then
             echo "generating TPM-backed SSH key..."
             ssh-tpm-keygen -f ~/.ssh/id_ecdsa_tpm
             echo ""
         fi
 
         cp ~/.ssh/id_ecdsa_tpm.pub "keys/hosts/${hostname}"
-        cp ~/.ssh/id_ecdsa_tpm ~/.ssh/signing_key
+        cp ~/.ssh/id_ecdsa_tpm.tpm ~/.ssh/signing_key
         cp ~/.ssh/id_ecdsa_tpm.pub ~/.ssh/signing_key.pub
         echo "public key saved to keys/hosts/${hostname}"
         ;;

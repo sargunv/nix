@@ -29,7 +29,7 @@ in
       forwardAgent = true;
       identityFile =
         if pkgs.stdenv.isDarwin then "~/.ssh/id_ecdsa_sk_rk"
-        else if pkgs.stdenv.isLinux then "~/.ssh/id_ecdsa_tpm"
+        else if pkgs.stdenv.isLinux then "~/.ssh/id_ecdsa_tpm.tpm"
         else null;
     };
   };
