@@ -2,6 +2,7 @@
 # Enable per-host with `local.nanoclaw.enable = true`.
 {
   config,
+  options,
   pkgs,
   lib,
   ...
@@ -21,7 +22,7 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       # NixOS: systemd user service
-      (lib.mkIf (config.options ? systemd) {
+      (lib.mkIf (options ? systemd) {
         systemd.user.services.nanoclaw = {
           description = "NanoClaw AI Agent";
           after = [
@@ -48,7 +49,7 @@ in
       })
 
       # macOS: launchd user agent
-      (lib.mkIf (config.options ? launchd) {
+      (lib.mkIf (options ? launchd) {
         launchd.user.agents.nanoclaw = {
           serviceConfig = {
             Label = "com.nanoclaw";
