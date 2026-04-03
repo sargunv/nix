@@ -8,7 +8,6 @@
     ./home.nix
     ./inference.nix
     ../ssh.nix
-    ./sudo.nix
     ./system.nix
     ./user.nix
   ];
