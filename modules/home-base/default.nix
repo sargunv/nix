@@ -21,6 +21,7 @@
   };
 
   home.packages = lib.optionals pkgs.stdenv.isLinux [
+    pkgs.ghostty.terminfo
     (pkgs.runCommand "open" { } ''
       mkdir -p $out/bin
       ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open

@@ -27,6 +27,13 @@ let
         else
           "sha256-PZUZrjhHtgLoN127iYsbLceSO75DPWjnBRyiNiIFPCw=";
     };
+    nativeBuildInputs = lib.optionals pkgs.stdenv.isLinux [
+      pkgs.autoPatchelfHook
+    ];
+    buildInputs = lib.optionals pkgs.stdenv.isLinux [
+      pkgs.stdenv.cc.cc.lib
+      pkgs.openssl
+    ];
     dontUnpack = true;
     installPhase = ''
       install -Dm755 $src $out/bin/forge
