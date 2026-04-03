@@ -22,6 +22,11 @@ in
 {
   programs.git = {
     enable = true;
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/signing_key.pub";
+      signByDefault = true;
+    };
     ignores =
       readIgnoreFile "${gitignore}/Global/Linux.gitignore"
       ++ readIgnoreFile "${gitignore}/Global/macOS.gitignore"
@@ -30,7 +35,6 @@ in
       user = {
         name = "Sargun Vohra";
         email = email;
-        signingKey = "~/.ssh/signing_key.pub";
       };
       init.defaultBranch = "main";
       branch.sort = "-committerdate";
@@ -42,10 +46,7 @@ in
       rebase.autoStash = true;
       diff.algorithm = "histogram";
       merge.conflictstyle = "zdiff3";
-      gpg.format = "ssh";
       gpg.ssh.allowedSignersFile = "${allowedSignersFile}";
-      commit.gpgSign = true;
-      tag.gpgSign = true;
     } // lib.optionalAttrs pkgs.stdenv.isLinux {
       # TPM keys can't be read directly by ssh-keygen; inject -U to sign via agent
       gpg.ssh.program = toString (pkgs.writeShellScript "ssh-tpm-sign" ''
