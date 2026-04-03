@@ -34,6 +34,6 @@ in
     };
 
     # User services survive SSH logout
-    security.loginctl-linger.users = [ "sargunv" ];
+    users.users.sargunv.linger = true;
   };
 }
