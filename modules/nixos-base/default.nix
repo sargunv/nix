@@ -2,6 +2,7 @@
 {
   imports = [
     ../nanoclaw.nix
+    ./nanoclaw.nix
     ../nix.nix
     ./boot.nix
     ./home.nix

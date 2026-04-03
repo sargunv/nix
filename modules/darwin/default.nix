@@ -4,6 +4,7 @@
 
   imports = [
     ../nanoclaw.nix
+    ./nanoclaw.nix
     ../nix.nix
     ../stylix.nix
     ./defaults.nix
