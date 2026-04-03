@@ -31,6 +31,11 @@ in
         if pkgs.stdenv.isDarwin then "~/.ssh/id_ecdsa_sk_rk"
         else if pkgs.stdenv.isLinux then "~/.ssh/id_ecdsa_tpm.tpm"
         else null;
+    } // lib.optionalAttrs pkgs.stdenv.isLinux {
+      # Point the SSH client at the TPM agent directly, so outbound SSH
+      # works without setting SSH_AUTH_SOCK globally (which would break
+      # agent-forwarded sudo by hiding the forwarded agent).
+      extraOptions.IdentityAgent = "\${XDG_RUNTIME_DIR}/ssh-tpm-agent.sock";
     };
   };
 
@@ -43,8 +48,12 @@ in
   };
 
 
-  # Linux: ssh-tpm-agent for TPM-backed SSH keys
+  # Linux: ssh-tpm-agent for TPM-backed SSH keys.
+  # Don't let it set SSH_AUTH_SOCK globally — the SSH client uses
+  # IdentityAgent instead, and sudo needs SSH_AUTH_SOCK to remain the
+  # forwarded agent socket so it requires Touch ID via the remote key.
   services.ssh-tpm-agent = lib.mkIf pkgs.stdenv.isLinux {
     enable = true;
+    setSshAuthSock = false;
   };
 }
