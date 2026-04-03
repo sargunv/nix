@@ -15,6 +15,8 @@
     if pkgs.stdenv.isDarwin then "/Users/sargunv" else "/home/sargunv"
   );
 
+  home.sessionPath = [ "$HOME/.local/bin" ];
+
   home.sessionVariables = {
     PAGER = "less -RF --mouse";
     DELTA_PAGER = "less -RF --mouse";
