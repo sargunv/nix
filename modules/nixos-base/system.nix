@@ -24,6 +24,9 @@
   # Firmware updates
   services.fwupd.enable = true;
 
+  # Run unpatched dynamically linked binaries (e.g. mise-managed toolchains)
+  programs.nix-ld.enable = true;
+
   # Docker
   virtualisation.docker.enable = true;
 

@@ -65,8 +65,7 @@
     programs.steam.enable = true;
     programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ];
 
-    # Run unpatched binaries, AppImages, and Flatpaks
-    programs.nix-ld.enable = true;
+    # AppImages and Flatpaks
     programs.appimage = {
       enable = true;
       binfmt = true;
