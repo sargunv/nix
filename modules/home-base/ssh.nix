@@ -1,11 +1,6 @@
 # SSH client configuration with hardware-backed key support.
 { lib, pkgs, ... }:
 let
-  keys = import ../../keys.nix;
-  allSshKeys =
-    builtins.attrValues keys.hostSshKeys
-    ++ builtins.attrValues keys.yubikeySshKeys;
-
   load-yubikey = pkgs.writeShellScriptBin "load-yubikey" (
     ''
       set -euo pipefail
@@ -47,12 +42,6 @@ in
     SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
   };
 
-  # On Darwin, manage authorized_keys via home-manager.
-  # On NixOS, this is handled by openssh.authorizedKeys in the system config
-  # (home-manager symlinks into /nix/store which sshd StrictModes rejects).
-  home.file.".ssh/authorized_keys" = lib.mkIf pkgs.stdenv.isDarwin {
-    text = builtins.concatStringsSep "\n" allSshKeys + "\n";
-  };
 
   # Linux: ssh-tpm-agent for TPM-backed SSH keys
   services.ssh-tpm-agent = lib.mkIf pkgs.stdenv.isLinux {

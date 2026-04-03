@@ -1,6 +1,14 @@
 # macOS-specific modules: system defaults, Homebrew, and home-manager wiring.
+let
+  keys = import ../../keys.nix;
+  allSshKeys =
+    builtins.attrValues keys.hostSshKeys
+    ++ builtins.attrValues keys.yubikeySshKeys;
+in
 {
   system.primaryUser = "sargunv";
+
+  users.users.sargunv.openssh.authorizedKeys.keys = allSshKeys;
 
   imports = [
     ../nanoclaw.nix
