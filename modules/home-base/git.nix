@@ -46,6 +46,18 @@ in
       gpg.ssh.allowedSignersFile = "${allowedSignersFile}";
       commit.gpgSign = true;
       tag.gpgSign = true;
+    } // lib.optionalAttrs pkgs.stdenv.isLinux {
+      # TPM keys can't be read directly by ssh-keygen; inject -U to sign via agent
+      gpg.ssh.program = toString (pkgs.writeShellScript "ssh-tpm-sign" ''
+        args=()
+        for arg in "$@"; do
+          args+=("$arg")
+          if [ "$arg" = "sign" ]; then
+            args+=("-U")
+          fi
+        done
+        exec ${pkgs.openssh}/bin/ssh-keygen "''${args[@]}"
+      '');
     };
   };
 
