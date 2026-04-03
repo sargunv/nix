@@ -24,6 +24,7 @@
     caligula
 
     # Security (CLI)
+    gnupg
     proton-pass-cli
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     proton-vpn-cli
