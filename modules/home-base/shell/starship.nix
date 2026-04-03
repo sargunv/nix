@@ -30,6 +30,10 @@
         style = "bright-black";
       };
 
+      hostname = {
+        ssh_symbol = "󰣀 ";
+      };
+
       mise = {
         disabled = false;
         format = "[$symbol]($style) ";
