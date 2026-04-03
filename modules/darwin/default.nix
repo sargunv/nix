@@ -3,6 +3,7 @@
   system.primaryUser = "sargunv";
 
   imports = [
+    ../nanoclaw.nix
     ../nix.nix
     ../stylix.nix
     ./defaults.nix
