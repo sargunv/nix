@@ -8,6 +8,7 @@
   networking.hostName = "optiplex";
 
   local.boot.secureBoot = false;
+  local.nanoclaw.enable = true;
 
   system.stateVersion = "25.11";
 }

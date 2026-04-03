@@ -7,7 +7,6 @@
 }:
 let
   cfg = config.local.nanoclaw;
-  nodePkg = pkgs.nodejs_20;
   workDir = "/home/sargunv/nanoclaw";
 in
 {
@@ -20,13 +19,13 @@ in
       ];
       wantedBy = [ "default.target" ];
       path = [
-        nodePkg
+        pkgs.mise
         pkgs.git
         pkgs.docker-client
       ];
       serviceConfig = {
         WorkingDirectory = workDir;
-        ExecStart = "${nodePkg}/bin/node dist/index.js";
+        ExecStart = "${pkgs.mise}/bin/mise x -- node dist/index.js";
         Restart = "on-failure";
         RestartSec = 10;
         KillMode = "process";

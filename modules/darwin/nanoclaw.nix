@@ -7,7 +7,6 @@
 }:
 let
   cfg = config.local.nanoclaw;
-  nodePkg = pkgs.nodejs_20;
   workDir = "/Users/sargunv/nanoclaw";
 in
 {
@@ -16,7 +15,10 @@ in
       serviceConfig = {
         Label = "com.nanoclaw";
         ProgramArguments = [
-          "${nodePkg}/bin/node"
+          "${pkgs.mise}/bin/mise"
+          "x"
+          "--"
+          "node"
           "dist/index.js"
         ];
         WorkingDirectory = workDir;
@@ -24,7 +26,7 @@ in
         KeepAlive = true;
         EnvironmentVariables = {
           PATH = lib.makeBinPath [
-            nodePkg
+            pkgs.mise
             pkgs.git
             pkgs.docker-client
           ] + ":/usr/bin:/bin";
