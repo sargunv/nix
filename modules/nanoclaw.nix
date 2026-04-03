@@ -21,7 +21,7 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       # NixOS: systemd user service
-      (lib.mkIf pkgs.stdenv.isLinux {
+      (lib.mkIf (config.options ? systemd) {
         systemd.user.services.nanoclaw = {
           description = "NanoClaw AI Agent";
           after = [
@@ -48,7 +48,7 @@ in
       })
 
       # macOS: launchd user agent
-      (lib.mkIf pkgs.stdenv.isDarwin {
+      (lib.mkIf (config.options ? launchd) {
         launchd.user.agents.nanoclaw = {
           serviceConfig = {
             Label = "com.nanoclaw";

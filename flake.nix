@@ -75,9 +75,12 @@
       in {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            git
             nil
             nixd
             mise
+          ] ++ lib.optionals pkgs.stdenv.isLinux [
+            ssh-tpm-agent
           ];
         };
       });
