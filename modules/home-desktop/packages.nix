@@ -68,8 +68,5 @@ in
       # Gaming
       prismlauncher
     ])
-    ++ lib.optionals isDarwin (with pkgs; [
-      # Apps built from source via nixpkgs (no Homebrew cask available)
-      aseprite
-    ]);
+;
 }

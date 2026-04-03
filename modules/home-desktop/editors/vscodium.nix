@@ -38,7 +38,10 @@ in
     package =
       if pkgs.stdenv.isDarwin then
         # Stub: Homebrew cask manages the app; HM only manages config/extensions.
-        pkgs.emptyDirectory // {
+        pkgs.runCommand "vscodium-stub" { } ''
+          mkdir -p $out/bin
+          ln -s /Applications/VSCodium.app/Contents/Resources/app/bin/codium $out/bin/vscodium
+        '' // {
           pname = "vscodium";
           version = "9999";
           meta = { mainProgram = "vscodium"; };

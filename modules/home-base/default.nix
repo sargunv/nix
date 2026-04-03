@@ -18,6 +18,8 @@
   home.sessionVariables = {
     PAGER = "less -RF --mouse";
     DELTA_PAGER = "less -RF --mouse";
+  } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    TERMINFO_DIRS = "$TERMINFO_DIRS:/Applications/Ghostty.app/Contents/Resources/terminfo";
   };
 
   home.packages = lib.optionals pkgs.stdenv.isLinux [
