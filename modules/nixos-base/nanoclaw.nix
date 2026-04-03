@@ -32,6 +32,9 @@ in
       };
     };
 
+    # Allow container-to-host traffic (OneCLI gateway)
+    networking.firewall.trustedInterfaces = [ "docker0" ];
+
     # User services survive SSH logout
     users.users.sargunv.linger = true;
   };
