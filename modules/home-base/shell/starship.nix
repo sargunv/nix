@@ -31,7 +31,7 @@
       };
 
       hostname = {
-        ssh_symbol = " ";
+        ssh_symbol = " ";
       };
 
       mise = {
