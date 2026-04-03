@@ -47,8 +47,12 @@ in
     SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
   };
 
-  home.file.".ssh/authorized_keys".text =
-    builtins.concatStringsSep "\n" allSshKeys + "\n";
+  # On Darwin, manage authorized_keys via home-manager.
+  # On NixOS, this is handled by openssh.authorizedKeys in the system config
+  # (home-manager symlinks into /nix/store which sshd StrictModes rejects).
+  home.file.".ssh/authorized_keys" = lib.mkIf pkgs.stdenv.isDarwin {
+    text = builtins.concatStringsSep "\n" allSshKeys + "\n";
+  };
 
   # Linux: ssh-tpm-agent for TPM-backed SSH keys
   services.ssh-tpm-agent = lib.mkIf pkgs.stdenv.isLinux {
