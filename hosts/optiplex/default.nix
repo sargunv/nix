@@ -10,5 +10,26 @@
   local.boot.secureBoot = false;
   local.nanoclaw.enable = true;
 
+  local.nfs.backups.enable = true;
+
+  local.backups = {
+    enable = true;
+    paths = [
+      "/var/lib/crafty"
+      "/home/sargunv/nanoclaw"
+    ];
+  };
+
+  local.crafty = {
+    enable = true;
+    minecraftPorts = [
+      25565
+      25566
+      25567
+      25568
+      25569
+    ];
+  };
+
   system.stateVersion = "25.11";
 }

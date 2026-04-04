@@ -2,11 +2,14 @@
 {
   imports = [
     ../nanoclaw.nix
-    ./nanoclaw.nix
-    ../nix.nix
+    ./backups.nix
     ./boot.nix
+    ./crafty.nix
     ./home.nix
     ./inference.nix
+    ./nanoclaw.nix
+    ./nfs.nix
+    ../nix.nix
     ../ssh.nix
     ./system.nix
     ./user.nix
