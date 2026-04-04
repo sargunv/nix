@@ -11,7 +11,15 @@ fi
 [tasks.apply]
 description = "Build and activate the system configuration"
 depends = ["build"]
-run = "sudo ./result/activate"
+run = """
+if [ "$(uname)" = "Darwin" ]; then
+  sudo ./result/activate
+else
+  sudo nix-env -p /nix/var/nix/profiles/system --set ./result
+  sudo ./result/bin/switch-to-configuration switch
+  sudo systemctl restart home-manager-$USER.service
+fi
+"""
 
 [tasks.check]
 description = "Validate flake without building"
