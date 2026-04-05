@@ -21,6 +21,11 @@ in
       default = [ 25565 ];
       description = "Minecraft server ports to expose.";
     };
+    sidecarPorts = lib.mkOption {
+      type = lib.types.listOf lib.types.port;
+      default = [ ];
+      description = "Sidecar HTTP server ports to expose alongside Minecraft.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -29,7 +34,8 @@ in
       image = "registry.gitlab.com/crafty-controller/crafty-4:latest";
       ports =
         [ "8443:8443" ]
-        ++ map (p: "${toString p}:${toString p}") cfg.minecraftPorts;
+        ++ map (p: "${toString p}:${toString p}") cfg.minecraftPorts
+        ++ map (p: "${toString p}:${toString p}") cfg.sidecarPorts;
       volumes = [
         "${dataDir}/backups:/crafty/backups"
         "${dataDir}/logs:/crafty/logs"
@@ -48,7 +54,7 @@ in
     ];
 
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 8443 ] ++ cfg.minecraftPorts;
+      allowedTCPPorts = [ 8443 ] ++ cfg.minecraftPorts ++ cfg.sidecarPorts;
     };
   };
 }
