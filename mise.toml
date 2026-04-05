@@ -39,3 +39,6 @@ run = """
 sudo launchctl kickstart system/org.nixos.darwin-auto-upgrade
 tail -f /var/log/darwin-auto-upgrade.log
 """
+
+[settings]
+experimental = true
