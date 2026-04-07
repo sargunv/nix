@@ -9,12 +9,18 @@
     settings = {
       voiceEnabled = true;
       skipDangerousModePermissionPrompt = true;
+      extraKnownMarketplaces = {
+        sargunv-plugins = {
+          source = {
+            source = "github";
+            repo = "sargunv/claude-plugins";
+          };
+        };
+      };
       enabledPlugins = {
-        "feature-dev@claude-plugins-official" = true;
+        "craft@sargunv-plugins" = true;
         "frontend-design@claude-plugins-official" = true;
-        "code-review@claude-plugins-official" = true;
-        "code-simplifier@claude-plugins-official" = true;
-        "ralph-loop@claude-plugins-official" = true;
+        "skill-creator@claude-plugins-official" = true;
         "commit-commands@claude-plugins-official" = true;
         "gopls-lsp@claude-plugins-official" = true;
         "rust-analyzer-lsp@claude-plugins-official" = true;
