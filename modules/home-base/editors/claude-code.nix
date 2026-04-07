@@ -21,6 +21,7 @@
         "typescript-lsp@claude-plugins-official" = true;
         "clangd-lsp@claude-plugins-official" = true;
       };
+      showThinkingSummaries = true;
       permissions = {
         allow = [
           "Bash(*)"
