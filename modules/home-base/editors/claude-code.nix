@@ -7,7 +7,6 @@
   programs.claude-code = {
     enable = true;
     settings = {
-      voiceEnabled = true;
       skipDangerousModePermissionPrompt = true;
       extraKnownMarketplaces = {
         sargunv-plugins = {
@@ -28,21 +27,6 @@
         "clangd-lsp@claude-plugins-official" = true;
       };
       showThinkingSummaries = true;
-      permissions = {
-        allow = [
-          "Bash(*)"
-          "Read"
-          "Edit"
-          "Write"
-          "WebFetch"
-          "WebSearch"
-          "Glob"
-          "Grep"
-          "Agent"
-          "NotebookEdit"
-          "mcp__*"
-        ];
-      };
     };
   };
 }
