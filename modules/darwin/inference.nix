@@ -7,6 +7,10 @@
 }:
 let
   cfg = config.local.inference;
+  user = config.system.primaryUser;
+  userLogDir = "/Users/${user}/Library/Logs";
+  llamaSwapLog = "${userLogDir}/llama-swap.log";
+  whisperLog = "${userLogDir}/whisper-server.log";
 
   settingsFormat = pkgs.formats.yaml { };
   llama-swap-config = settingsFormat.generate "config.yaml" cfg._llama-swap-settings;
@@ -17,7 +21,7 @@ in
   config = lib.mkMerge [
     # LLM inference via llama-swap
     (lib.mkIf cfg._anyLlmEnabled {
-      launchd.daemons.llama-swap = {
+      launchd.user.agents.llama-swap = {
         serviceConfig = {
           ProgramArguments = [
             (lib.getExe pkgs.llama-swap)
@@ -26,15 +30,16 @@ in
           ];
           RunAtLoad = true;
           KeepAlive = true;
-          StandardOutPath = "/var/log/llama-swap.log";
-          StandardErrorPath = "/var/log/llama-swap.log";
+          ProcessType = "Interactive";
+          StandardOutPath = llamaSwapLog;
+          StandardErrorPath = llamaSwapLog;
         };
       };
     })
 
     # Speech-to-text via whisper.cpp server
     (lib.mkIf cfg.whisper {
-      launchd.daemons.whisper-server = {
+      launchd.user.agents.whisper-server = {
         serviceConfig = {
           ProgramArguments = cfg._whisperServerArgs;
           EnvironmentVariables = {
@@ -42,8 +47,9 @@ in
           };
           RunAtLoad = true;
           KeepAlive = true;
-          StandardOutPath = "/var/log/whisper-server.log";
-          StandardErrorPath = "/var/log/whisper-server.log";
+          ProcessType = "Interactive";
+          StandardOutPath = whisperLog;
+          StandardErrorPath = whisperLog;
         };
       };
     })
