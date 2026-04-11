@@ -13,6 +13,7 @@
       if pkgs.stdenv.isDarwin then null else zed-package;
     extensions = [
       "nix"
+      "oxc"
       "toml"
       "dockerfile"
       "git-firefly"

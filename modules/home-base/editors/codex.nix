@@ -9,14 +9,17 @@ let
   codexConfig = {
     project_doc_fallback_filenames = [ "CLAUDE.md" ];
     file_opener = "vscode";
-    project_root_markers = [ ".git" ".hg" ];
+    project_root_markers = [
+      ".git"
+      ".hg"
+    ];
     hide_agent_reasoning = false;
     model_reasoning_summary = "detailed";
     personality = "pragmatic";
     web_search = "live";
     agents = {
-      max_depth = 2;
-      max_threads = 15;
+      max_depth = 1;
+      max_threads = 8;
     };
     features = {
       prevent_idle_sleep = true;
@@ -73,8 +76,7 @@ in
   home.packages = [ pkgs.codex ];
   home.shellAliases.codexd = "codex --dangerously-bypass-approvals-and-sandbox";
 
-  home.activation.codex-config =
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${patchScript} ${lib.escapeShellArg codexConfigJson}
-    '';
+  home.activation.codex-config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${patchScript} ${lib.escapeShellArg codexConfigJson}
+  '';
 }
