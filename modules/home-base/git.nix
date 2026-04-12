@@ -22,6 +22,7 @@ in
 {
   programs.git = {
     enable = true;
+    lfs.enable = true;
     signing = {
       format = "ssh";
       key = "~/.ssh/signing_key.pub";
