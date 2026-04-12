@@ -4,6 +4,7 @@
 {
   home.packages = with pkgs; [
     # CLI tools
+    aria2
     comma
     fd
     bat
