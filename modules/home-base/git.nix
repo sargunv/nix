@@ -15,7 +15,7 @@ let
 
   readIgnoreFile =
     path:
-    builtins.filter (line: line != "" && !lib.hasPrefix "#" line) (
+    builtins.filter (line: line != "" && !lib.hasPrefix "#" line && !lib.hasPrefix "Icon[" line) (
       lib.splitString "\n" (builtins.readFile path)
     );
 in
