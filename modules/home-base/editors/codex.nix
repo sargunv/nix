@@ -14,18 +14,7 @@ let
       ".hg"
     ];
     hide_agent_reasoning = false;
-    model_reasoning_summary = "detailed";
-    personality = "pragmatic";
     web_search = "live";
-    agents = {
-      max_depth = 1;
-      max_threads = 8;
-    };
-    features = {
-      prevent_idle_sleep = true;
-      smart_approvals = true;
-      undo = true;
-    };
     plugins."github@openai-curated" = {
       enabled = true;
     };
