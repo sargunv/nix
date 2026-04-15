@@ -1,5 +1,7 @@
 # OpenCode CLI configuration with local LLM provider.
 {
+  thaw.paths = [ ".config/opencode/opencode.json" ];
+
   programs.opencode = {
     enable = true;
     settings = {

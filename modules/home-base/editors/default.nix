@@ -3,7 +3,6 @@
   imports = [
     ./neovim
     ./claude-code.nix
-    ./codex.nix
     ./forge.nix
     ./opencode.nix
   ];
