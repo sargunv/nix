@@ -44,10 +44,12 @@
 
       # macOS-only apps
       "bettermouse"
+      "emdash"
       "ghostty"
       "handy"
       "jordanbaird-ice"
       "lunar"
+      "opencode-desktop"
       "orion"
       "proton-drive"
       "protonvpn"
