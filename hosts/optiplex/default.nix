@@ -8,15 +8,12 @@
   networking.hostName = "optiplex";
 
   local.boot.secureBoot = false;
-  local.nanoclaw.enable = true;
-
   local.nfs.backups.enable = true;
 
   local.backups = {
     enable = true;
     paths = [
       "/var/lib/crafty"
-      "/home/sargunv/nanoclaw"
     ];
   };
 

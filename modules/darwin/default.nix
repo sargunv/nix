@@ -11,8 +11,6 @@ in
   users.users.sargunv.openssh.authorizedKeys.keys = allSshKeys;
 
   imports = [
-    ../nanoclaw.nix
-    ./nanoclaw.nix
     ../nix.nix
     ../stylix.nix
     ./defaults.nix
