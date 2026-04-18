@@ -2,6 +2,8 @@
 {
   thaw.paths = [ ".config/opencode/opencode.json" ];
 
+  home.sessionVariables.OPENCODE_ENABLE_EXA = "1";
+
   programs.opencode = {
     enable = true;
     settings = {
