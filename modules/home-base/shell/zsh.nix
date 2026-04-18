@@ -12,6 +12,11 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
+    profileExtra = ''
+      if [[ -f "$ZDOTDIR/.zprofile.local" ]]; then
+        source "$ZDOTDIR/.zprofile.local"
+      fi
+    '';
     plugins = [
       {
         name = "zsh-autopair";

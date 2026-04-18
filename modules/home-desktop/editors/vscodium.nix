@@ -16,22 +16,6 @@ let
 in
 {
   thaw.paths = [ settingsPath ];
-  home.file.".continue/config.yaml".text = builtins.toJSON {
-    name = "Local";
-    version = "1.0.0";
-    schema = "v1";
-    allowAnonymousTelemetry = false;
-    models = [
-      {
-        name = "Local Autocomplete";
-        provider = "openai";
-        apiBase = "http://localhost:8000/v1";
-        model = "qwen2.5-coder-1.5b";
-        apiKey = "none";
-        roles = [ "autocomplete" ];
-      }
-    ];
-  };
 
   programs.vscode = {
     enable = true;

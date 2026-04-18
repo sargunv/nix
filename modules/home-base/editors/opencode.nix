@@ -12,8 +12,8 @@
           name = "Local LLM";
           options.baseURL = "http://localhost:8000/v1";
           models = {
-            "qwen3.5-35b-a3b" = {
-              name = "Qwen 3.5 35B-A3B";
+            "qwen3.6-35b-a3b" = {
+              name = "Qwen 3.6 35B-A3B";
               limit = {
                 context = 262144;
                 output = 32768;

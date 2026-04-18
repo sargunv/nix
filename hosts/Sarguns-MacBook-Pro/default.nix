@@ -9,8 +9,6 @@
   networking.hostName = "Sarguns-MacBook-Pro";
 
   local.inference = {
-    sweepNextEdit = true;
-    qwenCoder = true;
     qwen35b = true;
     qwen35bModel = config.local.inference._models.qwen35-35b-q4;
   };
