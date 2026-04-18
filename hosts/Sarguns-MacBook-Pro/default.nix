@@ -13,7 +13,6 @@
     qwenCoder = true;
     qwen35b = true;
     qwen35bModel = config.local.inference._models.qwen35-35b-q4;
-    qwen35bContext = 16384;
   };
 
   system.stateVersion = 6;

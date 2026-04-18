@@ -95,7 +95,7 @@ in
     };
     qwen35bContext = lib.mkOption {
       type = lib.types.int;
-      default = 32768;
+      default = 262144;
       description = "Context size for Qwen 3.5 35B-A3B.";
     };
     whisper = lib.mkEnableOption "Whisper Large V3 Turbo";

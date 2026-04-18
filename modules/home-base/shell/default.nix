@@ -15,5 +15,4 @@
     '';
   };
 
-  programs.nushell.enable = true;
 }
