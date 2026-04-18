@@ -14,11 +14,6 @@ let
   whisper-server = lib.getExe' cfg.whisper-cpp "whisper-server";
 
   models = {
-    qwen35-35b-q8 = pkgs.fetchurl {
-      url = "https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF/resolve/main/Qwen3.6-35B-A3B-UD-Q8_K_XL.gguf";
-      hash = "sha256-t2IhXF9Qf0hl30rD0a+oA4KK+kHgXsrD+sQxpnu9iOg=";
-    };
-
     qwen35-35b-q4 = pkgs.fetchurl {
       url = "https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF/resolve/main/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf";
       hash = "sha256-cHpVqKQ5fs3kTeDEmdPmjBrR0kDR2mWCa0lJ0QQ/RFA=";
@@ -34,7 +29,7 @@ let
     { }
     // lib.optionalAttrs cfg.qwen35b {
       "qwen3.6-35b-a3b" = {
-        cmd = "${llama-server} --port \${PORT} -m ${cfg.qwen35bModel} -c ${toString cfg.qwen35bContext} --cache-reuse 1 -ngl 99 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.0 --presence-penalty 0.0 --repeat-penalty 1.0 --reasoning on --chat-template-kwargs '{\"preserve_thinking\":true}' --no-webui";
+        cmd = "${llama-server} --port \${PORT} -m ${models.qwen35-35b-q4} -c ${toString cfg.qwen35bContext} --cache-reuse 1 -ngl 99 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.0 --presence-penalty 0.0 --repeat-penalty 1.0 --reasoning on --chat-template-kwargs '{\"preserve_thinking\":true}' --no-webui";
       };
     };
 
@@ -60,11 +55,6 @@ in
     };
 
     qwen35b = lib.mkEnableOption "Qwen 3.6 35B-A3B (on-demand in llama-swap)";
-    qwen35bModel = lib.mkOption {
-      type = lib.types.path;
-      default = models.qwen35-35b-q8;
-      description = "GGUF model file for Qwen 3.6 35B-A3B.";
-    };
     qwen35bContext = lib.mkOption {
       type = lib.types.int;
       default = 262144;

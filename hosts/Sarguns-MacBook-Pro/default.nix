@@ -10,7 +10,6 @@
 
   local.inference = {
     qwen35b = true;
-    qwen35bModel = config.local.inference._models.qwen35-35b-q4;
   };
 
   system.stateVersion = 6;
