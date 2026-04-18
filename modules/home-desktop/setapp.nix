@@ -26,6 +26,7 @@ let
     "CleanShot X"
     "DevUtils"
     "ForkLift"
+    "iStat Menus"
     "Lungo"
     "Numi"
     "Supercharge"
