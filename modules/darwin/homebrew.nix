@@ -45,6 +45,7 @@
       # macOS-only apps
       "bettermouse"
       "emdash"
+      "claude"
       "ghostty"
       "handy"
       "jordanbaird-ice"
