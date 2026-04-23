@@ -99,6 +99,10 @@ mise run update   # update flake.lock
    mise run apply
    ```
 
+   On macOS this builds as your user, then updates the system profile and
+   activates it as root. That avoids root-owned git objects while still making
+   the new generation persistent.
+
 ## Key management
 
 SSH public keys are stored in `keys/` and distributed via nix (authorized_keys on NixOS).

@@ -13,6 +13,7 @@ description = "Build and activate the system configuration"
 depends = ["build"]
 run = """
 if [ "$(uname)" = "Darwin" ]; then
+  sudo nix-env -p /nix/var/nix/profiles/system --set ./result
   sudo ./result/activate
 else
   sudo nix-env -p /nix/var/nix/profiles/system --set ./result
