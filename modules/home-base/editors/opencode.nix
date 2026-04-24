@@ -3,10 +3,12 @@
   thaw.paths = [ ".config/opencode/opencode.json" ];
 
   home.sessionVariables.OPENCODE_ENABLE_EXA = "1";
+  home.sessionVariables.OPENCODE_DISABLE_AUTOUPDATE = "1";
 
   programs.opencode = {
     enable = true;
     settings = {
+      autoupdate = false;
       permission = "allow";
       provider = {
         local = {

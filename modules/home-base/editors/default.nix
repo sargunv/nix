@@ -1,11 +1,14 @@
 # CLI editors, AI coding tools, and editorconfig.
+{ pkgs, ... }:
+
 {
   imports = [
     ./neovim
     ./claude-code.nix
-    ./forge.nix
     ./opencode.nix
   ];
+
+  home.packages = [ pkgs.codex ];
 
   editorconfig = {
     enable = true;
