@@ -114,7 +114,6 @@
 
       exec-once = [
         "hyprpolkitagent"
-        "hyprsunset"
         "xrdb -merge <<< 'Xft.dpi:${toString osConfig.local.desktop.xwaylandDpi}' "
       ];
 

@@ -32,6 +32,36 @@ in
   # Volume/brightness on-screen display
   services.swayosd.enable = true;
 
+  # Night Shift equivalent: warmer screen between sunset and sunrise.
+  # Uses Hyprland's CTM protocol (HDR-correct) instead of wlr-gamma-control.
+  xdg.configFile."sunsetr/sunsetr.toml".text = ''
+    backend = "hyprland"
+    transition_mode = "geo"
+    latitude = 47.6
+    longitude = -122.3
+    day_temp = 6500
+    night_temp = 4000
+    day_gamma = 100
+    night_gamma = 100
+  '';
+
+  systemd.user.services.sunsetr = {
+    Unit = {
+      Description = "Sunsetr - automatic blue light filter";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.sunsetr}/bin/sunsetr";
+      Restart = "on-failure";
+      RestartSec = 30;
+      Slice = "background.slice";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
   # Remove window buttons from CSD windows (no-op on tiling WM)
   dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu:";
 
@@ -83,7 +113,6 @@ in
     # Hyprland ecosystem
     hyprpolkitagent
     hyprshutdown
-    hyprsunset
     hyprpicker
 
     # Desktop apps (Linux default handlers)
