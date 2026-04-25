@@ -37,7 +37,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wallpaper = {
-      url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/void_upscayl_realesrgan-x4plus_x2.png";
+      url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/game_upscayl_realesrgan-x4plus_x2.png";
       flake = false;
     };
     nix-index-database = {

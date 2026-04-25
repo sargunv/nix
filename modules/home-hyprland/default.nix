@@ -98,6 +98,10 @@ in
       "image/webp" = "org.gnome.gThumb.desktop";
       "image/bmp" = "org.gnome.gThumb.desktop";
       "image/svg+xml" = "org.gnome.gThumb.desktop";
+      "x-scheme-handler/http" = "vivaldi-stable.desktop";
+      "x-scheme-handler/https" = "vivaldi-stable.desktop";
+      "text/html" = "vivaldi-stable.desktop";
+      "application/xhtml+xml" = "vivaldi-stable.desktop";
       "text/plain" = "org.gnome.TextEditor.desktop";
       "text/markdown" = "org.gnome.gitlab.somas.Apostrophe.desktop";
       "video/mp4" = "mpv.desktop";

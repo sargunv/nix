@@ -35,6 +35,9 @@ in
 {
   home.packages =
     lib.optionals isLinux (with pkgs; [
+      # Browsers
+      vivaldi
+
       # Communication
       beeper
       discord

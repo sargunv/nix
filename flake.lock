@@ -655,13 +655,13 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-IuH7csNwCjAZHQUwFdT7N0whO7BF0TqkCXb3mH29f4I=",
+        "narHash": "sha256-Smoc19djx6x6LeLc8wSDk6mfgOtX05zck7ngkm+vTXw=",
         "type": "file",
-        "url": "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/void_upscayl_realesrgan-x4plus_x2.png"
+        "url": "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/game_upscayl_realesrgan-x4plus_x2.png"
       },
       "original": {
         "type": "file",
-        "url": "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/void_upscayl_realesrgan-x4plus_x2.png"
+        "url": "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/game_upscayl_realesrgan-x4plus_x2.png"
       }
     }
   },
