@@ -5,6 +5,20 @@
 let
   inherit (pkgs.stdenv) isLinux isDarwin;
 
+  update-orion = pkgs.writeShellApplication {
+    name = "update-orion";
+    runtimeInputs = with pkgs; [ curl flatpak coreutils ];
+    text = ''
+      url="https://cdn.kagi.com/flatpaks/oriongtk.alpha.external.flatpak"
+      bundle=$(mktemp --suffix=.flatpak)
+      trap 'rm -f "$bundle"' EXIT
+      echo "downloading $url"
+      curl -fsSL --retry 3 -o "$bundle" "$url"
+      echo "installing..."
+      flatpak install --user --reinstall -y "$bundle"
+    '';
+  };
+
   t3code-appimage =
     let
       version = "0.0.4";
@@ -37,6 +51,7 @@ in
     lib.optionals isLinux (with pkgs; [
       # Browsers
       vivaldi
+      update-orion # Orion is installed as a flatpak; this script reinstalls latest from Kagi
 
       # Communication
       beeper
