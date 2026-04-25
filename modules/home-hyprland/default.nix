@@ -50,6 +50,24 @@ in
   xdg.desktopEntries.qt6ct = { name = "Qt6 Settings"; noDisplay = true; };
   xdg.desktopEntries.kvantummanager = { name = "Kvantum Manager"; noDisplay = true; };
 
+  # Vivaldi wrapper that detaches from the launcher (e.g. `gh repo view --web`)
+  # so callers don't block until the browser exits.
+  xdg.desktopEntries.vivaldi-detached = {
+    name = "Vivaldi";
+    genericName = "Web Browser";
+    exec = "${pkgs.systemd}/bin/systemd-run --user --quiet --collect ${pkgs.vivaldi}/bin/vivaldi %U";
+    icon = "vivaldi";
+    terminal = false;
+    categories = [ "Network" "WebBrowser" ];
+    mimeType = [
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "text/html"
+      "application/xhtml+xml"
+    ];
+    noDisplay = true;
+  };
+
   home.packages = with pkgs; [
     # Wayland utilities
     playerctl
@@ -98,10 +116,10 @@ in
       "image/webp" = "org.gnome.gThumb.desktop";
       "image/bmp" = "org.gnome.gThumb.desktop";
       "image/svg+xml" = "org.gnome.gThumb.desktop";
-      "x-scheme-handler/http" = "vivaldi-stable.desktop";
-      "x-scheme-handler/https" = "vivaldi-stable.desktop";
-      "text/html" = "vivaldi-stable.desktop";
-      "application/xhtml+xml" = "vivaldi-stable.desktop";
+      "x-scheme-handler/http" = "vivaldi-detached.desktop";
+      "x-scheme-handler/https" = "vivaldi-detached.desktop";
+      "text/html" = "vivaldi-detached.desktop";
+      "application/xhtml+xml" = "vivaldi-detached.desktop";
       "text/plain" = "org.gnome.TextEditor.desktop";
       "text/markdown" = "org.gnome.gitlab.somas.Apostrophe.desktop";
       "video/mp4" = "mpv.desktop";
