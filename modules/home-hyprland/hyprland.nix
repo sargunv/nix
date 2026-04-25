@@ -121,7 +121,7 @@
       bindd = [
         "$mod, Return, Open terminal, exec, kitty"
         "$mod, Space, Open launcher, exec, vicinae toggle"
-        "$mod, Q, Kill active window, killactive,"
+        "$mod, W, Kill active window, killactive,"
         "$mod, P, Toggle pseudotile, pseudo,"
         "$mod, F, Toggle floating, togglefloating,"
         "$mod, Z, Toggle zen mode, fullscreen, 1"
