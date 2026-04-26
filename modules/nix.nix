@@ -10,6 +10,12 @@
           chmod +x $out/lib/node_modules/@anthropic-ai/claude-code/vendor/*/*/*
         '';
       });
+
+      # direnv 2.37.1's upstream tests can hang on aarch64-darwin while
+      # exercising watch-dir behavior; skip checks until nixpkgs catches up.
+      direnv = prev.direnv.overrideAttrs (_old: prev.lib.optionalAttrs prev.stdenv.isDarwin {
+        doCheck = false;
+      });
     })
   ];
 
