@@ -13,7 +13,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
     fonts.monospace = {
       package = pkgs.nerd-fonts.monaspace;
-      name = "MonaspiceAr Nerd Font Propo";
+      name = "MonaspiceAr Nerd Font";
     };
   };
 }

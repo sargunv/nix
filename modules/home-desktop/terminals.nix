@@ -15,6 +15,8 @@
     settings = {
       window_padding_width = 8;
       active_tab_font_style = "bold";
+      allow_remote_control = "socket-only";
+      listen_on = "unix:@kitty";
     };
     # Stylix themes kitty via the deprecated upstream tinted-kitty template,
     # which maps color8 (ANSI bright black) to base02. base02 is the selection
@@ -26,6 +28,13 @@
     # Tracked upstream: https://github.com/nix-community/stylix/issues/1411
     extraConfig = lib.mkAfter ''
       color8 #${config.lib.stylix.colors.base03}
+
+      # Disable Monaspace texture healing; it changes glyph shapes contextually
+      # and makes pairs like "Sw" look uneven in terminal cells.
+      font_features MonaspiceArNF-Regular -calt
+      font_features MonaspiceArNF-Bold -calt
+      font_features MonaspiceArNF-Italic -calt
+      font_features MonaspiceArNF-BoldItalic -calt
     '';
   };
 
