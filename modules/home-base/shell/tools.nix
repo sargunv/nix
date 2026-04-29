@@ -35,15 +35,6 @@
     };
   };
 
-  programs.direnv = {
-    enable = true;
-    enableFishIntegration = true;
-    enableNushellIntegration = true;
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
-    config.global.hide_env_diff = true;
-  };
-
   programs.fzf = {
     enable = true;
     enableFishIntegration = true;

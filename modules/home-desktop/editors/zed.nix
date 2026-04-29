@@ -20,7 +20,6 @@
       "just"
     ];
     userSettings = {
-      load_direnv = "shell_hook";
       edit_predictions = {
         provider = "zed";
       };
