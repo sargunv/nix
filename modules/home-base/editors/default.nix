@@ -4,7 +4,6 @@
 {
   imports = [
     ./neovim
-    ./claude-code.nix
     ./opencode.nix
   ];
 
