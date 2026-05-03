@@ -19,6 +19,7 @@
   config = {
     # Boot loader
     boot.loader.systemd-boot.enable = !config.local.boot.secureBoot;
+    boot.loader.timeout = 5;
     boot.lanzaboote = lib.mkIf config.local.boot.secureBoot {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
