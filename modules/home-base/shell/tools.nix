@@ -28,12 +28,35 @@
     enableFishIntegration = true;
     enableNushellIntegration = true;
     enableZshIntegration = true;
-    globalConfig.settings = {
-      trusted_config_paths = [ "~/Code" ];
-      node.compile = false;
-      python.compile = false;
-    };
   };
+
+  xdg.configFile."mise/config.toml".text = ''
+    [settings]
+    trusted_config_paths = ["~/Code"]
+
+    [settings.node]
+    compile = false
+    corepack = true
+
+    [settings.python]
+    compile = false
+
+    [tools]
+    "core:java" = "temurin-25"
+    "core:node" = "lts"
+    "core:python" = "latest"
+
+    "aqua:astral-sh/uv" = "latest"
+    "aqua:anomalyco/opencode" = "latest"
+    "aqua:anthropics/claude-code" = "latest"
+    "aqua:charmbracelet/crush" = "latest"
+    "aqua:openai/codex" = "latest"
+
+    "github:badlogic/pi-mono" = "latest"
+
+    "npm:@google/gemini-cli" = "latest"
+    "npm:droid" = "latest"
+  '';
 
   programs.fzf = {
     enable = true;
