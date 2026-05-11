@@ -9,20 +9,6 @@
 
   programs.zed-editor = {
     enable = true;
-    package =
-      if pkgs.stdenv.isDarwin then null else zed-package;
-    extensions = [
-      "nix"
-      "oxc"
-      "toml"
-      "dockerfile"
-      "git-firefly"
-      "just"
-    ];
-    userSettings = {
-      edit_predictions = {
-        provider = "zed";
-      };
-    };
+    package = if pkgs.stdenv.isDarwin then null else zed-package;
   };
 }
