@@ -39,6 +39,10 @@ in
       };
       init.defaultBranch = "main";
       branch.sort = "-committerdate";
+      alias = {
+        gone = "!f() { git fetch --prune && git branch -vv | awk '/: gone]/{print ($1 == \"*\" ? $2 : $1)}'; }; f";
+        delete-gone = "!f() { git fetch --prune && git branch -vv | awk '/: gone]/{print ($1 == \"*\" ? $2 : $1)}' | while read -r branch; do git branch -D \"$branch\"; done; }; f";
+      };
       push = {
         autoSetupRemote = true;
         useForceIfIncludes = true;
