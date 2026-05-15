@@ -42,6 +42,7 @@ in
       alias = {
         gone = "!f() { git fetch --prune && git branch -vv | awk '/: gone]/{print ($1 == \"*\" ? $2 : $1)}'; }; f";
         delete-gone = "!f() { git fetch --prune && git branch -vv | awk '/: gone]/{print ($1 == \"*\" ? $2 : $1)}' | while read -r branch; do git branch -D \"$branch\"; done; }; f";
+        sync-fork = "!f() { branch=\"\${1:-$(git remote show upstream | sed -n 's/.*HEAD branch: //p')}\"; test -n \"$branch\" || { echo \"Could not detect upstream default branch\" >&2; return 1; }; git checkout \"$branch\" && git fetch upstream && git pull --ff-only upstream \"$branch\" && git push origin \"$branch\"; }; f";
       };
       push = {
         autoSetupRemote = true;
