@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+#MISE description="Prompt for Coder OIDC secrets and write /var/lib/coder/oidc.env"
+set -euo pipefail
+
+out=/var/lib/coder/oidc.env
+
+prompt_default() {
+  local var_name=$1
+  local prompt=$2
+  local default=$3
+  local value
+  read -r -p "$prompt [$default]: " value
+  printf -v "$var_name" '%s' "${value:-$default}"
+}
+
+prompt_secret() {
+  local var_name=$1
+  local prompt=$2
+  local value
+  read -r -s -p "$prompt: " value
+  echo >&2
+  if [[ -z "$value" ]]; then
+    echo "error: $prompt cannot be empty" >&2
+    exit 1
+  fi
+  printf -v "$var_name" '%s' "$value"
+}
+
+prompt_default issuer_url "OIDC issuer URL" "https://auth.home.sargunv.dev"
+prompt_default client_id "OIDC client ID" "coder"
+prompt_secret client_secret "OIDC client secret"
+
+sudo install -d -m 0750 -o coder -g coder /var/lib/coder
+
+umask 077
+tmp=$(mktemp)
+trap 'rm -f "$tmp"' EXIT
+cat >"$tmp" <<EOF
+CODER_OIDC_ISSUER_URL=$issuer_url
+CODER_OIDC_CLIENT_ID=$client_id
+CODER_OIDC_CLIENT_SECRET=$client_secret
+EOF
+
+sudo install -m 0600 -o coder -g coder "$tmp" "$out"
+
+echo "Wrote $out"
+echo "Restart Coder after rebuilding/applying config: sudo systemctl restart coder"

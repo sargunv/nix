@@ -57,6 +57,11 @@ in
       } // lib.optionalAttrs pkgs.stdenv.isLinux {
         # TPM keys can't be read directly by ssh-keygen; inject -U to sign via agent
         program = toString (pkgs.writeShellScript "ssh-tpm-sign" ''
+          # Git may be run from an SSH session with a forwarded/empty agent in
+          # SSH_AUTH_SOCK. For TPM-backed signing, force ssh-keygen -U to talk
+          # to the local ssh-tpm-agent instead.
+          export SSH_AUTH_SOCK="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/ssh-tpm-agent.sock"
+
           args=()
           for arg in "$@"; do
             args+=("$arg")
