@@ -59,6 +59,7 @@
       "rectangle"
       "sdformatter"
       "setapp"
+      "superset"
       "vivaldi"
       "vscodium"
       "zed"
