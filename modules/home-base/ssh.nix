@@ -25,9 +25,9 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
-      forwardAgent = true;
-      identityFile =
+    settings."*" = {
+      ForwardAgent = true;
+      IdentityFile =
         if pkgs.stdenv.isDarwin then "~/.ssh/id_ecdsa_sk_rk"
         else if pkgs.stdenv.isLinux then "~/.ssh/id_ecdsa_tpm.tpm"
         else null;

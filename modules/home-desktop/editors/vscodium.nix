@@ -17,7 +17,7 @@ in
 {
   thaw.paths = [ settingsPath ];
 
-  programs.vscode = {
+  programs.vscodium = {
     enable = true;
     package =
       if pkgs.stdenv.isDarwin then
