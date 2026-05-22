@@ -31,7 +31,14 @@ in
     ignores =
       readIgnoreFile "${gitignore}/Global/Linux.gitignore"
       ++ readIgnoreFile "${gitignore}/Global/macOS.gitignore"
-      ++ readIgnoreFile "${gitignore}/Global/mise.gitignore";
+      ++ readIgnoreFile "${gitignore}/Global/Windows.gitignore"
+      ++ readIgnoreFile "${gitignore}/Global/Vim.gitignore"
+      ++ readIgnoreFile "${gitignore}/Global/VisualStudioCode.gitignore"
+      ++ readIgnoreFile "${gitignore}/Global/Xcode.gitignore"
+      ++ readIgnoreFile "${gitignore}/Global/Zed.gitignore"
+      ++ readIgnoreFile "${gitignore}/Global/mise.gitignore"
+      ++ readIgnoreFile "${gitignore}/Global/Agents.gitignore"
+      ++ [ ".pi/*" ];
     settings = {
       user = {
         name = "Sargun Vohra";
