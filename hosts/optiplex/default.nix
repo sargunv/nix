@@ -23,10 +23,10 @@
     enable = true;
     # nixpkgs' Coder package can lag upstream; pin the current upstream binary here.
     package = pkgs.coder.overrideAttrs (_old: rec {
-      version = "2.32.4";
+      version = "2.34.0-rc.0";
       src = pkgs.fetchurl {
         url = "https://github.com/coder/coder/releases/download/v${version}/coder_${version}_linux_amd64.tar.gz";
-        hash = "sha256-pGNpLDVBd29lgeqT/O0OqX4UJr7fbtw0zAY6A5KjhTc=";
+        hash = "sha256-xAsy3ocdspSiJkdSBuHMva296hCCbbIL32bwvm2foR8=";
       };
     });
     listenAddress = "0.0.0.0:3000";
@@ -35,6 +35,7 @@
       file = "/var/lib/coder/oidc.env";
       extra = {
         CODER_DISABLE_PASSWORD_AUTH = "true";
+        CODER_EXPERIMENTS = "agents";
         CODER_OIDC_SCOPES = "openid,profile,email,offline_access";
         CODER_OIDC_SIGN_IN_TEXT = "Sign in with Authelia";
       };
