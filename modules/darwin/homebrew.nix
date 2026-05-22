@@ -44,6 +44,7 @@
 
       # macOS-only apps
       "bettermouse"
+      "codexbar"
       "emdash"
       "ghostty"
       "handy"
