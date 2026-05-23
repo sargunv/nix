@@ -26,6 +26,7 @@
       # Productivity
       "anki"
       "obsidian"
+      "cursor"
       "jetbrains-toolbox"
       "t3-code"
       "localsend"
