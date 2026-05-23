@@ -106,6 +106,27 @@
           ];
         };
 
+      nixosConfigurations.framework-13 =
+        let
+          system = "x86_64-linux";
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit gitignore nixvim wallpaper nix-index-database;
+            vscode-extensions = nix-vscode-extensions.extensions.${system};
+            zed-package = pkgs.zed-editor;
+            try-cli-package = try-cli.packages.${system}.default;
+          };
+          modules = [
+            lanzaboote.nixosModules.lanzaboote
+            nixos-hardware.nixosModules.framework-13-7040-amd
+            stylix.nixosModules.stylix
+            home-manager.nixosModules.home-manager
+            ./hosts/framework-13
+          ];
+        };
+
       nixosConfigurations.optiplex =
         let
           system = "x86_64-linux";
