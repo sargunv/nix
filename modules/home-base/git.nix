@@ -38,7 +38,10 @@ in
       ++ readIgnoreFile "${gitignore}/Global/Zed.gitignore"
       ++ readIgnoreFile "${gitignore}/Global/mise.gitignore"
       ++ readIgnoreFile "${gitignore}/Global/Agents.gitignore"
-      ++ [ ".pi/*" ];
+      ++ [
+        ".pi/*"
+        "!.pi/settings.json"
+      ];
     settings = {
       user = {
         name = "Sargun Vohra";
