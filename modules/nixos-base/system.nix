@@ -1,4 +1,5 @@
 # NixOS system basics: networking, locale, scheduling, and hardware services.
+{ pkgs, ... }:
 {
   # Networking
   networking.networkmanager.enable = true;
@@ -31,6 +32,10 @@
 
   # Run unpatched dynamically linked binaries (e.g. mise-managed toolchains)
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # mise-managed dotnet requires ICU at startup.
+    icu
+  ];
 
   # Docker
   virtualisation.docker.enable = true;
