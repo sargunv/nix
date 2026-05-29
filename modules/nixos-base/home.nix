@@ -3,7 +3,6 @@
 {
   nixvim,
   gitignore,
-  try-cli-package,
   nix-index-database,
   ...
 }:
@@ -16,10 +15,7 @@
     nix-index-database.homeModules.nix-index
   ];
   home-manager.extraSpecialArgs = {
-    inherit
-      gitignore
-      try-cli-package
-      ;
+    inherit gitignore;
   };
   home-manager.users.sargunv.imports = [ ../home-base ];
 }

@@ -5,7 +5,6 @@
   gitignore,
   vscode-extensions,
   zed-package,
-  try-cli-package,
   nix-index-database,
   ...
 }:
@@ -22,7 +21,6 @@
       gitignore
       vscode-extensions
       zed-package
-      try-cli-package
       ;
   };
   home-manager.users.sargunv.imports = [ ../home-base ../home-desktop ];

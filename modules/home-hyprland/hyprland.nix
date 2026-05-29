@@ -97,7 +97,7 @@ in
 
       hl.bind(mod .. " + Return", hl.dsp.exec_cmd("kitty"), { description = "Open terminal" })
       hl.bind(mod .. " + Space", hl.dsp.exec_cmd("vicinae toggle"), { description = "Open launcher" })
-      hl.bind(mod .. " + Q", hl.dsp.window.close(), { description = "Kill active window" })
+      hl.bind(mod .. " + W", hl.dsp.window.close(), { description = "Kill active window" })
       hl.bind(mod .. " + P", hl.dsp.window.pseudo(), { description = "Toggle pseudotile" })
       hl.bind(mod .. " + F", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating" })
       hl.bind(mod .. " + Z", hl.dsp.window.fullscreen(1), { description = "Toggle zen mode" })

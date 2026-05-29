@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  try-cli-package,
   ...
 }:
 
@@ -53,9 +52,6 @@
       # Ctrl+Home/End for beginning/end of line
       bindkey '^[[1;5H' beginning-of-line
       bindkey '^[[1;5F' end-of-line
-
-      # try-cli ephemeral workspace manager
-      eval "$(${try-cli-package}/bin/try init ~/Code/tries)"
     '';
     history = {
       size = 100000;

@@ -32,10 +32,6 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    try-cli = {
-      url = "github:tobi/try-cli";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     wallpaper = {
       url = "https://raw.githubusercontent.com/atraxsrc/tokyonight-wallpapers/refs/heads/main/game_upscayl_realesrgan-x4plus_x2.png";
       flake = false;
@@ -57,7 +53,6 @@
       nixvim,
       gitignore,
       stylix,
-      try-cli,
       wallpaper,
       nix-index-database,
       ...
@@ -95,7 +90,6 @@
             inherit gitignore nixvim wallpaper nix-index-database;
             vscode-extensions = nix-vscode-extensions.extensions.${system};
             zed-package = pkgs.zed-editor;
-            try-cli-package = try-cli.packages.${system}.default;
           };
           modules = [
             lanzaboote.nixosModules.lanzaboote
@@ -114,7 +108,6 @@
         nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit gitignore nixvim wallpaper nix-index-database;
-            try-cli-package = try-cli.packages.${system}.default;
           };
           modules = [
             lanzaboote.nixosModules.lanzaboote
@@ -134,7 +127,6 @@
             inherit gitignore nixvim wallpaper nix-index-database;
             vscode-extensions = nix-vscode-extensions.extensions.${system};
             zed-package = pkgs.zed-editor;
-            try-cli-package = try-cli.packages.${system}.default;
           };
           modules = [
             stylix.darwinModules.stylix

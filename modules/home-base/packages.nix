@@ -2,7 +2,6 @@
 {
   lib,
   pkgs,
-  try-cli-package,
   ...
 }:
 
@@ -78,7 +77,6 @@ in
       lazydocker
 
       # Disk utilities
-      try-cli-package
       caligula
 
       # Security (CLI)
