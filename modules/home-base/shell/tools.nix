@@ -48,14 +48,9 @@
 
     "aqua:astral-sh/uv" = "latest"
     "aqua:anomalyco/opencode" = "latest"
-    "aqua:anthropics/claude-code" = "latest"
-    "aqua:charmbracelet/crush" = "latest"
     "aqua:openai/codex" = "latest"
 
     "github:badlogic/pi-mono" = "latest"
-
-    "npm:@google/gemini-cli" = "latest"
-    "npm:droid" = "latest"
   '';
 
   programs.fzf = {
